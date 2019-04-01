@@ -2,55 +2,75 @@ import Vue from 'vue/dist/vue.js'
 import Vuex from 'vuex'
 import App from './App.vue'
 import moment from 'moment'
-import Vue2TouchEvents from 'vue2-touch-events'
 
 // import './registerServiceWorker'
 
 Vue.config.productionTip = false
 Vue.use(Vuex)
-Vue.use(Vue2TouchEvents, {
-  swipeTolerance: 100,
-})
 
 const store = new Vuex.Store({
   state: {
     today: moment(),
     currentDay: moment(),
-    tasks: [
-      {
-        id: 1,
-        title: 'title',
-        done: false,
-      },
-    ],
-  },
-  getters: {
-    day(state) {
-      let id = state.currentDay.format('YYYYMMDD')
-      let isToday = id === state.today.format('YYYYMMDD')
-      return {
-        id,
-        isToday,
-      }
-    },
+    days: {},
+    token: null,
   },
   mutations: {
-    changeDay(state, payload) {
-      let currentDay = state.currentDay
-      state.currentDay = ''
-      if (payload.step) {
-        //-1 or 1
-        state.currentDay = currentDay.add(payload.step, 'days')
-      } else if (payload.today) {
-        state.currentDay = moment(state.today.format('YYYYMMDD'))
+    addDay(state, newDateId) {
+      // if I receive a day id YYYYMMDD and it's not used already
+      if (newDateId && !state.days[newDateId]) {
+        let day = moment(newDateId)
+        let tasks = []
+        if (day.isValid()) {
+          Vue.set(state.days, day.format('YYYYMMDD'), { id: newDateId, tasks })
+        }
       }
     },
-    editTask(state, payload) {
-      let task = payload.task
-      let index = state.tasks.indexOf(task)
-      task.title = payload.title
+    gotoDay(state, id) {
+      let tempDay = state.currentDay
+      state.currentDay = ''
+      state.currentDay = moment(id)
+    },
+    token(state, token) {
+      state.token = token
+    },
+  },
+  actions: {
+    gotoDay(context, payload) {
+      let newDayId,
+        oldDayId = context.state.currentDay.format('YYYYMMDD')
+      if (payload.step) {
+        //-1 or 1
+        let tempDay = context.state.currentDay
+        tempDay.add(payload.step, 'days')
+        newDayId = tempDay.format('YYYYMMDD')
+      } else if (payload.today) {
+        newDayId = context.state.today.format('YYYYMMDD')
+      } else if (payload.id) {
+        newDayId = payload.id
+      }
 
-      state.tasks.splice(index, task)
+      if (newDayId !== oldDayId) {
+        if (context.state.days[newDayId]) {
+          context.commit('gotoDay', newDayId)
+        } else {
+          context.commit('addDay', newDayId)
+          context.commit('gotoDay', newDayId)
+        }
+      }
+
+      let prevDayId = moment(newDayId)
+        .subtract(1, 'days')
+        .format('YYYYMMDD')
+      if (!context.state[prevDayId]) {
+        context.commit('addDay', prevDayId)
+      }
+      let nextDayId = moment(newDayId)
+        .add(1, 'days')
+        .format('YYYYMMDD')
+      if (!context.state[nextDayId]) {
+        context.commit('addDay', nextDayId)
+      }
     },
   },
 })
@@ -59,5 +79,7 @@ new Vue({
   el: '#app',
   store,
   template: '<App/>',
-  components: { App },
+  components: {
+    App,
+  },
 })

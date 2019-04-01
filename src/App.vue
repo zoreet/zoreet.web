@@ -1,83 +1,219 @@
 <template>
-  <div id="app" v-cloak v-touch:swipe="swipeHandler">
-    <div class="window">
-      <div>day: {{day.id}} {{ day.isToday}}</div>
-      <!-- <Component msg="Yes" id="editor"></Component> -->
-      <button @click.prevent="gotoPrevDay">Prev</button>
-      <button @click.prevent="gotoToday">Today</button>
-      <button @click.prevent="gotoNextDay">Next</button>
-      <div>
-        <button @click.prevent="editTask">Change to vlad</button>
+  <div id="app" v-cloak>
+    <div class="windows">
+      <div
+        v-for="day in days"
+        :key="day.id"
+        class="window"
+        :class="{'window--past': day.id - currentDayId < 0, 'window--future': day.id - currentDayId > 0, 'window--current': day.id == currentDayId }"
+      >
+        <Page id="editor" :dayId="day.id"></Page>
       </div>
-
-      <ul>
-        <li v-for="task in tasks">{{task.title}}</li>
-      </ul>
     </div>
   </div>
 </template>
 
 <script>
+import moment from 'moment'
+import axios from 'axios'
+import auth0 from 'auth0-js'
+import Swipe from './modules/swipe'
+import Page from './components/Page.vue'
 // import Component from './components/Component.vue'
 
 export default {
   name: 'app',
+  data() {
+    return {
+      swipe: null,
+      user: {},
+      webAuth: null,
+    }
+  },
   components: {
     // Component,
+    Page,
   },
   computed: {
-    day() {
-      return this.$store.getters.day
+    days() {
+      return this.$store.state.days
+    },
+    currentDayId() {
+      return this.$store.state.currentDay.format('YYYYMMDD')
     },
     today() {
-      return this.$store.state.today
+      return this.$store.state.today.format('YYYYMMDD')
     },
-    tasks() {
-      return this.$store.state.tasks
-    },
+  },
+  beforeMount() {
+    this.checkLogin()
   },
   mounted() {
-    this.$store.subscribe((mutation, state) => {
-      if (mutation.type == 'changeDay') {
-        this.loadTasks()
-      } else if (mutation.type == 'changeTask') {
-        this.saveTasks()
-      }
+    let that = this
+
+    this.webAuth = new auth0.WebAuth({
+      domain: 'todayapp.eu.auth0.com',
+      clientID: 'Zz9d2EICFe1981TC5Ym7dfva9Y1jECmP',
+      responseType: 'token id_token',
+      scope: 'openid email profile',
+      redirectUri: window.location.origin,
+      audience: 'todayapp',
     })
+    this.$store.commit('addDay', this.currentDayId)
+    this.$store.dispatch('gotoDay', { id: this.currentDayId })
+
+    document
+      .querySelector('.windows')
+      .addEventListener('swipeLeft', function() {
+        that.gotoNextDay()
+      })
+    document
+      .querySelector('.windows')
+      .addEventListener('swipeRight', function() {
+        that.gotoPrevDay()
+      })
   },
   methods: {
-    // Days
+    // ////////////////////////////////////////////////////////////
+    //
+    // DAYS
+    //
+    // ////////////////////////////////////////////////////////////
     gotoPrevDay() {
-      this.$store.commit('changeDay', { step: -1 })
+      this.$store.dispatch('gotoDay', { step: -1 })
     },
     gotoNextDay() {
-      this.$store.commit('changeDay', { step: 1 })
+      this.$store.dispatch('gotoDay', { step: 1 })
     },
     gotoToday() {
-      this.$store.commit('changeDay', { today: true })
+      this.$store.dispatch('gotoDay', { today: true })
     },
 
-    //Tasks
-    editTask() {
-      this.$store.commit('editTask', {
-        task: this.$store.state.tasks[0],
-        title: 'Vlad',
+    // ////////////////////////////////////////////////////////////
+    //
+    // UI
+    //
+    // ////////////////////////////////////////////////////////////
+    swipeHandler(direction, event) {
+      if (event.target.type !== 'textarea') {
+        if (direction == 'left') {
+          this.gotoNextDay()
+        } else if (direction == 'right') {
+          this.gotoPrevDay()
+        }
+      }
+    },
+    // ////////////////////////////////////////////////////////////
+    //
+    // USER
+    //
+    // ////////////////////////////////////////////////////////////
+    checkLogin() {
+      if (window.location.hash.length > 1) {
+        this.handleAuthentication()
+      } else {
+        let expiresAt = parseInt(localStorage.getItem('expires_at'))
+        let now = new Date().getTime()
+        let expiresIn = expiresAt - now
+        let token = localStorage.getItem('access_token')
+
+        if (token && expiresAt && now < expiresAt) {
+          this.user = JSON.parse(localStorage.getItem('user'))
+          sessionStorage.setItem('activeSession', true)
+
+          this.$store.commit('token', token)
+          this.scheduleRenewal(expiresIn)
+
+          let that = this
+          window.onfocus = function() {
+            let now = new Date().getTime()
+            if (expiresAt < now) {
+              that.silentLogin()
+            }
+          }
+        } else {
+          this.login()
+        }
+      }
+    },
+    login() {
+      this.webAuth.authorize()
+    },
+    silentLogin() {
+      let that = this
+      this.webAuth.checkSession({}, function(err, result) {
+        if (err) {
+          that.error = err
+        } else {
+          that.error = ''
+          that.token = result.accessToken
+          that.saveLoginData(result)
+          that.scheduleRenewal(result.expiresIn * 1000)
+        }
       })
     },
-    loadTasks() {
-      console.log('Loading tasks')
+    handleAuthentication() {
+      let that = this
+      this.webAuth.parseHash(function(err, authResult) {
+        if (err) {
+          alert(
+            'Error: ' + err.error + '. Check the console for further details.'
+          )
+          console.log('This is the error you got: ', err)
+        } else if (authResult && authResult.accessToken && authResult.idToken) {
+          that.saveLoginData(authResult)
+          window.location.replace('/')
+        } else {
+          alert('Oups!/n/nTry again')
+          window.location.replace('/')
+        }
+      })
     },
-    saveTasks() {
-      console.log('Saving tasks')
-    },
+    scheduleRenewal(expiresIn) {
+      if (!expiresIn) return
 
-    //UI
-    swipeHandler(direction) {
-      if (direction == 'left') {
-        this.gotoPrevDay()
-      } else if (direction == 'right') {
-        this.gotoNextDay()
-      }
+      window.setTimeout(() => {
+        this.silentLogin()
+      }, expiresIn)
+    },
+    saveLoginData(result) {
+      var expiresAt = new Date().getTime() + result.expiresIn * 1000
+      var user = JSON.stringify({
+        email: result.idTokenPayload.email,
+        nickname: result.idTokenPayload.nickname,
+      })
+
+      localStorage.setItem('access_token', result.accessToken)
+      localStorage.setItem('id_token', result.idToken)
+      localStorage.setItem('expires_at', expiresAt)
+      localStorage.setItem('user', user)
+    },
+    clearSession() {
+      // Remove tokens and expiry time from localStorage
+      localStorage.removeItem('access_token')
+      localStorage.removeItem('id_token')
+      localStorage.removeItem('expires_at')
+      localStorage.removeItem('user')
+    },
+    logout() {
+      document.querySelector('body').classList.add('loading')
+
+      localStorage.removeItem('access_token')
+      localStorage.removeItem('id_token')
+      localStorage.removeItem('expires_at')
+      localStorage.removeItem('user')
+      localStorage.removeItem('user')
+      sessionStorage.removeItem('activeSession')
+
+      // log out to Auth0 ( and if needed google, facebook or whatever id provider they used )
+      let iframe = document.createElement('iframe')
+      iframe.src = 'https://todayapp.eu.auth0.com/v2/logout'
+      iframe.style.display = 'none'
+      document.body.appendChild(iframe)
+
+      window.setTimeout(() => {
+        window.top.location.href = '/'
+      }, 2000)
     },
   },
 }
@@ -93,27 +229,43 @@ body {
 }
 
 #app {
+  -webkit-font-smoothing: antialiased;
+  background-color: rgb(128, 128, 128);
+  color: var(--front);
   font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica,
     Arial, sans-serif;
   font-size: 16px;
-  -webkit-font-smoothing: antialiased;
-  color: var(--front);
-  display: flex;
-  filter: saturate(0);
-  flex-direction: column;
   height: 100%;
   overflow: hidden;
   position: fixed;
   width: 100%;
 }
+.windows {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
 
 .window {
+  background-color: #fff;
   flex: 1 1 auto;
   height: 100%;
+  left: 0%;
   overflow: hidden;
-  position: relative;
+  position: absolute;
+  top: 0;
   width: 100%;
+  transition: transform 0.3s;
 }
+.window--past {
+  transform: translateX(calc(-100% - 100px));
+}
+.window--future {
+  transform: translateX(calc(100% + 100px));
+}
+
 * {
   box-sizing: border-box;
   -webkit-overflow-scrolling: touch;
@@ -140,5 +292,10 @@ html {
   --accent: #2be4a4;
   --accent--dark: #16ac78;
   --accent--text: #16ac78;
+}
+
+textarea {
+  font-size: 16px;
+  width: 100%;
 }
 </style>
