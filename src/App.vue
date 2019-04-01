@@ -46,11 +46,6 @@ export default {
     },
   },
   beforeMount() {
-    this.checkLogin()
-  },
-  mounted() {
-    let that = this
-
     this.webAuth = new auth0.WebAuth({
       domain: 'todayapp.eu.auth0.com',
       clientID: 'Zz9d2EICFe1981TC5Ym7dfva9Y1jECmP',
@@ -59,6 +54,11 @@ export default {
       redirectUri: window.location.origin,
       audience: 'todayapp',
     })
+    this.checkLogin()
+  },
+  mounted() {
+    let that = this
+
     this.$store.commit('addDay', this.currentDayId)
     this.$store.dispatch('gotoDay', { id: this.currentDayId })
 
