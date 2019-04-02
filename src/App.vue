@@ -7,9 +7,19 @@
         class="window"
         :class="{'window--past': day.id - currentDayId < 0, 'window--future': day.id - currentDayId > 0, 'window--current': day.id == currentDayId }"
       >
-        <Page id="editor" :dayId="day.id"></Page>
+        <page id="editor" :dayId="day.id"></page>
       </div>
     </div>
+    <panel id="calendar" title="Pick a date">
+      <!-- <div class="buttons">
+        <a id="yesterday" href="#" class="button" @click.prevent="jumpToYesterday">Yesterday</a>
+        <a id="today" href="#" class="button" @click.prevent="jumpToToday">Today</a>
+        
+        <a id="tomorrow" href="#" class="button" @click.prevent="jumpToTomorrow">Tomorrow</a>
+      </div>-->
+      <month></month>
+    </panel>
+    <panel id="settings" title="Settings"></panel>
   </div>
 </template>
 
@@ -18,7 +28,9 @@ import moment from 'moment'
 import axios from 'axios'
 import auth0 from 'auth0-js'
 import Swipe from './modules/swipe'
-import Page from './components/Page.vue'
+import month from './components/Month'
+import page from './components/Page'
+import panel from './components/Panel'
 // import Component from './components/Component.vue'
 
 export default {
@@ -28,11 +40,14 @@ export default {
       swipe: null,
       user: {},
       webAuth: null,
+      isStandalone: localStorage.getItem('isStandalone'),
     }
   },
   components: {
     // Component,
-    Page,
+    month,
+    page,
+    panel,
   },
   computed: {
     days() {
@@ -41,11 +56,13 @@ export default {
     currentDayId() {
       return this.$store.state.currentDay.format('YYYYMMDD')
     },
-    today() {
-      return this.$store.state.today.format('YYYYMMDD')
+    activePanel() {
+      return this.$store.state.activePanel
     },
   },
   beforeMount() {
+    if (window.location.search) localStorage.setItem('isStandalone', true)
+
     this.webAuth = new auth0.WebAuth({
       domain: 'todayapp.eu.auth0.com',
       clientID: 'Zz9d2EICFe1981TC5Ym7dfva9Y1jECmP',
@@ -60,17 +77,16 @@ export default {
     let that = this
 
     this.$store.commit('addDay', this.currentDayId)
-    this.$store.dispatch('gotoDay', { id: this.currentDayId })
 
     document
       .querySelector('.windows')
       .addEventListener('swipeLeft', function() {
-        that.gotoNextDay()
+        if (!that.activePanel) that.gotoNextDay()
       })
     document
       .querySelector('.windows')
       .addEventListener('swipeRight', function() {
-        that.gotoPrevDay()
+        if (!that.activePanel) that.gotoPrevDay()
       })
   },
   methods: {
@@ -84,9 +100,6 @@ export default {
     },
     gotoNextDay() {
       this.$store.dispatch('gotoDay', { step: 1 })
-    },
-    gotoToday() {
-      this.$store.dispatch('gotoDay', { today: true })
     },
 
     // ////////////////////////////////////////////////////////////
@@ -223,6 +236,7 @@ export default {
 body {
   margin: 0;
   padding: 0;
+  background-color: var(--accent);
 }
 [v-cloak] {
   display: none !important;
@@ -254,7 +268,7 @@ body {
   height: 100%;
   left: 0%;
   overflow: hidden;
-  position: absolute;
+  position: fixed;
   top: 0;
   width: 100%;
   transition: transform 0.3s;
@@ -287,7 +301,7 @@ h6 {
 /* Colour Palette */
 html {
   --front: #202020;
-  --back: #fff;
+  --back: #fafafa;
   --back--dark: #f2f2f2;
   --accent: #2be4a4;
   --accent--dark: #16ac78;

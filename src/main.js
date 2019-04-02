@@ -14,6 +14,7 @@ const store = new Vuex.Store({
     currentDay: moment(),
     days: {},
     token: null,
+    activePanel: '',
   },
   mutations: {
     addDay(state, newDateId) {
@@ -30,6 +31,10 @@ const store = new Vuex.Store({
       let tempDay = state.currentDay
       state.currentDay = ''
       state.currentDay = moment(id)
+      localStorage.setItem('current-date', this.date)
+    },
+    changePanel(state, panelId) {
+      this.state.activePanel = panelId
     },
     token(state, token) {
       state.token = token
@@ -71,6 +76,8 @@ const store = new Vuex.Store({
       if (!context.state[nextDayId]) {
         context.commit('addDay', nextDayId)
       }
+
+      this.state.activePanel = ''
     },
   },
 })
