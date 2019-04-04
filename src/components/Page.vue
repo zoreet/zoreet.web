@@ -1,7 +1,10 @@
 <template>
   <div :id="id" class="page" :class="{isLoading: isLoading}">
     <div class="header">
-      <div class="subtitle">{{ dateSubtitle }}</div>
+      <div class="subtitle">
+        {{ dateSubtitle }}
+        <span v-if="isToday">- Today</span>
+      </div>
       <h3 class="title">{{ dateTitle }}</h3>
     </div>
     <draggable v-model="tasks" @end="saveTasks" delay="200" class="content">
@@ -45,6 +48,9 @@ export default {
   computed: {
     isVisible() {
       return this.date.isSame(this.$store.state.currentDay, 'day')
+    },
+    isToday() {
+      return this.date.isSame(this.$store.state.today, 'day')
     },
     dateTitle() {
       let now = moment()
