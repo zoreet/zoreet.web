@@ -85,7 +85,6 @@ export default {
   },
   methods: {
     loadTasks() {
-      console.log('Loading tasks for', this.dayId)
       this.isLoading = true
       if (!navigator.onLine) {
         return
@@ -123,7 +122,6 @@ export default {
           }
 
           if (this.tasks.length && this.isVisible) {
-            console.log(this.dayId, 'gets focused')
             this.$nextTick(() => {
               this.focusedTask = this.tasks[this.tasks.length - 1].id
             })
@@ -143,7 +141,6 @@ export default {
         })
     },
     saveTasks() {
-      console.log('Saving tasks for', this.dayId)
       if (!navigator.onLine) {
         return
       }
