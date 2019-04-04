@@ -1,5 +1,5 @@
 <template>
-  <div id="app" v-cloak>
+  <div id="app" v-cloak :class="{darkMode: darkMode}">
     <div class="windows">
       <div
         v-for="day in days"
@@ -20,8 +20,16 @@
       <month></month>
     </panel>
     <panel id="settings" title="Settings">
-      <div id="user--email">{{ user.email }}</div>
-      <a href="#" class="button" @click.prevent="logout">Log out</a>
+      <div>
+        <h4>Theme</h4>
+        <btn @action="switchTheme('')">Ligth</btn>
+        <btn @action="switchTheme('dark')">Dark</btn>
+      </div>
+      <div>
+        <h4>Logged in as</h4>
+        <div id="user--email">{{ user.email }}</div>
+        <btn @action="logout">Log out</btn>
+      </div>
     </panel>
   </div>
 </template>
@@ -45,6 +53,7 @@ export default {
       webAuth: null,
       isStandalone: localStorage.getItem('isStandalone'),
       loggedIn: false,
+      darkMode: false,
     }
   },
   components: {
@@ -74,9 +83,11 @@ export default {
       clientID: 'Zz9d2EICFe1981TC5Ym7dfva9Y1jECmP',
       responseType: 'token id_token',
       scope: 'openid email profile',
-      redirectUri: window.location.origin + '/app/',
+      redirectUri: window.location.origin + '/',
       audience: 'todayapp',
     })
+
+    this.darkMode = localStorage.getItem('darkMode')
 
     if (window.navigator.onLine) {
       this.checkLogin()
@@ -132,6 +143,10 @@ export default {
           this.gotoPrevDay()
         }
       }
+    },
+    switchTheme(flag) {
+      this.darkMode = flag
+      localStorage.setItem('darkMode', this.darkMode)
     },
     // ////////////////////////////////////////////////////////////
     //
@@ -319,7 +334,8 @@ h6 {
 }
 
 /* Colour Palette */
-html {
+#app {
+  /* light mode */
   --front: #202020;
   --back: #fafafa;
   --back--dark: #f2f2f2;
@@ -327,9 +343,29 @@ html {
   --accent--dark: #16ac78;
   --accent--text: #16ac78;
 }
+#app.darkMode {
+  /* dark mode */
+  --front: #fafafa;
+  --back: #202020;
+  --back--dark: #1c1c1c;
+  --accent: #2be4a4;
+  --accent--dark: #2be4a4;
+  --accent--text: #2be4a4;
+  background-color: #000;
+}
 
 textarea {
   font-size: 16px;
   width: 100%;
+}
+
+#settings h4 {
+  margin-bottom: 8px;
+}
+#settings .content > div {
+  margin-bottom: 32px;
+}
+#user--email {
+  margin-bottom: 12px;
 }
 </style>

@@ -251,6 +251,10 @@ export default {
   padding-top: constant(safe-area-inset-top);
   padding-top: env(safe-area-inset-top);
 }
+.darkMode .header {
+  background-color: var(--back--dark);
+  color: var(--accent);
+}
 .title {
   font-size: 32px;
   font-weight: 700;

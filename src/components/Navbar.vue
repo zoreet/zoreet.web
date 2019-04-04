@@ -33,7 +33,7 @@ export default {
   display: flex;
   padding-bottom: constant(safe-area-inset-bottom);
   padding-bottom: env(safe-area-inset-bottom);
-  background: #f2f2f2;
+  background: var(--back--dark);
   width: 100%;
   display: flex;
   justify-content: space-between;

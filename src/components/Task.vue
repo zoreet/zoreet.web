@@ -129,6 +129,9 @@ export default {
   padding: 12px 16px;
   position: relative;
 }
+.darkMode .task {
+  border-bottom-color: var(--back--dark);
+}
 .task.active,
 .in-the-past .task {
   color: #757575;
@@ -160,6 +163,9 @@ export default {
   margin-right: 16px;
   position: relative;
   width: 30px;
+}
+.darkMode .checkbox {
+  border-color: #757575;
 }
 
 .task.active .checkbox {
