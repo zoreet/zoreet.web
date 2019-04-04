@@ -8,10 +8,29 @@ import moment from 'moment'
 Vue.config.productionTip = false
 Vue.use(Vuex)
 
+window.onfocus = function() {
+  let now = moment()
+  if (store.state.today.format('YYYYMMDD') !== now.format('YYYYMMDD')) {
+    store.commit('newToday', now)
+  }
+  if (
+    store.state.today.format('YYYYMMDD') !==
+    store.state.currentDay.format('YYYYMMDD')
+  ) {
+    store.dispatch('gotoDay', { today: true })
+  }
+}
+
+let currentDayId = localStorage.getItem('currentDayId')
+if (!currentDayId) {
+  currentDayId = moment().format('YYYYMMDD')
+  localStorage.setItem('currentDayId', currentDayId)
+}
+
 const store = new Vuex.Store({
   state: {
     today: moment(),
-    currentDay: moment(),
+    currentDay: moment(currentDayId, 'YYYYMMDD'),
     days: {},
     token: null,
     activePanel: '',
@@ -27,11 +46,15 @@ const store = new Vuex.Store({
         }
       }
     },
+    newToday(state, date) {
+      state.today = ''
+      state.today = date
+    },
     gotoDay(state, id) {
       let tempDay = state.currentDay
       state.currentDay = ''
       state.currentDay = moment(id)
-      localStorage.setItem('current-date', this.date)
+      localStorage.setItem('currentDayId', id)
     },
     changePanel(state, panelId) {
       this.state.activePanel = panelId

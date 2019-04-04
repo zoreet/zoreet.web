@@ -48,9 +48,9 @@ function handleTouchMove(evt) {
       }
     } else {
       if (yDiff > 0) {
-        console.log('swipeup')
+        // console.log('swipeup')
       } else {
-        console.log('swipedown')
+        // console.log('swipedown')
       }
     }
   }

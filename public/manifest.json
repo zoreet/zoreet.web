@@ -1,6 +1,6 @@
 {
-  "name": "www-cli",
-  "short_name": "www-cli",
+  "name": "zoreet",
+  "short_name": "zoreet",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",
@@ -16,5 +16,5 @@
   "start_url": "./?standalone=1",
   "display": "standalone",
   "background_color": "#000000",
-  "theme_color": "#4DBA87"
+  "theme_color": "#2be4a4"
 }

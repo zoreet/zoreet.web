@@ -55,7 +55,9 @@ export default {
 }
 .panel.active {
   box-shadow: 0 0 12px 2px rgba(0, 0, 0, 0.2);
-  top: 20px;
+  top: 95px;
+  margin-top: constant(safe-area-inset-top);
+  margin-top: env(safe-area-inset-top);
 }
 
 .header {

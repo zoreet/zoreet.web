@@ -10,27 +10,30 @@
         <page id="editor" :dayId="day.id"></page>
       </div>
     </div>
+    <navbar></navbar>
     <panel id="calendar" title="Pick a date">
       <!-- <div class="buttons">
         <a id="yesterday" href="#" class="button" @click.prevent="jumpToYesterday">Yesterday</a>
         <a id="today" href="#" class="button" @click.prevent="jumpToToday">Today</a>
-        
         <a id="tomorrow" href="#" class="button" @click.prevent="jumpToTomorrow">Tomorrow</a>
       </div>-->
       <month></month>
     </panel>
-    <panel id="settings" title="Settings"></panel>
+    <panel id="settings" title="Settings">
+      <div id="user--email">{{ user.email }}</div>
+      <a href="#" class="button" @click.prevent="logout">Log out</a>
+    </panel>
   </div>
 </template>
 
 <script>
-import moment from 'moment'
-import axios from 'axios'
 import auth0 from 'auth0-js'
-import Swipe from './modules/swipe'
+import btn from './components/Button'
 import month from './components/Month'
+import navbar from './components/Navbar'
 import page from './components/Page'
 import panel from './components/Panel'
+import Swipe from './modules/swipe' // keep this, I'm using it
 // import Component from './components/Component.vue'
 
 export default {
@@ -41,11 +44,14 @@ export default {
       user: {},
       webAuth: null,
       isStandalone: localStorage.getItem('isStandalone'),
+      loggedIn: false,
     }
   },
   components: {
     // Component,
+    btn,
     month,
+    navbar,
     page,
     panel,
   },
@@ -71,10 +77,21 @@ export default {
       redirectUri: window.location.origin,
       audience: 'todayapp',
     })
-    this.checkLogin()
+
+    if (window.navigator.onLine) {
+      this.checkLogin()
+    }
   },
   mounted() {
     let that = this
+
+    document.addEventListener(
+      'touchmove',
+      function(e) {
+        if (e.target == document.body) e.preventDefault()
+      },
+      { passive: false }
+    )
 
     this.$store.commit('addDay', this.currentDayId)
 
@@ -132,7 +149,6 @@ export default {
 
         if (token && expiresAt && now < expiresAt) {
           this.user = JSON.parse(localStorage.getItem('user'))
-          sessionStorage.setItem('activeSession', true)
 
           this.$store.commit('token', token)
           this.scheduleRenewal(expiresIn)
@@ -216,7 +232,6 @@ export default {
       localStorage.removeItem('expires_at')
       localStorage.removeItem('user')
       localStorage.removeItem('user')
-      sessionStorage.removeItem('activeSession')
 
       // log out to Auth0 ( and if needed google, facebook or whatever id provider they used )
       let iframe = document.createElement('iframe')
@@ -246,41 +261,46 @@ body {
   -webkit-font-smoothing: antialiased;
   background-color: rgb(128, 128, 128);
   color: var(--front);
+  display: flex;
+  flex-direction: column;
   font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica,
     Arial, sans-serif;
   font-size: 16px;
-  height: 100%;
+  height: 100vh;
+  left: 0;
+  right: 0;
   overflow: hidden;
   position: fixed;
-  width: 100%;
+  top: 0;
+  width: 100vw;
 }
 .windows {
-  position: fixed;
-  left: 0;
-  top: 0;
+  flex: 1 0 auto;
+  height: calc(100% - 86px);
+  overflow: hidden;
+  position: relative;
   width: 100%;
-  height: 100%;
+  left: 0px;
 }
 
 .window {
   background-color: #fff;
-  flex: 1 1 auto;
   height: 100%;
-  left: 0%;
+  left: 0;
   overflow: hidden;
   position: fixed;
   top: 0;
   width: 100%;
-  transition: transform 0.3s;
+  transition: transform 0.4s;
 }
 .window--past {
-  transform: translateX(calc(-100% - 100px));
+  transform: translateX(calc(-100vw - 100px));
 }
 .window--future {
-  transform: translateX(calc(100% + 100px));
+  transform: translateX(calc(100vw + 100px));
 }
 
-* {
+body * {
   box-sizing: border-box;
   -webkit-overflow-scrolling: touch;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);

@@ -17,13 +17,14 @@
     <div class="days">
       <div
         v-for="day in days"
+        :key="day.id"
         class="day"
         :class="{
             active: ( day.date == activeDayId ),
             today: ( day.date == todayId )
           }"
       >
-        <span class="day--label" @click="changeDate(day.date)" v-if="day.id">{{day.id}}</span>
+        <span class="day--label" @click="changeDate(day.date)" v-if="day.id > 0">{{day.id}}</span>
       </div>
     </div>
   </div>
@@ -44,6 +45,9 @@ export default {
     currentDay() {
       return this.$store.state.currentDay
     },
+    dateId() {
+      return moment(this.date.format('YYYYMMDD'))
+    },
     activeDayId() {
       return this.$store.state.currentDay.format('YYYYMMDD')
     },
@@ -54,7 +58,9 @@ export default {
       return this.date.format('MMMM YYYY')
     },
     lastDay() {
-      let day = this.date.endOf('month').format('DD')
+      let day = moment(this.dateId)
+        .endOf('month')
+        .format('DD')
 
       day = parseInt(day)
 
@@ -68,22 +74,23 @@ export default {
   },
   methods: {
     generateData() {
-      // debugger
+      let tempDate = moment(this.dateId)
       let days = [...Array(this.lastDay).keys()]
       this.days = days.map(day => {
         return {
           id: day + 1,
-          date: this.date.set('date', day + 1).format('YYYYMMDD'),
+          date: tempDate.set('date', day + 1).format('YYYYMMDD'),
         }
       })
       // hack so that I can align the first day so it coresponds to the right day of the week
       let i =
-        moment(this.days[0].id)
+        moment(this.days[0].date)
           .startOf('month')
           .isoWeekday() - 1
+      // debugger
       for (; i > 0; i--) {
         this.days.unshift({
-          id: 0,
+          id: 0 - i,
           date: null,
         })
       }

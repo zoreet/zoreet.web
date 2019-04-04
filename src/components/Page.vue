@@ -4,15 +4,9 @@
       <div class="subtitle">{{ dateSubtitle }}</div>
       <h3 class="title">{{ dateTitle }}</h3>
     </div>
-    <navbar></navbar>
-    <draggable
-      v-model="tasks"
-      @end="saveTasks"
-      :options="{handle: '.task', delay: 200}"
-      class="content"
-    >
+    <draggable v-model="tasks" @end="saveTasks" delay="200" class="content">
       <task
-        v-for="(taskItem, index) in tasks"
+        v-for="taskItem in tasks"
         :key="taskItem.id"
         v-bind:task.sync="taskItem"
         @addEmptyTaskAfter="addEmptyTaskAfter"
@@ -29,7 +23,6 @@ import moment from 'moment'
 import axios from 'axios'
 import draggable from 'vuedraggable'
 import task from './Task'
-import navbar from './Navbar'
 
 export default {
   name: 'Page',
@@ -40,7 +33,6 @@ export default {
   components: {
     task,
     draggable,
-    navbar,
   },
   data() {
     return {
@@ -71,12 +63,16 @@ export default {
     },
   },
   mounted() {
-    if (this.isVisible) this.loadTasks()
+    if (this.isVisible) {
+      this.loadTasks()
+    }
 
-    this.$store.subscribe((mutation, state) => {
+    this.$store.subscribe(mutation => {
       switch (mutation.type) {
         case 'gotoDay':
-          if (this.isVisible) this.loadTasks()
+          if (this.isVisible) {
+            this.loadTasks()
+          }
           break
       }
     })
@@ -94,7 +90,6 @@ export default {
         })
         .then(response => {
           let rawTasks = response.data.day.tasks
-          let tasks
 
           this.isLoading = false
           this.error = ''
@@ -104,7 +99,7 @@ export default {
           } catch (e) {
             this.tasks = rawTasks
               .replace(/<br>/g, '')
-              .replace(/\<div class\=\"\s*[a-z]*\s*\"\>\s*\<\/div\>/g, '') // empty divs
+              .replace(/<div class="\s*[a-z]*\s*">\s*<\/div>/g, '') // empty divs
               .split('</div>')
               .filter(task => task.length)
               .map((task, index) => {
@@ -132,7 +127,6 @@ export default {
         })
         .catch(error => {
           console.log(error)
-          let code = error.response.status
           let message = error.response.data.error.message
 
           if (message.indexOf('expired') >= 0) {
@@ -154,11 +148,10 @@ export default {
           { tasks: JSON.stringify(this.tasks) },
           { headers: { Authorization: 'Bearer ' + this.$store.state.token } }
         )
-        .then(response => {
+        .then(() => {
           this.error = ''
         })
         .catch(error => {
-          let code = error.response.status
           let message = error.response.data.error.message
 
           if (message.indexOf('expired') >= 0) {
@@ -168,7 +161,7 @@ export default {
           this.error = message
         })
     },
-    addEmptyTask(task) {
+    addEmptyTask() {
       let newTask = {
         id: Date.now(),
         title: '',
@@ -247,10 +240,13 @@ export default {
   flex: 0 0 auto;
   flex-direction: column;
   height: 107px;
+  box-sizing: content-box;
   justify-content: center;
   margin-bottom: 0;
   padding: 0 16px;
   text-decoration: none;
+  padding-top: constant(safe-area-inset-top);
+  padding-top: env(safe-area-inset-top);
 }
 .title {
   font-size: 32px;
@@ -268,7 +264,9 @@ export default {
   flex: 1 1 auto;
   justify-content: flex-start;
   overflow: scroll;
-  padding: 20px 0;
+  padding: 20px 0 40px;
+  margin-bottom: constant(safe-area-inset-bottom);
+  margin-bottom: env(safe-area-inset-bottom);
 }
 
 .isLoading .content > * {
