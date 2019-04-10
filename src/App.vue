@@ -281,13 +281,12 @@ body {
   font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica,
     Arial, sans-serif;
   font-size: 16px;
-  height: 100vh;
+  bottom: 0;
   left: 0;
   right: 0;
   overflow: hidden;
   position: fixed;
   top: 0;
-  width: 100vw;
 }
 .windows {
   flex: 1 0 auto;
