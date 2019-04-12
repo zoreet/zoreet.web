@@ -7,6 +7,15 @@
       </div>
       <h3 class="title">{{ dateTitle }}</h3>
     </div>
+    <div class="empty-state" v-if="this.tasks.length == 0">
+      <div>
+        <h3 class="empty-state__title">Start planning your day</h3>
+        <p class="empty-state__subtitle">You don't have any tasks added for this day</p>
+        <div>
+          <btn @action="addEmptyTask">Add first task</btn>
+        </div>
+      </div>
+    </div>
     <draggable v-model="tasks" @end="saveTasks" delay="200" class="content">
       <task
         v-for="taskItem in tasks"
@@ -26,6 +35,7 @@ import moment from 'moment'
 import axios from 'axios'
 import draggable from 'vuedraggable'
 import task from './Task'
+import btn from './Button'
 
 export default {
   name: 'Page',
@@ -34,6 +44,7 @@ export default {
     id: String,
   },
   components: {
+    btn,
     task,
     draggable,
   },
@@ -125,8 +136,6 @@ export default {
             this.$nextTick(() => {
               this.focusedTask = this.tasks[this.tasks.length - 1].id
             })
-          } else if (this.tasks.length == 0) {
-            this.addEmptyTask()
           }
         })
         .catch(error => {
@@ -307,5 +316,18 @@ export default {
   font-weight: 700;
   margin-bottom: 10px;
   margin-top: 32px;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-around;
+  text-align: center;
+}
+.empty-state__subtitle {
+  font-size: 14px;
+  margin: 4px 0 24px;
+  opacity: 0.6;
 }
 </style>
