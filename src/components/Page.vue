@@ -7,7 +7,7 @@
       </div>
       <h3 class="title">{{ dateTitle }}</h3>
     </div>
-    <div class="empty-state" v-if="this.tasks.length == 0">
+    <div class="empty-state content" v-if="this.tasks.length == 0">
       <div>
         <h3 class="empty-state__title">Start planning your day</h3>
         <p class="empty-state__subtitle">You don't have any tasks added for this day</p>
@@ -16,7 +16,7 @@
         </div>
       </div>
     </div>
-    <draggable v-model="tasks" @end="saveTasks" delay="200" class="content">
+    <draggable v-else v-model="tasks" @end="saveTasks" delay="200" class="content">
       <task
         v-for="taskItem in tasks"
         :key="taskItem.id"
@@ -321,7 +321,6 @@ export default {
 .empty-state {
   display: flex;
   flex-direction: column;
-  height: 100%;
   justify-content: space-around;
   text-align: center;
 }
