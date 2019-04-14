@@ -164,6 +164,7 @@ export default {
 }
 .days.weekdays {
   border-bottom: 1px solid #eaeaea;
+  opacity: 0.7;
 }
 .weekdays .day {
   font-size: 10px;
