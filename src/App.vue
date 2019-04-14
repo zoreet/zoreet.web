@@ -34,6 +34,10 @@
         <div id="user--email">{{ user.email }}</div>
         <btn @action="logout">Log out</btn>
       </div>
+      <div class="version">
+        You're using version
+        <strong>v3.0.3</strong> of zoreet.com
+      </div>
     </panel>
   </div>
 </template>
@@ -386,5 +390,9 @@ textarea {
 
 .banner.info {
   text-align: center;
+}
+
+.version {
+  font-size: 12px;
 }
 </style>
