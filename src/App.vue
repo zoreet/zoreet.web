@@ -1,5 +1,9 @@
 <template>
   <div id="app" v-cloak :class="{darkMode: darkMode}">
+    <div class="banner info" id="refresh" style="display: none" @click.prevent="refresh">
+      <strong>A new version is available.</strong>
+      <br>Press here to get the latest changes
+    </div>
     <div class="windows">
       <div
         v-for="day in days"
@@ -147,6 +151,9 @@ export default {
     switchTheme(flag) {
       this.darkMode = flag
       localStorage.setItem('darkMode', this.darkMode)
+    },
+    refresh() {
+      window.location.reload()
     },
     // ////////////////////////////////////////////////////////////
     //
@@ -366,5 +373,18 @@ textarea {
 }
 #user--email {
   margin-bottom: 12px;
+}
+
+.banner {
+  position: fixed;
+  z-index: 999;
+  padding: 12px 16px;
+  background: #dedede;
+  font-size: 12px;
+  width: 100%;
+}
+
+.banner.info {
+  text-align: center;
 }
 </style>

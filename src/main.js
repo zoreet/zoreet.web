@@ -2,8 +2,7 @@ import Vue from 'vue/dist/vue.js'
 import Vuex from 'vuex'
 import App from './App.vue'
 import moment from 'moment'
-
-// import './registerServiceWorker'
+import sw from './registerServiceWorker'
 
 Vue.config.productionTip = false
 Vue.use(Vuex)

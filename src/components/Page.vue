@@ -51,7 +51,7 @@ export default {
   data() {
     return {
       date: moment(this.dayId, 'YYYYMMDD'),
-      isLoading: false,
+      isLoading: true,
       focusedTask: 0,
       tasks: [],
     }
