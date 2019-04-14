@@ -1,5 +1,5 @@
 <template>
-  <a href="#" class="button" @click.prevent="action">
+  <a href="#" class="button" :class="{selected: selected}" @click.prevent="action">
     <slot></slot>
   </a>
 </template>
@@ -7,7 +7,9 @@
 <script>
 export default {
   name: 'Button',
-  props: {},
+  props: {
+    selected: Boolean,
+  },
   data() {
     return {}
   },
@@ -25,21 +27,30 @@ export default {
 <style scoped>
 .button {
   background-color: var(--back);
-  border: 1px solid;
   border-radius: 6px;
+  border: 1px solid;
   box-sizing: border-box;
   color: inherit;
   display: inline-block;
   font-size: 14px;
-  padding: 8px 12px 9px;
   margin: 2px 0;
+  padding: 8px 12px 9px;
   text-align: center;
   text-decoration: none;
 }
 .button + .button {
   margin-left: 10px;
 }
+.selected {
+  background-color: var(--accent);
+}
+
 .darkMode .button {
   border-color: #757575;
+}
+.darkMode .selected {
+  background-color: transparent;
+  border-color: var(--accent);
+  color: var(--accent);
 }
 </style>

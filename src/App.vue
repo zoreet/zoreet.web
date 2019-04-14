@@ -26,8 +26,8 @@
     <panel id="settings" title="Settings">
       <div>
         <h4>Theme</h4>
-        <btn @action="switchTheme('')">Ligth</btn>
-        <btn @action="switchTheme('dark')">Dark</btn>
+        <btn @action="switchTheme('')" :selected="!darkMode">Ligth</btn>
+        <btn @action="switchTheme('dark')" :selected="darkMode">Dark</btn>
       </div>
       <div>
         <h4>Logged in as</h4>
@@ -153,7 +153,7 @@ export default {
       }
     },
     switchTheme(flag) {
-      this.darkMode = flag
+      this.darkMode = flag ? true : false
       localStorage.setItem('darkMode', this.darkMode)
     },
     refresh() {
