@@ -45,6 +45,7 @@
 <script>
 import auth0 from 'auth0-js'
 import btn from './components/Button'
+import moment from 'moment'
 import month from './components/Month'
 import navbar from './components/Navbar'
 import page from './components/Page'
@@ -113,6 +114,15 @@ export default {
     )
 
     this.$store.commit('addDay', this.currentDayId)
+
+    let yesterdayId = moment(this.currentDayId)
+      .subtract(1, 'days')
+      .format('YYYYMMDD')
+    this.$store.commit('addDay', yesterdayId)
+    let tomorrowId = moment(this.currentDayId)
+      .add(1, 'days')
+      .format('YYYYMMDD')
+    this.$store.commit('addDay', tomorrowId)
 
     document
       .querySelector('.windows')
