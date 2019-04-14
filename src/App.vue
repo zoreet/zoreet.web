@@ -95,7 +95,7 @@ export default {
       audience: 'todayapp',
     })
 
-    this.darkMode = localStorage.getItem('darkMode')
+    this.darkMode = JSON.parse(localStorage.getItem('darkMode')) ? true : false
 
     if (window.navigator.onLine) {
       this.checkLogin()
