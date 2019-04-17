@@ -167,7 +167,7 @@ export default {
       localStorage.setItem('darkMode', this.darkMode)
     },
     refresh() {
-      window.location.reload()
+      window.location.reload(true)
     },
     // ////////////////////////////////////////////////////////////
     //
