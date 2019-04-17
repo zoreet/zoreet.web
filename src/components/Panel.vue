@@ -58,6 +58,7 @@ export default {
   top: 95px;
   margin-top: constant(safe-area-inset-top);
   margin-top: env(safe-area-inset-top);
+  z-index: 999;
 }
 
 .header {

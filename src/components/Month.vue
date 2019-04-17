@@ -119,9 +119,9 @@ export default {
 <style scoped>
 .month {
   background: var(--back);
-  border: 1px solid;
+  border: 1px solid var(--text--secondary);
   border-radius: 10px;
-  color: var(--front);
+  color: var(--text);
   padding: 8px 0;
 }
 .header {
@@ -163,7 +163,7 @@ export default {
   grid-template-columns: repeat(7, 1fr);
 }
 .days.weekdays {
-  border-bottom: 1px solid #eaeaea;
+  border-bottom: 1px solid var(--text--secondary);
   opacity: 0.7;
 }
 .weekdays .day {
@@ -189,17 +189,20 @@ export default {
   width: 28px;
 }
 .day--label:hover {
-  background-color: #eaeaea;
+  background-color: var(--back--dark);
 }
 .today .day--label {
   font-weight: bold;
+  color: var(--accent);
 }
 .day.active .day--label {
-  background-color: var(--front);
+  background-color: var(--text);
+  color: var(--text);
+}
+.darkMode .day.active .day--label {
   color: var(--back);
 }
 .today.active .day--label {
   background-color: var(--accent);
-  color: var(--front);
 }
 </style>

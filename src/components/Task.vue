@@ -121,7 +121,7 @@ export default {
 <style scoped>
 .task {
   align-items: center;
-  border-bottom: 1px solid #e3e3e3;
+  border-bottom: 1px solid var(--text--secondary);
   display: flex;
   font-size: 16px;
   line-height: 20px;
@@ -134,13 +134,13 @@ export default {
 }
 .task.active,
 .in-the-past .task {
-  color: #757575;
+  color: var(--text--secondary);
 }
 .in-the-past .task.active {
   color: inherit;
 }
 .task.sortable-ghost {
-  background-color: #f2f2f2;
+  background-color: var(--back--dark);
 }
 .task.sortable-drag {
   background-color: var(--back);
@@ -153,7 +153,7 @@ export default {
 }
 
 .checkbox {
-  border: 1px solid #d1d1d6;
+  border: 1px solid var(--text--secondary);
   border-radius: 6px;
   box-sizing: border-box;
   cursor: pointer;
@@ -163,9 +163,6 @@ export default {
   margin-right: 16px;
   position: relative;
   width: 30px;
-}
-.darkMode .checkbox {
-  border-color: #757575;
 }
 
 .task.active .checkbox {
@@ -184,12 +181,6 @@ export default {
   transform: rotate(-45deg);
   width: 14px;
 }
-.add-icon {
-  margin-right: 13px;
-}
-.add-icon #icon {
-  fill: #d1d1d6;
-}
 
 .input {
   background-color: transparent;
@@ -207,7 +198,7 @@ export default {
   width: 100%;
 }
 .input:focus {
-  color: var(--front);
+  color: var(--text);
   outline: none;
 }
 .todos:not(.in-the-past) .input::-webkit-input-placeholder {

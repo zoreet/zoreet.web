@@ -297,7 +297,7 @@ body {
 #app {
   -webkit-font-smoothing: antialiased;
   background-color: rgb(128, 128, 128);
-  color: var(--front);
+  color: var(--text);
   display: flex;
   flex-direction: column;
   font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica,
@@ -342,7 +342,7 @@ body * {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 ::selection {
-  background: #2be4a4;
+  background: #5ceea7;
 }
 h1,
 h2,
@@ -357,21 +357,21 @@ h6 {
 /* Colour Palette */
 #app {
   /* light mode */
-  --front: #202020;
-  --back: #fafafa;
+  --text: #161e35;
+  --text--secondary: #e3e3e3;
+  --back: #fff;
   --back--dark: #f2f2f2;
   --accent: #2be4a4;
-  --accent--dark: #16ac78;
-  --accent--text: #16ac78;
+  --accent--text: #1e2c4a;
 }
 #app.darkMode {
   /* dark mode */
-  --front: #fafafa;
-  --back: #202020;
-  --back--dark: #1c1c1c;
-  --accent: #2be4a4;
-  --accent--dark: #2be4a4;
-  --accent--text: #2be4a4;
+  --text: #fafafa;
+  --text--secondary: #63709f;
+  --back: #1e2b4c;
+  --back--dark: #161e35;
+  --accent: #24e3ae;
+  --accent--text: #24e3ae;
   background-color: #000;
 }
 

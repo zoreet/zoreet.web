@@ -43,14 +43,14 @@ export default {
 }
 .selected {
   background-color: var(--accent);
+  color: var(--text);
+  border-color: transparent;
 }
 
-.darkMode .button {
-  border-color: #757575;
+.darkMode .button:not(.selected) {
+  border-color: var(--text--secondary);
 }
 .darkMode .selected {
-  background-color: transparent;
-  border-color: var(--accent);
-  color: var(--accent);
+  color: var(--back);
 }
 </style>
