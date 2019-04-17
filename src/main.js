@@ -20,10 +20,16 @@ window.onfocus = function() {
   }
 }
 
-let currentDayId = localStorage.getItem('currentDayId')
-if (!currentDayId) {
-  currentDayId = moment().format('YYYYMMDD')
-  localStorage.setItem('currentDayId', currentDayId)
+// temporary cleanup for versions up to and including v3.0.3
+localStorage.removeItem('currentDayId')
+
+let currentDayId = moment().format('YYYYMMDD')
+
+let lastViewedDay = JSON.parse(localStorage.getItem('lastViewedDay'))
+if (lastViewedDay && lastViewedDay.when && lastViewedDay.id) {
+  if (lastViewedDay.when == currentDayId) {
+    currentDayId = lastViewedDay.id
+  }
 }
 
 const store = new Vuex.Store({
@@ -51,9 +57,15 @@ const store = new Vuex.Store({
     },
     gotoDay(state, id) {
       let tempDay = state.currentDay
+      let lastViewedDay = JSON.stringify({
+        id: id,
+        when: state.today.format('YYYYMMDD'),
+      })
+
       state.currentDay = ''
       state.currentDay = moment(id)
-      localStorage.setItem('currentDayId', id)
+
+      localStorage.setItem('lastViewedDay', lastViewedDay)
     },
     changePanel(state, panelId) {
       this.state.activePanel = panelId
