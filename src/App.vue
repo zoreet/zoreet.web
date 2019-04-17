@@ -357,12 +357,12 @@ h6 {
 /* Colour Palette */
 #app {
   /* light mode */
-  --text: #161e35;
+  --text: #1e2c4a;
   --text--secondary: #e3e3e3;
   --back: #fff;
   --back--dark: #f2f2f2;
   --accent: #2be4a4;
-  --accent--text: #1e2c4a;
+  --accent--text: #0d067c;
 }
 #app.darkMode {
   /* dark mode */
