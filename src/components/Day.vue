@@ -1,5 +1,5 @@
 <template>
-  <div :id="id" class="page" :class="{isLoading: isLoading}">
+  <div :id="id" class="day" :class="{isLoading: isLoading}">
     <div class="header">
       <div class="subtitle">
         {{ dateSubtitle }}
@@ -38,7 +38,7 @@ import task from './Task'
 import btn from './Button'
 
 export default {
-  name: 'Page',
+  name: 'Day',
   props: {
     dayId: String,
     id: String,
@@ -228,7 +228,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.page {
+.day {
   background-color: var(--back);
   display: flex;
   flex-direction: column;

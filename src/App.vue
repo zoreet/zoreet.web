@@ -11,7 +11,7 @@
         class="window"
         :class="{'window--past': day.id - currentDayId < 0, 'window--future': day.id - currentDayId > 0, 'window--current': day.id == currentDayId }"
       >
-        <page id="editor" :dayId="day.id"></page>
+        <day id="editor" :dayId="day.id"></day>
       </div>
     </div>
     <navbar></navbar>
@@ -48,7 +48,7 @@ import btn from './components/Button'
 import moment from 'moment'
 import month from './components/Month'
 import navbar from './components/Navbar'
-import page from './components/Page'
+import day from './components/Day'
 import panel from './components/Panel'
 import Swipe from './modules/swipe' // keep this, I'm using it
 // import Component from './components/Component.vue'
@@ -70,7 +70,7 @@ export default {
     btn,
     month,
     navbar,
-    page,
+    day,
     panel,
   },
   computed: {
