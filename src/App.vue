@@ -237,8 +237,9 @@ export default {
     scheduleRenewal(expiresIn) {
       if (!expiresIn) return
 
+      let that = this
       window.setTimeout(() => {
-        this.silentLogin()
+        that.silentLogin()
       }, expiresIn)
     },
     saveLoginData(result) {
