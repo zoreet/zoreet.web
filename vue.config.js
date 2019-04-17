@@ -4,5 +4,8 @@ module.exports = {
   outputDir: 'docs',
   pwa: {
     appleMobileWebAppStatusBarStyle: 'black',
+    workboxOptions: {
+      skipWaiting: true,
+    },
   },
 }
