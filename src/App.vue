@@ -394,7 +394,7 @@ textarea {
   position: fixed;
   z-index: 999;
   padding: 12px 16px;
-  background: #dedede;
+  background: var(--back);
   font-size: 12px;
   width: 100%;
 }
