@@ -14,10 +14,12 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.387ac67d1a64aa0a01c8f51748b29150.js"
+  "/precache-manifest.a77c2a4f0c262cc5571f58a21ec1dfd4.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "zoreet"});
+
+workbox.skipWaiting();
 
 /**
  * The workboxSW.precacheAndRoute() method efficiently caches and responds to
