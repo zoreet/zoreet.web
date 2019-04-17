@@ -141,11 +141,6 @@ export default {
         .catch(error => {
           console.log(error)
           let message = error.response.data.error.message
-
-          if (message.indexOf('expired') >= 0) {
-            this.silentLogin()
-          }
-
           this.error = message
         })
     },
@@ -165,11 +160,6 @@ export default {
         })
         .catch(error => {
           let message = error.response.data.error.message
-
-          if (message.indexOf('expired') >= 0) {
-            this.silentLogin()
-          }
-
           this.error = message
         })
     },
