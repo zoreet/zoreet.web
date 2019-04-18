@@ -16,16 +16,18 @@
         </div>
       </div>
     </div>
-    <draggable v-else v-model="tasks" @end="saveTasks" delay="200" class="content">
-      <task
-        v-for="taskItem in tasks"
-        :key="taskItem.id"
-        v-bind:task.sync="taskItem"
-        @addEmptyTaskAfter="addEmptyTaskAfter"
-        @updateTask="updateTask"
-        @removeTask="removeTask"
-        :autofocus="taskItem.id == focusedTask"
-      ></task>
+    <draggable v-else v-model="tasks" @end="onDragEnd" delay="200" class="content">
+      <transition-group name="reorder-list">
+        <task
+          v-for="taskItem in tasks"
+          :key="taskItem.id"
+          v-bind:task.sync="taskItem"
+          @addEmptyTaskAfter="addEmptyTaskAfter"
+          @updateTask="updateTask"
+          @removeTask="removeTask"
+          :autofocus="taskItem.id == focusedTask"
+        ></task>
+      </transition-group>
     </draggable>
   </div>
 </template>
@@ -71,12 +73,6 @@ export default {
     },
     dateSubtitle() {
       return this.date.format('dddd')
-    },
-    doneTasksTitle() {
-      return 'Done tasks'
-    },
-    unfinishedTasksTitle() {
-      return 'Unfinished tasks'
     },
   },
   mounted() {
@@ -132,6 +128,8 @@ export default {
               .filter(task => task.title.length)
           }
 
+          this.sortTasks()
+
           if (this.tasks.length && this.isVisible) {
             this.$nextTick(() => {
               this.focusedTask = this.tasks[this.tasks.length - 1].id
@@ -149,6 +147,8 @@ export default {
         return
       }
 
+      this.sortTasks()
+
       axios
         .post(
           'https://api.zoreet.com/days/' + this.dayId,
@@ -162,6 +162,36 @@ export default {
           let message = error.response.data.error.message
           this.error = message
         })
+    },
+    sortTasks() {
+      this.tasks = this.tasks.sort(function(b, a) {
+        if (a.done && !b.done) {
+          return -1
+        }
+
+        return 0
+      })
+    },
+    onDragEnd(event) {
+      let index = event.newIndex
+      let movedTask = this.tasks[index]
+      let prevTask = this.tasks[index - 1]
+      let nextTask = this.tasks[index + 1]
+
+      if (index == 0 && movedTask.done == true && nextTask.done == false) {
+        movedTask.done = false
+      } else if (
+        index == this.tasks.length - 1 &&
+        movedTask.done == false &&
+        prevTask.done == true
+      ) {
+        movedTask.done = true
+      } else if (
+        prevTask.done == nextTask.done &&
+        prevTask.done !== movedTask.done
+      ) {
+        movedTask.done = prevTask.done
+      }
     },
     addEmptyTask() {
       let newTask = {
@@ -318,5 +348,9 @@ export default {
   font-size: 14px;
   margin: 4px 0 24px;
   opacity: 0.6;
+}
+
+.reorder-list-move {
+  transition: transform 0.3s;
 }
 </style>
