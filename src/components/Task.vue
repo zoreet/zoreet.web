@@ -1,5 +1,5 @@
 <template>
-  <div class="task" :class="{active: task.done, focused: autofocus}">
+  <div class="task" :class="{active: task.done, focused: autofocus, important: important}">
     <div class="checkbox" @click="toggleTask"></div>
     <textarea
       class="input"
@@ -25,6 +25,7 @@ export default {
     task: Object,
     dayId: String,
     autofocus: Boolean,
+    important: Boolean,
   },
   data() {
     return {
@@ -133,10 +134,10 @@ export default {
   border-bottom-color: var(--back--dark);
 }
 .task.active,
-.in-the-past .task {
+.task:not(.important) {
   color: var(--text--secondary);
 }
-.in-the-past .task.active {
+.task.important {
   color: inherit;
 }
 .task.sortable-ghost {

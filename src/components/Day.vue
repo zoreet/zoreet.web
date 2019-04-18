@@ -22,6 +22,7 @@
           v-for="taskItem in tasks"
           :key="taskItem.id"
           v-bind:task.sync="taskItem"
+          :important="(isPast && taskItem.done == true) || (!isPast && taskItem.done == false)"
           @addEmptyTaskAfter="addEmptyTaskAfter"
           @updateTask="updateTask"
           @removeTask="removeTask"
