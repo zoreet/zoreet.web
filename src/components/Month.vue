@@ -197,7 +197,7 @@ export default {
 }
 .day.active .day--label {
   background-color: var(--text);
-  color: var(--text);
+  color: var(--back);
 }
 .darkMode .day.active .day--label {
   color: var(--back);
