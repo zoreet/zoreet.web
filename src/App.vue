@@ -9,7 +9,7 @@
         v-for="day in days"
         :key="day.id"
         class="window"
-        :class="{'window--past': day.id - currentDayId < 0, 'window--future': day.id - currentDayId > 0, 'window--current': day.id == currentDayId }"
+        :class="{'window--current': day.id == currentDayId }"
       >
         <day id="editor" :dayId="day.id"></day>
       </div>
@@ -328,11 +328,12 @@ body {
   top: 0;
   width: 100%;
   transition: transform 0.4s;
-}
-.window--past {
   transform: translateX(calc(-100vw - 100px));
 }
-.window--future {
+.window--current {
+  transform: translateX(0);
+}
+.window--current ~ .window {
   transform: translateX(calc(100vw + 100px));
 }
 
