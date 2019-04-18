@@ -48,8 +48,8 @@ export default {
   },
   components: {
     btn,
-    task,
     draggable,
+    task,
   },
   data() {
     return {
@@ -111,7 +111,7 @@ export default {
           let rawTasks = response.data.day.tasks
 
           this.isLoading = false
-          this.error = ''
+          this.$store.commit('errorMessage', '')
 
           try {
             this.tasks = JSON.parse(rawTasks)
@@ -144,9 +144,8 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error)
           let message = error.response.data.error.message
-          this.error = message
+          this.$store.commit('errorMessage', message)
         })
     },
     saveTasks() {
@@ -163,11 +162,11 @@ export default {
           { headers: { Authorization: 'Bearer ' + this.$store.state.token } }
         )
         .then(() => {
-          this.error = ''
+          this.$store.commit('errorMessage', '')
         })
         .catch(error => {
           let message = error.response.data.error.message
-          this.error = message
+          this.$store.commit('errorMessage', message)
         })
     },
     sortTasks() {

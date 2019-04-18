@@ -39,6 +39,7 @@ const store = new Vuex.Store({
     days: {},
     token: null,
     activePanel: '',
+    errorMessage: '',
   },
   mutations: {
     addDay(state, newDateId) {
@@ -72,6 +73,9 @@ const store = new Vuex.Store({
     },
     token(state, token) {
       state.token = token
+    },
+    errorMessage(state, newErrorMessage) {
+      state.errorMessage = newErrorMessage
     },
   },
   actions: {
