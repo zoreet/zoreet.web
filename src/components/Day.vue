@@ -62,8 +62,14 @@ export default {
     isVisible() {
       return this.date.isSame(this.$store.state.currentDay, 'day')
     },
+    isPast() {
+      return this.date.isBefore(this.$store.state.today, 'day')
+    },
     isToday() {
       return this.date.isSame(this.$store.state.today, 'day')
+    },
+    isFuture() {
+      return this.date.isAfter(this.$store.state.today, 'day')
     },
     dateTitle() {
       let now = moment()
@@ -164,13 +170,25 @@ export default {
         })
     },
     sortTasks() {
-      this.tasks = this.tasks.sort(function(b, a) {
-        if (a.done && !b.done) {
-          return -1
-        }
+      // done tasks on top, because I care to report on what tasks I've done
+      if (this.isPast) {
+        this.tasks = this.tasks.sort(function(b, a) {
+          if (b.done && !a.done) {
+            return -1
+          }
 
-        return 0
-      })
+          return 0
+        })
+      } else {
+        // pending tasks on top, so I need to know what I need to work on
+        this.tasks = this.tasks.sort(function(b, a) {
+          if (a.done && !b.done) {
+            return -1
+          }
+
+          return 0
+        })
+      }
     },
     onDragEnd(event) {
       let index = event.newIndex
@@ -178,19 +196,42 @@ export default {
       let prevTask = this.tasks[index - 1]
       let nextTask = this.tasks[index + 1]
 
-      if (index == 0 && movedTask.done == true && nextTask.done == false) {
-        movedTask.done = false
-      } else if (
-        index == this.tasks.length - 1 &&
-        movedTask.done == false &&
-        prevTask.done == true
-      ) {
-        movedTask.done = true
-      } else if (
-        prevTask.done == nextTask.done &&
-        prevTask.done !== movedTask.done
-      ) {
-        movedTask.done = prevTask.done
+      // The logic goes as follows
+      // when between two tasks of the same kind you become the same kind
+      if (prevTask && nextTask) {
+        if (
+          prevTask.done == nextTask.done &&
+          prevTask.done !== movedTask.done
+        ) {
+          movedTask.done = prevTask.done
+        }
+      }
+      if (this.isPast) {
+        // when in the past, done tasks stay on top
+        // so if you're the top task and below you there are done tasks, you become done
+        if (index == 0 && movedTask.done == false && nextTask.done == true) {
+          movedTask.done = true
+        } else if (
+          // if you're the last tasks, and above you there are pending tasks, you become pending
+          index == this.tasks.length - 1 &&
+          movedTask.done == true &&
+          prevTask.done == false
+        ) {
+          movedTask.done = false
+        }
+      } else {
+        // in the present and future, pending tasks are at the top
+        // so if you're the top task and below you there are pending tasks, you become pending
+        if (index == 0 && movedTask.done == true && nextTask.done == false) {
+          movedTask.done = false
+        } else if (
+          // if you're the last tasks, and above you there are done tasks, you become dibe
+          index == this.tasks.length - 1 &&
+          movedTask.done == false &&
+          prevTask.done == true
+        ) {
+          movedTask.done = true
+        }
       }
     },
     addEmptyTask() {
