@@ -282,8 +282,6 @@ export default {
           this.focusedTask = this.tasks[index - 1].id
         } else if (this.tasks.length) {
           this.focusedTask == this.tasks[0].id
-        } else {
-          this.addEmptyTask()
         }
       })
     },
