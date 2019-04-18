@@ -136,12 +136,6 @@ export default {
           }
 
           this.sortTasks()
-
-          if (this.tasks.length && this.isVisible) {
-            this.$nextTick(() => {
-              this.focusedTask = this.tasks[this.tasks.length - 1].id
-            })
-          }
         })
         .catch(error => {
           let message = error.response.data.error.message
