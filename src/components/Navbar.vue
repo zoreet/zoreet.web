@@ -1,7 +1,7 @@
 <template>
   <div class="navbar">
-    <a href="#" class="link" @click.prevent="showPannel('calendar')">Calendar</a>
     <a href="#" class="link" @click.prevent="gotoToday()">Today</a>
+    <a href="#" class="link" @click.prevent="showPannel('calendar')">Calendar</a>
     <a href="#" class="link" @click.prevent="showPannel('settings')">Settings</a>
   </div>
 </template>
