@@ -326,7 +326,7 @@ export default {
   flex: 1 1 auto;
   justify-content: flex-start;
   overflow: scroll;
-  padding: 20px 0 40px;
+  padding: 20px 0 80px;
   margin-bottom: constant(safe-area-inset-bottom);
   margin-bottom: env(safe-area-inset-bottom);
 }
