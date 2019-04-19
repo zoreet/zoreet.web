@@ -41,7 +41,7 @@
       </div>
       <div class="version">
         You're using version
-        <strong>v3.0.5</strong> of zoreet.com
+        <strong>v3.0.6</strong> of zoreet.com
       </div>
     </panel>
   </div>

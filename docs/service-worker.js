@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.066f206c4d5d24536e06f544dc0872c4.js"
+  "/precache-manifest.0b958ca3478c4fc5b8d791d0e85e88ff.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "zoreet"});
