@@ -55,7 +55,7 @@ export default {
     return {
       date: moment(this.dayId, 'YYYYMMDD'),
       isLoading: true,
-      focusedTask: 0,
+      focusedTask: -1,
       tasks: [],
     }
   },
@@ -277,13 +277,6 @@ export default {
           this.focusedTask == this.tasks[0].id
         }
       })
-    },
-  },
-  watch: {
-    isVisible() {
-      this.focusedTask = ''
-      if (this.tasks.length && this.tasks.length)
-        this.focusedTask = this.tasks[this.tasks.length - 1].id
     },
   },
 }
