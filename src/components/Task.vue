@@ -143,9 +143,12 @@ export default {
 .task.sortable-ghost {
   background-color: var(--back--dark);
 }
-.task.sortable-drag {
+.task.sortable-drag,
+.task.sortable-chosen:not(.task.sortable-ghost) {
   background-color: var(--back);
   border-bottom-color: transparent;
+  opacity: 1 !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   /* box-shadow: 0 0 10px 10px var(--back); */
 }
 
