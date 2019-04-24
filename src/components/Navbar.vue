@@ -33,7 +33,7 @@ export default {
   display: flex;
   padding-bottom: constant(safe-area-inset-bottom);
   padding-bottom: env(safe-area-inset-bottom);
-  background: var(--back--dark);
+  background: var(--default);
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -45,7 +45,7 @@ export default {
   padding: 20px 16px;
   line-height: 20px;
   text-decoration: none;
-  color: var(--accent--text);
+  color: var(--default--text--strong);
   font-size: 16px;
   display: block;
 }

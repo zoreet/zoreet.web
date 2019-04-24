@@ -26,11 +26,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .button {
-  background-color: var(--back);
+  background-color: var(--accent);
+  color: var(--accent--text--strong);
   border-radius: 6px;
-  border: 1px solid;
   box-sizing: border-box;
-  color: inherit;
   display: inline-block;
   font-size: 14px;
   margin: 2px 0;
@@ -40,17 +39,5 @@ export default {
 }
 .button + .button {
   margin-left: 10px;
-}
-.selected {
-  background-color: var(--accent);
-  color: var(--text);
-  border-color: transparent;
-}
-
-.darkMode .button:not(.selected) {
-  border-color: var(--text--secondary);
-}
-.darkMode .selected {
-  color: var(--back);
 }
 </style>

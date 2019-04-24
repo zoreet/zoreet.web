@@ -27,7 +27,8 @@ export default {
   position: fixed;
   z-index: 999;
   padding: 12px 16px;
-  background: var(--back);
+  background: var(--warning);
+  color: var(--warning--text--strong);
   font-size: 13px;
   width: 100%;
   font-size: 13px;
@@ -39,8 +40,7 @@ p {
   text-align: center;
 }
 .error {
-  background-color: #f8d7da;
-  border-color: #f5c6cb;
-  color: #721c24;
+  background-color: var(--destructive);
+  color: var(--destructive--text--strong);
 }
 </style>

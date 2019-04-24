@@ -1,5 +1,5 @@
 <template>
-  <div id="app" v-cloak :class="{darkMode: darkMode}">
+  <div id="app" v-cloak>
     <alert id="refresh" type="info" :action="refresh" style="display: none">
       <strong>A new version is available.</strong>
       <p>Press here to get the latest changes</p>
@@ -29,11 +29,6 @@
       <month></month>
     </panel>
     <panel id="settings" title="Settings">
-      <div>
-        <h4>Theme</h4>
-        <btn @action="switchTheme('')" :selected="!darkMode">Ligth</btn>
-        <btn @action="switchTheme('dark')" :selected="darkMode">Dark</btn>
-      </div>
       <div>
         <h4>Logged in as</h4>
         <div id="user--email">{{ user.email }}</div>
@@ -69,7 +64,6 @@ export default {
       webAuth: null,
       isStandalone: localStorage.getItem('isStandalone'),
       loggedIn: false,
-      darkMode: false,
     }
   },
   components: {
@@ -106,8 +100,6 @@ export default {
       redirectUri: window.location.origin + '/',
       audience: 'todayapp',
     })
-
-    this.darkMode = JSON.parse(localStorage.getItem('darkMode')) ? true : false
 
     if (window.navigator.onLine) {
       this.checkLogin()
@@ -172,10 +164,6 @@ export default {
           this.gotoPrevDay()
         }
       }
-    },
-    switchTheme(flag) {
-      this.darkMode = flag ? true : false
-      localStorage.setItem('darkMode', this.darkMode)
     },
     refresh() {
       window.location.reload(true)
@@ -331,7 +319,6 @@ body {
 }
 
 .window {
-  background-color: #fff;
   height: 100%;
   left: 0;
   overflow: hidden;
@@ -367,22 +354,26 @@ h6 {
 
 /* Colour Palette */
 #app {
-  /* light mode */
-  --text: #1e2c4a;
-  --text--secondary: #e3e3e3;
-  --back: #fff;
-  --back--dark: #f2f2f2;
-  --accent: #2be4a4;
-  --accent--text: #0d067c;
-}
-#app.darkMode {
-  /* dark mode */
-  --text: #fafafa;
-  --text--secondary: #63709f;
-  --back: #161e35;
-  --back--dark: #1e2b4c;
-  --accent: #24e3ae;
-  --accent--text: #24e3ae;
+  --default: #312e53;
+  --default--strong: #232041;
+  --default--text: #8480aa;
+  --default--text--strong: #ffffff;
+  --accent: #82e5cc;
+  --accent--strong: #73d8be;
+  --accent--text: #389981;
+  --accent--text--strong: #114a3b;
+  --warning: #fec660;
+  --warning--strong: #feaa58;
+  --warning--text: #ce6a00;
+  --warning--text--strong: #623100;
+  --destructive: #f27778;
+  --destructive--strong: #ef686a;
+  --destructive--text: #c23a3d;
+  --destructive--text--strong: #69080a;
+  --extra--light: #a57ed5;
+  --extra--dark: #a57ed5;
+
+  color: var(--default--text);
   background-color: #000;
 }
 

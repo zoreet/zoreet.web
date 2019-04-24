@@ -285,48 +285,53 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .day {
-  background-color: var(--back);
+  background-color: var(--default--strong);
   display: flex;
   flex-direction: column;
   height: 100%;
   overflow: hidden;
   width: 100%;
+  border-radius: 8px 8px 0 0;
 }
 .header {
-  background-color: var(--accent);
-  display: flex;
-  flex: 0 0 auto;
-  flex-direction: column;
-  height: 107px;
   box-sizing: content-box;
+  flex: 0 0 auto;
   justify-content: center;
   margin-bottom: 0;
-  padding: 0 16px;
+  padding-top: 32px;
+  padding: 32px 16px 0;
   text-decoration: none;
-  padding-top: constant(safe-area-inset-top);
-  padding-top: env(safe-area-inset-top);
 }
-.darkMode .header {
-  background-color: var(--back--dark);
-  color: var(--accent);
+.header:after {
+  background-color: var(--acent);
+  background-image: linear-gradient(
+    17deg,
+    var(--warning) 0%,
+    var(--accent) 50%,
+    var(--extra--light) 100%
+  );
+  content: '';
+  display: block;
+  height: 4px;
+  margin-top: 10px;
 }
 .title {
+  color: var(--default--text--strong);
   font-size: 32px;
   font-weight: 700;
-  margin-top: 4px;
 }
 .subtitle {
   font-size: 13px;
   font-weight: 500;
-  opacity: 0.7;
   text-transform: uppercase;
+  color: var(--default--text);
 }
 .content {
-  background-color: var(--back);
+  background-color: var(--default--strong);
   flex: 1 1 auto;
   justify-content: flex-start;
   overflow: scroll;
-  padding: 20px 0 80px;
+  padding: 14px 0 80px;
   margin-bottom: constant(safe-area-inset-bottom);
   margin-bottom: env(safe-area-inset-bottom);
 }

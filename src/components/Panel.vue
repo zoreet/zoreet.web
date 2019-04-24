@@ -39,8 +39,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .panel {
-  background-color: var(--back);
-  border-radius: 10px 10px 0 0;
+  color: var(--default--text);
+  background-color: var(--default);
+  border-radius: 8px 8px 0 0;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -70,13 +71,22 @@ export default {
   text-decoration: none;
 }
 .title {
+  color: var(--default--text--strong);
   font-size: 32px;
   font-weight: 700;
+}
+h4 {
+  color: var(--default--text--strong);
 }
 .close {
   cursor: pointer;
 }
 .content {
   padding: 0 16px;
+}
+
+a {
+  text-decoration: underline;
+  color: var(--default--text);
 }
 </style>

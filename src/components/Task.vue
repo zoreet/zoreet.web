@@ -56,8 +56,11 @@ export default {
   methods: {
     editTask() {
       this.beforeEditCache = this.task.title
+      document.querySelector('.window--current').style.top =
+        -1 * this.$el.offsetTop + 'px'
     },
     doneEdit() {
+      document.querySelector('.window--current').style.top = '0px'
       if (this.isRemoved) return
 
       this.task.title = this.task.title.trim()
@@ -122,7 +125,7 @@ export default {
 <style scoped>
 .task {
   align-items: center;
-  border-bottom: 1px solid var(--text--secondary);
+  border-bottom: 1px solid var(--default);
   display: flex;
   font-size: 16px;
   line-height: 20px;
@@ -130,26 +133,23 @@ export default {
   padding: 12px 16px;
   position: relative;
 }
-.darkMode .task {
-  border-bottom-color: var(--back--dark);
-}
 .task.active,
 .task:not(.important) {
-  color: var(--text--secondary);
+  color: var(--default--text);
 }
 .task.important {
-  color: inherit;
+  color: var(--default--text--strong);
 }
 .task.sortable-ghost {
-  background-color: var(--back--dark);
+  background-color: var(--default--strong);
 }
 .task.sortable-drag,
 .task.sortable-chosen:not(.task.sortable-ghost) {
-  background-color: var(--back);
+  background-color: var(--default);
   border-bottom-color: transparent;
   opacity: 1 !important;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  /* box-shadow: 0 0 10px 10px var(--back); */
+  /* box-shadow: 0 0 10px 10px var(--default); */
 }
 
 .task.sortable-ghost * {
@@ -157,7 +157,7 @@ export default {
 }
 
 .checkbox {
-  border: 1px solid var(--text--secondary);
+  border: 1px solid var(--default--text);
   border-radius: 6px;
   box-sizing: border-box;
   cursor: pointer;
@@ -174,8 +174,8 @@ export default {
   border-color: var(--accent);
 }
 .task.active .checkbox:after {
-  border-bottom: 2px solid var(--back);
-  border-left: 2px solid var(--back);
+  border-bottom: 2px solid var(--default);
+  border-left: 2px solid var(--default);
   content: '';
   display: block;
   height: 6px;
@@ -202,7 +202,7 @@ export default {
   width: 100%;
 }
 .input:focus {
-  color: var(--text);
+  color: var(--default--text--strong);
   outline: none;
 }
 .todos:not(.in-the-past) .input::-webkit-input-placeholder {
@@ -210,7 +210,7 @@ export default {
   text-indent: -2px;
 }
 .label {
-  background: var(--back);
+  background: var(--default);
   flex: 1 0 auto;
   line-height: 20px;
   min-height: 20px;
@@ -219,7 +219,4 @@ export default {
   position: absolute;
   word-break: break-word;
 }
-/* .focused {
-  background-color: lightcoral;
-} */
 </style>

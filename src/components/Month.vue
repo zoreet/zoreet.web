@@ -118,10 +118,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .month {
-  background: var(--back);
-  border: 1px solid var(--text--secondary);
+  background: var(--default--strong);
+  border: 1px solid var(--default);
   border-radius: 10px;
-  color: var(--text);
+  color: var(--default--text);
   padding: 8px 0;
 }
 .header {
@@ -131,6 +131,7 @@ export default {
   text-align: center;
 }
 .title {
+  color: var(--default--text--strong);
   font-size: 22px;
   font-weight: bold;
   text-align: center;
@@ -146,6 +147,7 @@ export default {
 .pagination:before {
   border-style: solid;
   border-width: 0 0 2px 2px;
+  border-color: var(--default--text--strong);
   content: '';
   display: block;
   height: 10px;
@@ -163,7 +165,7 @@ export default {
   grid-template-columns: repeat(7, 1fr);
 }
 .days.weekdays {
-  border-bottom: 1px solid var(--text--secondary);
+  border-bottom: 1px solid;
   opacity: 0.7;
 }
 .weekdays .day {
@@ -189,18 +191,15 @@ export default {
   width: 28px;
 }
 .day--label:hover {
-  background-color: var(--back--dark);
+  background-color: var(--default--dark);
 }
 .today .day--label {
   font-weight: bold;
   color: var(--accent);
 }
 .day.active .day--label {
-  background-color: var(--text);
-  color: var(--back);
-}
-.darkMode .day.active .day--label {
-  color: var(--back);
+  background-color: var(--default--text--strong);
+  color: var(--default);
 }
 .today.active .day--label {
   background-color: var(--accent);
