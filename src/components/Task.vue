@@ -56,8 +56,6 @@ export default {
   methods: {
     editTask() {
       this.beforeEditCache = this.task.title
-      document.querySelector('.window--current').style.top =
-        -1 * this.$el.offsetTop + 'px'
     },
     doneEdit() {
       document.querySelector('.window--current').style.top = '0px'
