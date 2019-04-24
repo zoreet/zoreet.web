@@ -384,4 +384,8 @@ export default {
 .reorder-list-move {
   transition: transform 0.3s;
 }
+
+.empty-state__title {
+  color: var(--default--text--strong);
+}
 </style>

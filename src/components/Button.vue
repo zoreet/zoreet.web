@@ -27,11 +27,12 @@ export default {
 <style scoped>
 .button {
   background-color: var(--accent);
-  color: var(--accent--text--strong);
   border-radius: 6px;
   box-sizing: border-box;
+  color: var(--accent--text--strong);
   display: inline-block;
   font-size: 14px;
+  font-weight: bold;
   margin: 2px 0;
   padding: 8px 12px 9px;
   text-align: center;
