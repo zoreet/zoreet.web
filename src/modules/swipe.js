@@ -38,10 +38,10 @@ function handleTouchMove(evt) {
   var yDiff = yDown - yUp
   var now = new Date()
 
-  if (now - timeStart < 100) {
+  if (now - timeStart < 100 && Math.abs(xDiff) > 100) {
     if (Math.abs(xDiff) > Math.abs(yDiff)) {
       /*most significant*/
-      if (xDiff > 0) {
+      if (xDiff > 100) {
         document.querySelector('.windows').dispatchEvent(swipeLeftEvent)
       } else {
         document.querySelector('.windows').dispatchEvent(swipeRightEvent)
@@ -53,10 +53,9 @@ function handleTouchMove(evt) {
         // console.log('swipedown')
       }
     }
+    /* reset values */
+    xDown = null
+    yDown = null
+    timeStart = null
   }
-
-  /* reset values */
-  xDown = null
-  yDown = null
-  timeStart = null
 }
