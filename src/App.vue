@@ -379,8 +379,8 @@ h6 {
   /* dark mode */
   --text: #fafafa;
   --text--secondary: #63709f;
-  --back: #1e2b4c;
-  --back--dark: #161e35;
+  --back: #161e35;
+  --back--dark: #1e2b4c;
   --accent: #24e3ae;
   --accent--text: #24e3ae;
   background-color: #000;
