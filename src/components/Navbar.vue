@@ -20,9 +20,6 @@ export default {
 
   mounted() {},
   methods: {
-    showPannel(pannelId) {
-      this.$store.commit('changePanel', pannelId)
-    },
     gotoToday() {
       this.$store.dispatch('gotoDay', { today: true })
     },
@@ -40,7 +37,7 @@ export default {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  z-index: 999;
+  z-index: 998;
   position: fixed;
   bottom: 0;
 }
