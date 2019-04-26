@@ -1,20 +1,22 @@
 <template>
   <div class="task" :class="{active: task.done, focused: autofocus, important: important}">
     <div class="checkbox" @click="toggleTask"></div>
-    <textarea
-      class="input"
-      type="text"
-      v-model="task.title"
-      @change="updateHeight"
-      @keydown="updateHeight"
-      @blur="doneEdit"
-      @focus="editTask"
-      @keydown.backspace="removeTask"
-      @keydown.enter.prevent="doneEditWithEnter"
-      @keyup.escape="cancelEdit"
-      @paste="paste"
-    ></textarea>
-    <div class="label">{{ task.title }}</div>
+    <div class="content">
+      <textarea
+        class="input"
+        type="text"
+        v-model="task.title"
+        @change="updateHeight"
+        @keydown="updateHeight"
+        @blur="doneEdit"
+        @focus="editTask"
+        @keydown.backspace="removeTask"
+        @keydown.enter.prevent="doneEditWithEnter"
+        @keyup.escape="cancelEdit"
+        @paste="paste"
+      ></textarea>
+      <div class="label">{{ task.title }}</div>
+    </div>
   </div>
 </template>
 
@@ -38,8 +40,6 @@ export default {
   mounted() {
     this.input = this.$el.querySelector('.input')
     this.label = this.$el.querySelector('.label')
-
-    this.label.style.width = this.input.offsetWidth + 'px'
 
     this.updateHeight()
 
@@ -166,6 +166,10 @@ export default {
   position: relative;
   width: 30px;
 }
+.content {
+  position: relative;
+  flex: 1 0 auto;
+}
 
 .task.active .checkbox {
   background-color: var(--accent);
@@ -189,6 +193,7 @@ export default {
   border: 0 none;
   border-radius: 0;
   color: inherit;
+  display: block;
   font-family: inherit;
   font-size: inherit;
   height: 20px;
@@ -209,12 +214,14 @@ export default {
 }
 .label {
   background: var(--default);
-  flex: 1 0 auto;
+  left: 0;
   line-height: 20px;
   min-height: 20px;
   opacity: 0;
   pointer-events: none;
   position: absolute;
+  top: 0;
+  width: 100%;
   word-break: break-word;
 }
 </style>
