@@ -56,8 +56,11 @@ export default {
   methods: {
     editTask() {
       this.beforeEditCache = this.task.title
+      this.$store.commit('editingTask', true)
     },
     doneEdit() {
+      this.$store.commit('editingTask', false)
+
       if (this.isRemoved) return
 
       this.task.title = this.task.title.trim()

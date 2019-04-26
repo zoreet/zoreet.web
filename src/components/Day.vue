@@ -332,9 +332,13 @@ export default {
   flex: 1 1 auto;
   justify-content: flex-start;
   overflow: scroll;
-  padding: 14px 0 80px;
+  padding: 14px 0 60px;
   margin-bottom: constant(safe-area-inset-bottom);
   margin-bottom: env(safe-area-inset-bottom);
+}
+
+.editingTask .content {
+  padding-bottom: 0;
 }
 
 .isLoading .content > * {

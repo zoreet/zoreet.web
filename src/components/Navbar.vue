@@ -38,6 +38,12 @@ export default {
   display: flex;
   justify-content: space-between;
   z-index: 999;
+  position: fixed;
+  bottom: 0;
+}
+
+.editingTask .navbar {
+  display: none;
 }
 
 .link {

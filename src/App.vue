@@ -1,5 +1,5 @@
 <template>
-  <div id="app" v-cloak>
+  <div id="app" v-cloak :class="{editingTask: editingTask}">
     <alert id="refresh" type="info" :action="refresh" style="display: none">
       <strong>A new version is available.</strong>
       <p>Press here to get the latest changes</p>
@@ -87,6 +87,9 @@ export default {
     },
     errorMessage() {
       return this.$store.state.errorMessage
+    },
+    editingTask() {
+      return this.$store.state.editingTask
     },
   },
   beforeMount() {
@@ -297,8 +300,6 @@ body {
   -webkit-font-smoothing: antialiased;
   background-color: rgb(128, 128, 128);
   color: var(--text);
-  display: flex;
-  flex-direction: column;
   font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica,
     Arial, sans-serif;
   font-size: 16px;
@@ -311,7 +312,7 @@ body {
 }
 .windows {
   flex: 1 0 auto;
-  height: calc(100% - 86px);
+  height: 100%;
   overflow: hidden;
   position: relative;
   width: 100%;
