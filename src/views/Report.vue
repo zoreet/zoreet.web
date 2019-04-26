@@ -1,7 +1,6 @@
 <template>
   <div :id="id" class="day" :class="{isLoading: isLoading}">
     <div class="header">
-      <a href="#" class="calendar" @click.prevent="showPannel('calendar')"></a>
       <div>
         <div class="subtitle">
           {{ dateSubtitle }}
@@ -308,15 +307,15 @@ export default {
   border-radius: 8px 8px 0 0;
 }
 .header {
+  align-items: flex-end;
   box-sizing: content-box;
+  display: flex;
   flex: 0 0 auto;
   margin-bottom: 0;
-  padding-top: 32px;
-  padding: 32px 16px 0;
-  display: flex;
-  align-items: flex-end;
+  padding: 32px 16px 14px;
+  position: relative;
 }
-.content:before {
+.header:after {
   background-color: var(--acent);
   background-image: linear-gradient(
     17deg,
@@ -324,10 +323,12 @@ export default {
     var(--accent) 50%,
     var(--extra--light) 100%
   );
+  bottom: 0;
   content: '';
   display: block;
   height: 4px;
-  margin: 10px 16px 14px;
+  position: absolute;
+  width: calc(100% - 32px);
 }
 .title {
   color: var(--default--text--strong);
@@ -345,7 +346,7 @@ export default {
   flex: 1 1 auto;
   justify-content: flex-start;
   overflow: scroll;
-  padding: 0 0 60px;
+  padding: 14px 0 60px;
   margin-bottom: constant(safe-area-inset-bottom);
   margin-bottom: env(safe-area-inset-bottom);
 }
@@ -405,14 +406,5 @@ export default {
 
 .empty-state__title {
   color: var(--default--text--strong);
-}
-
-.calendar {
-  border: 0 none;
-  border-radius: 6px;
-  margin-right: 16px;
-}
-.calendar svg * {
-  fill: var(--default--text);
 }
 </style>
