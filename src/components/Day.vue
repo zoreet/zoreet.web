@@ -1,11 +1,48 @@
 <template>
   <div :id="id" class="day" :class="{isLoading: isLoading}">
     <div class="header">
-      <div class="subtitle">
-        {{ dateSubtitle }}
-        <span v-if="isToday">- Today</span>
+      <a href="#" class="calendar" @click.prevent="showPannel('calendar')">
+        <svg
+          width="30px"
+          height="32px"
+          viewBox="0 0 30 32"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        >
+          <g id="calendar" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <path
+              d="M6,2 C6.27614237,2 6.5,2.22385763 6.5,2.5 C6.5,2.77614237 6.27614237,3 6,3 L4,3 C2.34314575,3 1,4.34314575 1,6 L1,28 C1,29.6568542 2.34314575,31 4,31 L26,31 C27.6568542,31 29,29.6568542 29,28 L29,6 C29,4.34314575 27.6568542,3 26,3 L24,3 C23.7238576,3 23.5,2.77614237 23.5,2.5 C23.5,2.22385763 23.7238576,2 24,2 L26,2 C28.209139,2 30,3.790861 30,6 L30,28 C30,30.209139 28.209139,32 26,32 L4,32 C1.790861,32 2.705415e-16,30.209139 0,28 L0,6 C-2.705415e-16,3.790861 1.790861,2 4,2 L6,2 Z"
+              id="Path"
+              fill="#000000"
+              fill-rule="nonzero"
+            ></path>
+            <rect id="Rectangle" fill="#000000" x="1" y="12" width="28" height="1"></rect>
+            <path
+              d="M19,2 C19.2761424,2 19.5,2.22385763 19.5,2.5 C19.5,2.77614237 19.2761424,3 19,3 L11,3 C10.7238576,3 10.5,2.77614237 10.5,2.5 C10.5,2.22385763 10.7238576,2 11,2 L19,2 Z"
+              id="Path"
+              fill="#000000"
+            ></path>
+            <path
+              d="M9,5.05000906 C10.1411202,5.28164422 11,6.29052104 11,7.5 C11,8.88071187 9.88071187,10 8.5,10 C7.11928813,10 6,8.88071187 6,7.5 C6,6.29052104 6.85887984,5.28164422 8,5.05000906 L8,0.5 C8,0.223857625 8.22385763,0 8.5,0 C8.77614237,0 9,0.223857625 9,0.5 L9,5.05000906 Z M8.5,9 C9.32842712,9 10,8.32842712 10,7.5 C10,6.67157288 9.32842712,6 8.5,6 C7.67157288,6 7,6.67157288 7,7.5 C7,8.32842712 7.67157288,9 8.5,9 Z"
+              id="Combined-Shape"
+              fill="#000000"
+            ></path>
+            <path
+              d="M22,5.05000906 C23.1411202,5.28164422 24,6.29052104 24,7.5 C24,8.88071187 22.8807119,10 21.5,10 C20.1192881,10 19,8.88071187 19,7.5 C19,6.29052104 19.8588798,5.28164422 21,5.05000906 L21,0.5 C21,0.223857625 21.2238576,0 21.5,0 C21.7761424,0 22,0.223857625 22,0.5 L22,5.05000906 Z M21.5,9 C22.3284271,9 23,8.32842712 23,7.5 C23,6.67157288 22.3284271,6 21.5,6 C20.6715729,6 20,6.67157288 20,7.5 C20,8.32842712 20.6715729,9 21.5,9 Z"
+              id="Combined-Shape-Copy"
+              fill="#000000"
+            ></path>
+          </g>
+        </svg>
+      </a>
+      <div>
+        <div class="subtitle">
+          {{ dateSubtitle }}
+          <span v-if="isToday">- Today</span>
+        </div>
+        <h3 class="title">{{ dateTitle }}</h3>
       </div>
-      <h3 class="title">{{ dateTitle }}</h3>
     </div>
     <div class="empty-state content" v-if="this.tasks.length == 0">
       <div>
@@ -288,6 +325,9 @@ export default {
         }
       })
     },
+    showPannel(pannelId) {
+      this.$store.commit('changePanel', pannelId)
+    },
   },
 }
 </script>
@@ -306,13 +346,13 @@ export default {
 .header {
   box-sizing: content-box;
   flex: 0 0 auto;
-  justify-content: center;
   margin-bottom: 0;
   padding-top: 32px;
   padding: 32px 16px 0;
-  text-decoration: none;
+  display: flex;
+  align-items: flex-end;
 }
-.header:after {
+.content:before {
   background-color: var(--acent);
   background-image: linear-gradient(
     17deg,
@@ -323,7 +363,7 @@ export default {
   content: '';
   display: block;
   height: 4px;
-  margin-top: 10px;
+  margin: 10px 16px 14px;
 }
 .title {
   color: var(--default--text--strong);
@@ -341,7 +381,7 @@ export default {
   flex: 1 1 auto;
   justify-content: flex-start;
   overflow: scroll;
-  padding: 14px 0 60px;
+  padding: 0 0 60px;
   margin-bottom: constant(safe-area-inset-bottom);
   margin-bottom: env(safe-area-inset-bottom);
 }
@@ -401,5 +441,14 @@ export default {
 
 .empty-state__title {
   color: var(--default--text--strong);
+}
+
+.calendar {
+  border: 0 none;
+  border-radius: 6px;
+  margin-right: 16px;
+}
+.calendar svg * {
+  fill: var(--default--text);
 }
 </style>
