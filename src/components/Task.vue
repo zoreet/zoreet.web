@@ -58,7 +58,6 @@ export default {
       this.beforeEditCache = this.task.title
     },
     doneEdit() {
-      document.querySelector('.window--current').style.top = '0px'
       if (this.isRemoved) return
 
       this.task.title = this.task.title.trim()
