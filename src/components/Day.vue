@@ -16,7 +16,8 @@
         </div>
       </div>
     </div>
-    <draggable v-else v-model="tasks" @end.prevent="onDragEnd" delay="50" class="content">
+    <!-- 200ms so that I can scroll comfortably and never miss -->
+    <draggable v-else v-model="tasks" @end.prevent="onDragEnd" delay="200" class="content">
       <transition-group name="reorder-list">
         <task
           v-for="taskItem in tasks"
