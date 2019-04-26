@@ -1,8 +1,11 @@
 <template>
   <div class="navbar">
-    <a href="#" class="link" @click.prevent="gotoToday()">Today</a>
+    <router-link class="link" to="/">Tasks</router-link>
+    <router-link class="link" to="/report">Reports</router-link>
+    <router-link class="link" to="/settings">Settings</router-link>
+    <!-- <a href="#" class="link" @click.prevent="gotoToday()">Today</a>
     <a href="#" class="link" @click.prevent="showPannel('calendar')">Calendar</a>
-    <a href="#" class="link" @click.prevent="showPannel('settings')">Settings</a>
+    <a href="#" class="link" @click.prevent="showPannel('settings')">Settings</a>-->
   </div>
 </template>
 
@@ -54,5 +57,8 @@ export default {
   color: var(--default--text--strong);
   font-size: 16px;
   display: block;
+}
+.router-link-exact-active {
+  color: var(--accent);
 }
 </style>
