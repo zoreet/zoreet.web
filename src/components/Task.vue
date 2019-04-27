@@ -3,13 +3,13 @@
     class="task"
     :class="{active: task.done, focused: autofocus, important: important, disabled: disabled}"
   >
-    <div v-if="!disabled" class="checkbox" @click="toggleTask"></div>
+    <div v-if="enabled" class="checkbox" @click="toggleTask"></div>
     <div v-else class="checkbox"></div>
     <div class="content">
       <textarea
         class="input"
         type="text"
-        v-if="!disabled"
+        v-if="enabled"
         v-model="task.title"
         @change="updateHeight"
         @keydown="updateHeight"
@@ -20,12 +20,15 @@
         @keyup.escape="cancelEdit"
         @paste="paste"
       ></textarea>
-      <div class="label">{{ task.title }}</div>
+      <div class="input-shadow">{{ task.title }}</div>
+      <div v-if="label" class="label">{{ label }}</div>
     </div>
   </div>
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
   name: 'Task',
   props: {
@@ -39,15 +42,28 @@ export default {
     return {
       beforeEditCache: '',
       input: null,
-      label: null,
+      inputShadow: null,
       isRemoved: false,
     }
   },
+  computed: {
+    enabled() {
+      return !this.disabled
+    },
+    label() {
+      if (this.task.date) {
+        return moment(this.task.date, 'YYYYMMDD').format('dddd, DD MM YYYY')
+      }
+      return null
+    },
+  },
   mounted() {
     this.input = this.$el.querySelector('.input')
-    this.label = this.$el.querySelector('.label')
+    this.inputShadow = this.$el.querySelector('.input-shadow')
 
-    this.updateHeight()
+    if (this.enabled) {
+      this.updateHeight()
+    }
 
     if (this.autofocus) {
       this.$nextTick(() => {
@@ -105,7 +121,7 @@ export default {
         // this get's fired too soon, but having it prevents some flickering
         setTimeout(() => {
           // it's stupid, I know, but this is the only way I could get the textarea and div in sync
-          this.input.style.height = this.label.offsetHeight + 'px'
+          this.input.style.height = this.inputShadow.offsetHeight + 'px'
         }, 10)
       })
     },
@@ -220,7 +236,7 @@ export default {
   /* Webkit */
   text-indent: -2px;
 }
-.label {
+.input-shadow {
   left: 0;
   line-height: 20px;
   min-height: 20px;
@@ -229,8 +245,18 @@ export default {
   width: 100%;
   word-break: break-word;
 }
-.task:not(.disabled) .label {
+.task:not(.disabled) .input-shadow {
   opacity: 0;
   position: absolute;
+}
+
+.label {
+  color: var(--default--text);
+  font-size: 13px;
+  font-weight: 500;
+  -webkit-user-select: none; /* Chrome all / Safari all */
+  -moz-user-select: none; /* Firefox all */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none; /* Likely future */
 }
 </style>
