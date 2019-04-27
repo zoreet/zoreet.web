@@ -19,13 +19,11 @@
     <div v-else class="content">
       <task
         v-for="taskItem in tasks"
+        v-if="taskItem.done"
         :key="taskItem.id"
         v-bind:task.sync="taskItem"
-        :important="(isPast && taskItem.done == true) || (!isPast && taskItem.done == false)"
-        @addEmptyTaskAfter="addEmptyTaskAfter"
-        @updateTask="updateTask"
-        @removeTask="removeTask"
-        :autofocus="taskItem.id == focusedTask"
+        :important="true"
+        :disabled="true"
       ></task>
     </div>
   </div>

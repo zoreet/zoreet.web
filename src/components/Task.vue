@@ -1,10 +1,15 @@
 <template>
-  <div class="task" :class="{active: task.done, focused: autofocus, important: important}">
-    <div class="checkbox" @click="toggleTask"></div>
+  <div
+    class="task"
+    :class="{active: task.done, focused: autofocus, important: important, disabled: disabled}"
+  >
+    <div v-if="!disabled" class="checkbox" @click="toggleTask"></div>
+    <div v-else class="checkbox"></div>
     <div class="content">
       <textarea
         class="input"
         type="text"
+        v-if="!disabled"
         v-model="task.title"
         @change="updateHeight"
         @keydown="updateHeight"
@@ -27,6 +32,7 @@ export default {
     task: Object,
     dayId: String,
     autofocus: Boolean,
+    disabled: Boolean,
     important: Boolean,
   },
   data() {
@@ -215,15 +221,16 @@ export default {
   text-indent: -2px;
 }
 .label {
-  background: var(--default);
   left: 0;
   line-height: 20px;
   min-height: 20px;
-  opacity: 0;
   pointer-events: none;
-  position: absolute;
   top: 0;
   width: 100%;
   word-break: break-word;
+}
+.task:not(.disabled) .label {
+  opacity: 0;
+  position: absolute;
 }
 </style>
