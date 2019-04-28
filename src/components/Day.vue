@@ -37,11 +37,11 @@
         </svg>
       </a>
       <div>
-        <div class="subtitle">
+        <div class="subtitle" @click.prevent="showPannel('calendar')">
           {{ dateSubtitle }}
           <span v-if="isToday">- Today</span>
         </div>
-        <h3 class="title">{{ dateTitle }}</h3>
+        <h3 class="title" @click.prevent="showPannel('calendar')">{{ dateTitle }}</h3>
       </div>
     </div>
     <div class="empty-state content" v-if="this.tasks.length == 0">
