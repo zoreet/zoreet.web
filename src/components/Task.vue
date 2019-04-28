@@ -52,7 +52,7 @@ export default {
     },
     label() {
       if (this.task.date) {
-        return moment(this.task.date, 'YYYYMMDD').format('dddd, DD MM YYYY')
+        return moment(this.task.date, 'YYYYMMDD').format('dddd, DD MMMM')
       }
       return null
     },
