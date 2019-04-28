@@ -190,11 +190,6 @@ export default {
   position: relative;
   width: 30px;
 }
-.content {
-  position: relative;
-  flex: 1 0 auto;
-}
-
 .task.active .checkbox {
   background-color: var(--accent);
   border-color: var(--accent);
@@ -210,6 +205,18 @@ export default {
   top: 8px;
   transform: rotate(-45deg);
   width: 14px;
+}
+.task.active.disabled .checkbox {
+  background-color: var(--default);
+  border-color: var(--default);
+}
+.task.active.disabled .checkbox:after {
+  border-color: var(--accent);
+}
+
+.content {
+  position: relative;
+  flex: 1 0 auto;
 }
 
 .input {
