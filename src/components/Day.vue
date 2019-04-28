@@ -1,7 +1,7 @@
 <template>
   <div :id="id" class="day" :class="{isLoading: isLoading}">
     <div class="header">
-      <a href="#" class="calendar" @click.prevent="showPannel('calendar')">
+      <a href="#" class="calendar" @click.prevent="showPanel('calendar')">
         <svg
           width="30px"
           height="32px"
@@ -37,11 +37,11 @@
         </svg>
       </a>
       <div>
-        <div class="subtitle" @click.prevent="showPannel('calendar')">
+        <div class="subtitle" @click.prevent="showPanel('calendar')">
           {{ dateSubtitle }}
           <span v-if="isToday">- Today</span>
         </div>
-        <h3 class="title" @click.prevent="showPannel('calendar')">{{ dateTitle }}</h3>
+        <h3 class="title" @click.prevent="showPanel('calendar')">{{ dateTitle }}</h3>
       </div>
     </div>
     <div class="empty-state content" v-if="this.tasks.length == 0">
@@ -325,7 +325,7 @@ export default {
         }
       })
     },
-    showPannel(pannelId) {
+    showPanel(pannelId) {
       this.$store.commit('changePanel', pannelId)
     },
   },
