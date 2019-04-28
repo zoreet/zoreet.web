@@ -3,9 +3,6 @@
     <router-link class="link" to="/">Tasks</router-link>
     <router-link class="link" to="/report">Reports</router-link>
     <router-link class="link" to="/settings">Settings</router-link>
-    <!-- <a href="#" class="link" @click.prevent="gotoToday()">Today</a>
-    <a href="#" class="link" @click.prevent="showPannel('calendar')">Calendar</a>
-    <a href="#" class="link" @click.prevent="showPannel('settings')">Settings</a>-->
   </div>
 </template>
 
