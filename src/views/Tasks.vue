@@ -25,20 +25,21 @@
         <a id="today" href="#" class="button" @click.prevent="jumpToToday">Today</a>
         <a id="tomorrow" href="#" class="button" @click.prevent="jumpToTomorrow">Tomorrow</a>
       </div>-->
-      <month></month>
+      <month :action="gotoDay" :date="currentDayId"></month>
     </panel>
   </div>
 </template>
 
 <script>
+import Vue from 'vue/dist/vue.js'
+import alert from '@/components/Alert'
 import auth0 from 'auth0-js'
 import btn from '@/components/Button'
+import day from '@/components/Day'
 import moment from 'moment'
 import month from '@/components/Month'
 import navbar from '@/components/Navbar'
-import day from '@/components/Day'
 import panel from '@/components/Panel'
-import alert from '@/components/Alert'
 import Swipe from '@/modules/swipe' // keep this, I'm using it
 // import Component from '@/components/Component.vue'
 
@@ -57,9 +58,9 @@ export default {
     // Component,
     alert,
     btn,
+    day,
     month,
     navbar,
-    day,
     panel,
   },
   computed: {
@@ -115,6 +116,9 @@ export default {
     },
     gotoNextDay() {
       this.$store.dispatch('gotoDay', { step: 1 })
+    },
+    gotoDay(date) {
+      this.$store.dispatch('gotoDay', { id: date })
     },
 
     // ////////////////////////////////////////////////////////////

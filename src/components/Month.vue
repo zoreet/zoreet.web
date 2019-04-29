@@ -20,7 +20,7 @@
         :key="day.id"
         class="day"
         :class="{
-            active: ( day.date == activeDayId ),
+            active: ( day.date == currentDayId ),
             today: ( day.date == todayId )
           }"
       >
@@ -35,46 +35,50 @@ import moment from 'moment'
 
 export default {
   name: 'Month',
+  props: {
+    action: Function,
+    date: String,
+  },
   data() {
     return {
-      date: null,
       days: [],
+      visibleMonthId: null,
     }
   },
   computed: {
-    currentDay() {
-      return this.$store.state.currentDay
+    currentDayId() {
+      return parseInt(this.date) || moment().format('YYYYMMDD')
     },
-    dateId() {
-      return moment(this.date.format('YYYYMMDD'))
-    },
-    activeDayId() {
-      return this.$store.state.currentDay.format('YYYYMMDD')
+    visibleMonth: {
+      get() {
+        return moment(this.visibleMonthId, 'YYYYMMDD')
+      },
+      set(newMonth) {
+        this.visibleMonthId = newMonth.format('YYYYMMDD')
+      },
     },
     todayId() {
-      return this.$store.state.today.format('YYYYMMDD')
-    },
-    title() {
-      return this.date.format('MMMM YYYY')
+      return moment().format('YYYYMMDD')
     },
     lastDay() {
-      let day = moment(this.dateId)
-        .endOf('month')
-        .format('DD')
+      let day = this.visibleMonth.endOf('month').format('DD')
 
       day = parseInt(day)
 
       if (day) return day
       return null
     },
+    title() {
+      return this.visibleMonth.format('MMMM YYYY')
+    },
   },
   created() {
-    this.date = this.currentDay
+    this.visibleMonthId = this.currentDayId
     this.generateData()
   },
   methods: {
     generateData() {
-      let tempDate = moment(this.dateId)
+      let tempDate = this.visibleMonth
       let days = [...Array(this.lastDay).keys()]
       this.days = days.map(day => {
         return {
@@ -87,7 +91,6 @@ export default {
         moment(this.days[0].date)
           .startOf('month')
           .isoWeekday() - 1
-      // debugger
       for (; i > 0; i--) {
         this.days.unshift({
           id: 0 - i,
@@ -96,19 +99,14 @@ export default {
       }
     },
     changeDate(date) {
-      this.$store.dispatch('gotoDay', { id: date })
+      this.action(date)
     },
     prevMonth() {
-      let newDate = this.date.subtract(1, 'months')
-      this.date = ''
-      this.date = newDate
+      this.visibleMonth = this.visibleMonth.subtract(1, 'months')
       this.generateData()
-      // debugger
     },
     nextMonth() {
-      let newDate = this.date.add(1, 'months')
-      this.date = ''
-      this.date = newDate
+      this.visibleMonth = this.visibleMonth.add(1, 'months')
       this.generateData()
     },
   },
