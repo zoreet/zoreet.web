@@ -204,7 +204,7 @@ const store = new Vuex.Store({
 
       let that = this
       window.setTimeout(() => {
-        that.silentLogin()
+        context.dispatch('silentLogin')
       }, expiresIn)
     },
     saveLoginData(context, result) {
