@@ -160,7 +160,7 @@ const store = new Vuex.Store({
           window.onfocus = function() {
             let now = new Date().getTime()
             if (expiresAt < now) {
-              that.silentLogin()
+              context.dispatch('silentLogin')
             }
           }
         } else {
