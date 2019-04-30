@@ -20,7 +20,10 @@
         :key="day.id"
         class="day"
         :class="{
-            active: ( day.date == currentDayId ),
+            active: ( day.date == currentDateId ),
+            startRange: ( day.date == range.startDate ),
+            endRange: ( day.date == range.endDate ),
+            range: ( day.date > range.startDate && day.date < range.endDate ),
             today: ( day.date == todayId )
           }"
       >
@@ -38,15 +41,20 @@ export default {
   props: {
     action: Function,
     date: String,
+    mode: String,
+    range: Object,
   },
   data() {
     return {
+      isRange: false,
       days: [],
       visibleMonthId: null,
     }
   },
   computed: {
-    currentDayId() {
+    currentDateId() {
+      if (this.isRange) return null
+
       return parseInt(this.date) || moment().format('YYYYMMDD')
     },
     visibleMonth: {
@@ -73,7 +81,14 @@ export default {
     },
   },
   created() {
-    this.visibleMonthId = this.currentDayId
+    this.isRange = this.mode == 'range'
+    if (this.isRange) {
+      this.range.starDate = this.range.starDate || this.todayId
+      this.range.endDate = this.range.endDate || this.todayId
+      this.visibleMonthId = this.range.starDate
+    } else {
+      this.visibleMonthId = this.currentDateId
+    }
     this.generateData()
   },
   methods: {
@@ -201,5 +216,22 @@ export default {
 }
 .today.active .day--label {
   background-color: var(--accent);
+}
+
+.day.startRange .day--label,
+.day.endRange .day--label,
+.day.range .day--label {
+  background: var(--default--text--strong);
+  color: var(--default--strong);
+  border-radius: 0;
+  width: 100%;
+}
+.day.startRange .day--label {
+  width: 100%;
+  border-radius: 14px 0 0 14px;
+}
+
+.day.endRange .day--label {
+  border-radius: 0 14px 14px 0;
 }
 </style>
