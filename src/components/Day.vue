@@ -1,10 +1,19 @@
 <template>
   <div :id="id" class="day" :class="{isLoading: isLoading}">
     <div class="header">
+      <div class="header__copy">
+        <div class="subtitle" @click.prevent="showPanel('calendar')">
+          {{ dateSubtitle }}
+          <span v-if="isToday">- Today</span>
+        </div>
+        <h3 class="title" @click.prevent="showPanel('calendar')">{{ dateTitle }}</h3>
+      </div>
+
+      <a href="#" class="header__add-task" @click.prevent="addFirstEmptyTask">+</a>
       <a href="#" class="calendar" @click.prevent="showPanel('calendar')">
         <svg
-          width="30px"
-          height="32px"
+          width="24px"
+          height="25px"
           viewBox="0 0 30 32"
           version="1.1"
           xmlns="http://www.w3.org/2000/svg"
@@ -36,20 +45,13 @@
           </g>
         </svg>
       </a>
-      <div>
-        <div class="subtitle" @click.prevent="showPanel('calendar')">
-          {{ dateSubtitle }}
-          <span v-if="isToday">- Today</span>
-        </div>
-        <h3 class="title" @click.prevent="showPanel('calendar')">{{ dateTitle }}</h3>
-      </div>
     </div>
     <div class="empty-state content" v-if="this.tasks.length == 0">
       <div>
         <h3 class="empty-state__title">Start planning your day</h3>
         <p class="empty-state__subtitle">You don't have any tasks added for this day</p>
         <div>
-          <btn @action="addEmptyTask">Add first task</btn>
+          <btn @action="addFirstEmptyTask">Add first task</btn>
         </div>
       </div>
     </div>
@@ -275,17 +277,6 @@ export default {
         }
       }
     },
-    addEmptyTask() {
-      let newTask = {
-        id: Date.now(),
-        title: '',
-        done: false,
-      }
-      this.tasks.push(newTask)
-      this.$nextTick(function() {
-        this.focusedTask = newTask.id
-      })
-    },
     addEmptyTaskAfter(task) {
       let index = this.findTaskById(task.id)
       let newTask = {
@@ -294,6 +285,17 @@ export default {
         done: task.done,
       }
       this.tasks.splice(index + 1, 0, newTask)
+      this.$nextTick(function() {
+        this.focusedTask = newTask.id
+      })
+    },
+    addFirstEmptyTask() {
+      let newTask = {
+        id: Date.now(),
+        title: '',
+        done: false,
+      }
+      this.tasks.unshift(newTask)
       this.$nextTick(function() {
         this.focusedTask = newTask.id
       })
@@ -344,7 +346,7 @@ export default {
   border-radius: 8px 8px 0 0;
 }
 .header {
-  align-items: flex-end;
+  align-items: flex-start;
   box-sizing: content-box;
   display: flex;
   flex: 0 0 auto;
@@ -366,6 +368,9 @@ export default {
   height: 4px;
   position: absolute;
   width: calc(100% - 32px);
+}
+.header__copy {
+  flex: 1 0 auto;
 }
 .title {
   color: var(--default--text--strong);
@@ -448,9 +453,21 @@ export default {
 .calendar {
   border: 0 none;
   border-radius: 6px;
-  margin-right: 16px;
 }
 .calendar svg * {
-  fill: var(--default--text);
+  fill: var(--accent--strong);
+}
+
+.header__add-task {
+  font-size: 34px;
+  line-height: 20px;
+  color: var(--accent--strong);
+  text-decoration: none;
+  height: 25px;
+  width: 24px;
+  text-align: center;
+  margin-right: 24px;
+  font-weight: 200;
+  display: inline-block;
 }
 </style>
