@@ -3,7 +3,10 @@
     <div class="day" :class="{isLoading: isLoading}">
       <div class="header">
         <div class="header__copy">
-          <div class="subtitle" @click.prevent="showPanel('calendar')">Tasks completed</div>
+          <div class="subtitle" @click.prevent="showPanel('calendar')">
+            <span v-if="tasks.length">{{tasks.length}}</span>
+            Tasks completed
+          </div>
           <h3 class="title" @click.prevent="showPanel('calendar')">{{ title }}</h3>
         </div>
         <a href="#" class="calendar" @click.prevent="showPanel('calendar')">
