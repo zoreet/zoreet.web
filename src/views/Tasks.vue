@@ -169,10 +169,10 @@ export default {
   transition: transform 0.4s;
 }
 .window--past {
-  transform: translateX(calc(-100vw - 100px));
+  transform: translateX(calc(-100% - 100px));
 }
 .window--future {
-  transform: translateX(calc(100vw + 100px));
+  transform: translateX(calc(100% + 100px));
 }
 
 textarea {
