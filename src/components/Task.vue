@@ -51,8 +51,15 @@ export default {
       return !this.disabled
     },
     label() {
+      let today = moment()
+
       if (this.task.date) {
-        return moment(this.task.date, 'YYYYMMDD').format('dddd, D MMMM')
+        let date = moment(this.task.date, 'YYYYMMDD')
+        if (!date.isSame(today, 'year')) {
+          return date.format('dddd, D MMMM YYYY')
+        } else {
+          return date.format('dddd, D MMMM')
+        }
       }
       return null
     },
