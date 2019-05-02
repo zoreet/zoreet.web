@@ -2,10 +2,14 @@
   <div id="report">
     <div class="day" :class="{isLoading: isLoading}">
       <div class="header">
+        <div class="header__copy">
+          <div class="subtitle" @click.prevent="showPanel('calendar')">Tasks completed</div>
+          <h3 class="title" @click.prevent="showPanel('calendar')">{{ title }}</h3>
+        </div>
         <a href="#" class="calendar" @click.prevent="showPanel('calendar')">
           <svg
-            width="30px"
-            height="32px"
+            width="24px"
+            height="25px"
             viewBox="0 0 30 32"
             version="1.1"
             xmlns="http://www.w3.org/2000/svg"
@@ -37,10 +41,6 @@
             </g>
           </svg>
         </a>
-        <div>
-          <div class="subtitle" @click.prevent="showPanel('calendar')">Tasks completed</div>
-          <h3 class="title" @click.prevent="showPanel('calendar')">{{ title }}</h3>
-        </div>
       </div>
       <div class="empty-state content" v-if="this.tasks.length == 0">
         <div>
@@ -240,7 +240,7 @@ export default {
   position: fixed;
 }
 .header {
-  align-items: flex-end;
+  align-items: flex-start;
   box-sizing: content-box;
   display: flex;
   flex: 0 0 auto;
@@ -262,6 +262,9 @@ export default {
   height: 4px;
   position: absolute;
   width: calc(100% - 32px);
+}
+.header__copy {
+  flex: 1 0 auto;
 }
 .title {
   color: var(--default--text--strong);
@@ -347,6 +350,6 @@ export default {
   margin-right: 16px;
 }
 .calendar svg * {
-  fill: var(--default--text);
+  fill: var(--accent--strong);
 }
 </style>
