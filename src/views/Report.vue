@@ -125,6 +125,54 @@ export default {
       this.endDate = range.endDate
       this.showPanel('')
       this.getTasks()
+
+      let startDate = moment(range.startDate, 'YYYYMMDD')
+      let endDate = moment(range.endDate, 'YYYYMMDD')
+      let today = moment()
+
+      let startDateFormat = 'D'
+      let endDateFormat = 'D MMM'
+      if (
+        !startDate.isSame(endDate, 'month') &&
+        startDate.isSame(endDate, 'year')
+      ) {
+        startDateFormat += ' MMM'
+      }
+      if (!startDate.isSame(endDate, 'year')) {
+        startDateFormat += ` 'YY`
+        endDateFormat += ` 'YY`
+      } else if (!startDate.isSame(today, 'year')) {
+        endDateFormat += ` 'YY`
+      }
+
+      this.title =
+        startDate.format(startDateFormat) +
+        ' - ' +
+        endDate.format(endDateFormat)
+    },
+    gotoLastWeek() {
+      this.title = 'Last Week'
+      let tempDay = moment().subtract(7, 'days')
+      this.startDate = tempDay.isoWeekday(1).format('YYYYMMDD')
+      this.endDate = tempDay.isoWeekday(7).format('YYYYMMDD')
+
+      this.showPanel('')
+      this.getTasks()
+    },
+    gotoThisWeek() {
+      this.title = 'This Week'
+      this.startDate = moment()
+        .isoWeekday(1)
+        .format('YYYYMMDD')
+      this.endDate = moment()
+        .isoWeekday(7)
+        .format('YYYYMMDD')
+
+      this.showPanel('')
+      this.getTasks()
+    },
+    showPanel(panelId) {
+      this.$store.commit('changePanel', panelId)
     },
     // ////////////////////////////////////////////////////////////
     //
@@ -204,30 +252,6 @@ export default {
 
           this.error = message
         })
-    },
-    gotoLastWeek() {
-      this.title = 'Last Week'
-      let tempDay = moment().subtract(7, 'days')
-      this.startDate = tempDay.isoWeekday(1).format('YYYYMMDD')
-      this.endDate = tempDay.isoWeekday(7).format('YYYYMMDD')
-
-      this.showPanel('')
-      this.getTasks()
-    },
-    gotoThisWeek() {
-      this.title = 'This Week'
-      this.startDate = moment()
-        .isoWeekday(1)
-        .format('YYYYMMDD')
-      this.endDate = moment()
-        .isoWeekday(7)
-        .format('YYYYMMDD')
-
-      this.showPanel('')
-      this.getTasks()
-    },
-    showPanel(panelId) {
-      this.$store.commit('changePanel', panelId)
     },
   },
 }
