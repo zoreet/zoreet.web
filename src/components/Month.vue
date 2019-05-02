@@ -20,10 +20,11 @@
         :key="day.id"
         class="day"
         :class="{
-          startRange: ( day.date == range.startDate ),
-          endRange: ( day.date == range.endDate ),
-          range: ( day.date > range.startDate && day.date < range.endDate ),
-          today: ( day.date == todayId )
+          startRange: ( day.date == selectedRange.startDate ),
+          endRange: ( day.date == selectedRange.endDate ),
+          range: ( day.date > selectedRange.startDate && day.date < selectedRange.endDate ),
+          today: ( day.date == todayId ),
+          disabled: ( selectedRange.startDate && !selectedRange.endDate && day.date < selectedRange.startDate )
           }"
       >
         <span class="day--label" @click="changeDate(day.date)" v-if="day.id > 0">{{day.id}}</span>
@@ -61,6 +62,7 @@ export default {
       rangeMode: false,
       days: [],
       visibleMonthId: null,
+      selectedRange: this.range,
     }
   },
   computed: {
@@ -127,18 +129,18 @@ export default {
     },
     changeDate(date) {
       if (this.rangeMode) {
-        if (!this.range.startDate) {
-          this.range.startDate = date
+        if (!this.selectedRange.startDate) {
+          this.selectedRange.startDate = date
         } else {
-          if (!this.range.endDate) {
-            this.range.endDate = date
+          if (!this.selectedRange.endDate) {
+            this.selectedRange.endDate = date
             this.action({
-              startDate: this.range.startDate,
-              endDate: this.range.endDate,
+              startDate: this.selectedRange.startDate,
+              endDate: this.selectedRange.endDate,
             })
           } else {
-            this.range.startDate = date
-            this.range.endDate = null
+            this.selectedRange.startDate = date
+            this.selectedRange.endDate = null
           }
         }
       } else {
@@ -262,5 +264,11 @@ export default {
 
 .day.endRange .day--label {
   border-radius: 0 14px 14px 0;
+}
+
+.day.disabled {
+  pointer-events: none;
+  opacity: 0.3;
+  cursor: default;
 }
 </style>
