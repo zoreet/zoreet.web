@@ -62,6 +62,7 @@
       @end.prevent="onDragEnd"
       delay="200"
       class="content"
+      :options="{disabled: editingTask}"
       @start="drag = true"
       @end="drag = false"
     >
@@ -129,6 +130,9 @@ export default {
     },
     dateSubtitle() {
       return this.date.format('dddd')
+    },
+    editingTask() {
+      return this.$store.state.editingTask
     },
   },
   mounted() {
