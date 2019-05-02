@@ -347,7 +347,6 @@ export default {
 .calendar {
   border: 0 none;
   border-radius: 6px;
-  margin-right: 16px;
 }
 .calendar svg * {
   fill: var(--accent--strong);
