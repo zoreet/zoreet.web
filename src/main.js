@@ -2,7 +2,6 @@ import Vue from 'vue/dist/vue.js'
 import App from './App.vue'
 import moment from 'moment'
 import auth0 from 'auth0-js'
-import sw from './registerServiceWorker'
 import router from '@/router/index.js'
 
 Vue.config.productionTip = false
@@ -69,7 +68,6 @@ const store = new Vuex.Store({
       state.today = date
     },
     gotoDay(state, id) {
-      let tempDay = state.currentDay
       let lastViewedDay = JSON.stringify({
         id: id,
         when: state.today.format('YYYYMMDD'),
@@ -156,7 +154,6 @@ const store = new Vuex.Store({
           context.commit('token', token)
           context.dispatch('scheduleRenewal', expiresIn)
 
-          let that = this
           window.onfocus = function() {
             let now = new Date().getTime()
             if (expiresAt < now) {
@@ -183,7 +180,6 @@ const store = new Vuex.Store({
       })
     },
     handleAuthentication(context) {
-      let that = this
       context.state.webAuth.parseHash(function(err, authResult) {
         if (err) {
           alert(
@@ -202,7 +198,6 @@ const store = new Vuex.Store({
     scheduleRenewal(context, expiresIn) {
       if (!expiresIn) return
 
-      let that = this
       window.setTimeout(() => {
         context.dispatch('silentLogin')
       }, expiresIn)
