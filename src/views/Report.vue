@@ -67,6 +67,7 @@
       <div class="buttons">
         <btn @action="gotoLastWeek">Last Week</btn>
         <btn @action="gotoThisWeek">This Week</btn>
+        <btn v-if="user.sub == 'auth0|5be5dd454aecba31291994c4'" @action="gotoAll">So Far</btn>
       </div>
     </panel>
   </div>
@@ -105,6 +106,11 @@ export default {
       endDate: null,
       title: null,
     }
+  },
+  computed: {
+    user() {
+      return this.$store.state.user
+    },
   },
   beforeMount() {
     let today = moment().isoWeekday()
@@ -168,6 +174,13 @@ export default {
         .isoWeekday(7)
         .format('YYYYMMDD')
 
+      this.showPanel('')
+      this.getTasks()
+    },
+    gotoAll() {
+      this.title = 'So Far'
+      this.startDate = moment('20161128').format('YYYYMMDD')
+      this.endDate = moment().format('YYYYMMDD')
       this.showPanel('')
       this.getTasks()
     },

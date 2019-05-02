@@ -207,6 +207,7 @@ const store = new Vuex.Store({
       var user = JSON.stringify({
         email: result.idTokenPayload.email,
         nickname: result.idTokenPayload.nickname,
+        sub: result.idTokenPayload.sub,
       })
 
       localStorage.setItem('access_token', result.accessToken)
