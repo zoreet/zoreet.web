@@ -53,7 +53,6 @@
         <task
           v-for="taskItem in tasks"
           v-if="taskItem.done"
-          :key="taskItem.id"
           v-bind:task.sync="taskItem"
           :important="true"
           :disabled="true"
@@ -65,7 +64,7 @@
         <btn @action="gotoLastWeek">Last Week</btn>
         <btn @action="gotoThisWeek">This Week</btn>
       </div>
-      <!-- <month></month> -->
+      <month mode="range" :action="rangeSelected" :range="{startDate: startDate, endDate: endDate}"></month>
     </panel>
   </div>
 </template>
@@ -88,12 +87,19 @@ export default {
   },
   data() {
     return {
+      attrs: {
+        key: 'today',
+        highlight: {
+          backgroundColor: '#ff8080',
+          // Other properties are available too, like `height` & `borderRadius`
+        },
+      },
       date: moment(this.dayId, 'YYYYMMDD'),
       days: [],
-      fromDate: null,
+      startDate: null,
       isLoading: true,
       tasks: [],
-      tillDate: null,
+      endDate: null,
       title: null,
     }
   },
@@ -111,6 +117,9 @@ export default {
     this.getTasks()
   },
   methods: {
+    rangeSelected(range) {
+      console.log(range)
+    },
     // ////////////////////////////////////////////////////////////
     //
     // NETWORK
@@ -127,9 +136,9 @@ export default {
       axios
         .get(
           'https://api.zoreet.com/reports/' +
-            this.fromDate +
+            this.startDate +
             '/' +
-            this.tillDate,
+            this.endDate,
           {
             headers: { Authorization: 'Bearer ' + this.$store.state.token },
           }
@@ -152,7 +161,7 @@ export default {
             } catch (e) {
               day.tasks = rawTasks
                 .replace(/<br>/g, '')
-                .replace(/\<div class\=\"\s*[a-z]*\s*\"\>\s*\<\/div\>/g, '') // empty divs
+                .replace(/<div class="\s*[a-z]*\s*">\s*<\/div>/g, '') // empty divs
                 .split('</div>')
                 .filter(task => task.length)
                 .map((task, index) => {
@@ -185,7 +194,6 @@ export default {
           this.error = ''
         })
         .catch(error => {
-          let code = error.response.status
           let message = error.response.data.error.message
 
           this.error = message
@@ -194,18 +202,18 @@ export default {
     gotoLastWeek() {
       this.title = 'Last Week'
       let tempDay = moment().subtract(7, 'days')
-      this.fromDate = tempDay.isoWeekday(1).format('YYYYMMDD')
-      this.tillDate = tempDay.isoWeekday(7).format('YYYYMMDD')
+      this.startDate = tempDay.isoWeekday(1).format('YYYYMMDD')
+      this.endDate = tempDay.isoWeekday(7).format('YYYYMMDD')
 
       this.showPanel('')
       this.getTasks()
     },
     gotoThisWeek() {
       this.title = 'This Week'
-      this.fromDate = moment()
+      this.startDate = moment()
         .isoWeekday(1)
         .format('YYYYMMDD')
-      this.tillDate = moment()
+      this.endDate = moment()
         .isoWeekday(7)
         .format('YYYYMMDD')
 

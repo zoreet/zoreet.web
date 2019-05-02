@@ -14,16 +14,28 @@
       <div class="day">S</div>
       <div class="day">S</div>
     </div>
-    <div class="days">
+    <div class="days" v-if="rangeMode">
+      <div
+        v-for="day in days"
+        :key="day.id"
+        class="day"
+        :class="{
+          startRange: ( day.date == range.startDate ),
+          endRange: ( day.date == range.endDate ),
+          range: ( day.date > range.startDate && day.date < range.endDate ),
+          today: ( day.date == todayId )
+          }"
+      >
+        <span class="day--label" @click="changeDate(day.date)" v-if="day.id > 0">{{day.id}}</span>
+      </div>
+    </div>
+    <div class="days" v-else>
       <div
         v-for="day in days"
         :key="day.id"
         class="day"
         :class="{
             active: ( day.date == currentDateId ),
-            startRange: ( day.date == range.startDate ),
-            endRange: ( day.date == range.endDate ),
-            range: ( day.date > range.startDate && day.date < range.endDate ),
             today: ( day.date == todayId )
           }"
       >
@@ -46,14 +58,14 @@ export default {
   },
   data() {
     return {
-      isRange: false,
+      rangeMode: false,
       days: [],
       visibleMonthId: null,
     }
   },
   computed: {
     currentDateId() {
-      if (this.isRange) return null
+      if (this.rangeMode) return null
 
       return parseInt(this.date) || moment().format('YYYYMMDD')
     },
@@ -81,8 +93,8 @@ export default {
     },
   },
   created() {
-    this.isRange = this.mode == 'range'
-    if (this.isRange) {
+    this.rangeMode = this.mode == 'range'
+    if (this.rangeMode) {
       this.range.starDate = this.range.starDate || this.todayId
       this.range.endDate = this.range.endDate || this.todayId
       this.visibleMonthId = this.range.starDate
@@ -114,7 +126,24 @@ export default {
       }
     },
     changeDate(date) {
-      this.action(date)
+      if (this.rangeMode) {
+        if (!this.range.startDate) {
+          this.range.startDate = date
+        } else {
+          if (!this.range.endDate) {
+            this.range.endDate = date
+            this.action({
+              startDate: this.range.startDate,
+              endDate: this.range.endDate,
+            })
+          } else {
+            this.range.startDate = date
+            this.range.endDate = null
+          }
+        }
+      } else {
+        this.action(date)
+      }
     },
     prevMonth() {
       this.visibleMonth = this.visibleMonth.subtract(1, 'months')
