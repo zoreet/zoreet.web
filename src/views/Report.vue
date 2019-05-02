@@ -394,4 +394,14 @@ export default {
 .calendar svg * {
   fill: var(--accent--strong);
 }
+
+@media (min-width: 1024px) {
+  /* iPad and up */
+  .header {
+    align-items: flex-end;
+  }
+  .header__add-task {
+    line-height: 14px;
+  }
+}
 </style>

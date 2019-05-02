@@ -50,7 +50,7 @@ export default {
   overflow-y: scroll;
   position: absolute;
   top: 100%;
-  transition: top 0.3s;
+  transition: top 0.3s, left 0.3s;
   width: 100%;
   z-index: 100;
 }
@@ -88,5 +88,20 @@ h4 {
 a {
   text-decoration: underline;
   color: var(--default--text);
+}
+
+@media (min-width: 1024px) {
+  /* iPad and up */
+  .panel {
+    height: 100vw;
+    left: 100%;
+    width: 320px;
+    bottom: auto;
+    top: 0;
+  }
+  .panel.active {
+    left: calc(100% - 320px);
+    top: 0;
+  }
 }
 </style>

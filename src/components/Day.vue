@@ -475,4 +475,17 @@ export default {
   font-weight: 200;
   display: inline-block;
 }
+
+@media (min-width: 1024px) {
+  /* iPad and up */
+  .day {
+    border-radius: 0;
+  }
+  .header {
+    align-items: flex-end;
+  }
+  .header__add-task {
+    line-height: 14px;
+  }
+}
 </style>
