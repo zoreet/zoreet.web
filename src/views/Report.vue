@@ -63,11 +63,11 @@
       </div>
     </div>
     <panel id="calendar" title="Generate report for">
+      <month mode="range" :action="rangeSelected" :range="{startDate: startDate, endDate: endDate}"></month>
       <div class="buttons">
         <btn @action="gotoLastWeek">Last Week</btn>
         <btn @action="gotoThisWeek">This Week</btn>
       </div>
-      <month mode="range" :action="rangeSelected" :range="{startDate: startDate, endDate: endDate}"></month>
     </panel>
   </div>
 </template>
@@ -121,7 +121,10 @@ export default {
   },
   methods: {
     rangeSelected(range) {
-      console.log(range)
+      this.startDate = range.startDate
+      this.endDate = range.endDate
+      this.showPanel('')
+      this.getTasks()
     },
     // ////////////////////////////////////////////////////////////
     //
