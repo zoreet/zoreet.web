@@ -29,14 +29,11 @@
 </template>
 
 <script>
-import Vue from 'vue/dist/vue.js'
 import alert from '@/components/Alert'
-import auth0 from 'auth0-js'
 import btn from '@/components/Button'
 import day from '@/components/Day'
 import moment from 'moment'
 import month from '@/components/Month'
-import navbar from '@/components/Navbar'
 import panel from '@/components/Panel'
 import Swipe from '@/modules/swipe' // keep this, I'm using it
 // import Component from '@/components/Component.vue'
@@ -58,7 +55,6 @@ export default {
     btn,
     day,
     month,
-    navbar,
     panel,
   },
   computed: {
