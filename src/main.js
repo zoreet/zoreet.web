@@ -140,7 +140,7 @@ const store = new Vuex.Store({
     //
     // ////////////////////////////////////////////////////////////
     checkLogin(context) {
-      if (window.location.hash.length > 1) {
+      if (window.location.hash.length > 20) {
         this.dispatch('handleAuthentication')
       } else {
         let expiresAt = parseInt(localStorage.getItem('expires_at'))

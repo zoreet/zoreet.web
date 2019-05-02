@@ -8,7 +8,6 @@ import Report from '@/views/Report.vue'
 import Settings from '@/views/Settings.vue'
 
 export default new Router({
-  mode: 'history',
   routes: [
     {
       path: '/',
