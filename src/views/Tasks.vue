@@ -20,12 +20,10 @@
       </div>
     </div>
     <panel id="calendar" title="Pick a date">
-      <!-- <div class="buttons">
-        <a id="yesterday" href="#" class="button" @click.prevent="jumpToYesterday">Yesterday</a>
-        <a id="today" href="#" class="button" @click.prevent="jumpToToday">Today</a>
-        <a id="tomorrow" href="#" class="button" @click.prevent="jumpToTomorrow">Tomorrow</a>
-      </div>-->
       <month :action="gotoDay" :date="currentDayId"></month>
+      <div class="buttons">
+        <btn @action="gotoToday" role="secondary">Today</btn>
+      </div>
     </panel>
   </div>
 </template>
@@ -117,6 +115,9 @@ export default {
     gotoNextDay() {
       this.$store.dispatch('gotoDay', { step: 1 })
     },
+    gotoToday() {
+      this.$store.dispatch('gotoDay', { today: true })
+    },
     gotoDay(date) {
       this.$store.dispatch('gotoDay', { id: date })
     },
@@ -177,5 +178,13 @@ export default {
 textarea {
   font-size: 16px;
   width: 100%;
+}
+
+.buttons {
+  margin-top: 16px;
+  display: flex;
+}
+.buttons .button {
+  flex: 1 1 auto;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <a href="#" class="button" :class="{selected: selected}" @click.prevent="action">
+  <a href="#" class="button" :class="{secondary: role=='secondary'}" @click.prevent="action">
     <slot></slot>
   </a>
 </template>
@@ -8,7 +8,7 @@
 export default {
   name: 'Button',
   props: {
-    selected: Boolean,
+    role: String,
   },
   data() {
     return {}
@@ -40,5 +40,11 @@ export default {
 }
 .button + .button {
   margin-left: 10px;
+}
+
+.secondary {
+  background-color: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent--strong);
 }
 </style>
