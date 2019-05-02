@@ -276,6 +276,7 @@ export default {
           movedTask.done = true
         }
       }
+      this.saveTasks()
     },
     addEmptyTaskAfter(task) {
       let index = this.findTaskById(task.id)
