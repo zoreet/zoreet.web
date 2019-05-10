@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>add-to-homescreen</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="add-to-homescreen">
+            <rect id="Rectangle" fill="#686871" x="0" y="0" width="30" height="30" rx="6"></rect>
+            <path d="M16,14 L20,14 C20.5522847,14 21,14.4477153 21,15 C21,15.5522847 20.5522847,16 20,16 L16,16 L16,20 C16,20.5522847 15.5522847,21 15,21 C14.4477153,21 14,20.5522847 14,20 L14,16 L10,16 C9.4477153,16 9,15.5522847 9,15 C9,14.4477153 9.4477153,14 10,14 L14,14 L14,10 C14,9.4477153 14.4477153,9 15,9 C15.5522847,9 16,9.4477153 16,10 L16,14 Z" id="Path" fill="#FFFFFF"></path>
+        </g>
+    </g>
+</svg>
