@@ -1,18 +1,18 @@
 self.__precacheManifest = [
   {
-    "revision": "35d2b58bfd8c581870fb",
-    "url": "/css/app.86053168.css"
+    "revision": "7dfca846d5a9ab6feade",
+    "url": "/css/app.6584fa9e.css"
   },
   {
-    "revision": "35d2b58bfd8c581870fb",
-    "url": "/js/app.70a9d464.js"
+    "revision": "7dfca846d5a9ab6feade",
+    "url": "/js/app.ec4d7e6b.js"
   },
   {
     "revision": "0eb7539a9e4f11f7867c",
     "url": "/js/chunk-vendors.f1ea6b42.js"
   },
   {
-    "revision": "5026372d9217baa36f8eabab5534c5db",
+    "revision": "e5794ea34d66e567accd7e3c9a621ad1",
     "url": "/index.html"
   },
   {
@@ -24,11 +24,11 @@ self.__precacheManifest = [
     "url": "/img/add-to-homescreen.svg"
   },
   {
-    "revision": "dc80e835b225c920d9550aa439edd688",
-    "url": "/img/share-ios.svg"
-  },
-  {
     "revision": "b6216d61c03e6ce0c9aea6ca7808f7ca",
     "url": "/robots.txt"
+  },
+  {
+    "revision": "dc80e835b225c920d9550aa439edd688",
+    "url": "/img/share-ios.svg"
   }
 ];

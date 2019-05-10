@@ -11,7 +11,7 @@
       </div>
       <div class="version">
         You're using version
-        <strong>v3.1.2</strong> of zoreet.com
+        <strong>v3.1.3</strong> of zoreet.com
         <a href="#" @click.prevent="refresh">force update</a>
       </div>
     </div>
