@@ -4,7 +4,7 @@
       <div class="header">
         <div class="header__copy">
           <div class="subtitle" @click.prevent="showPanel('calendar')">
-            <span v-if="tasks.length">{{tasks.length}}</span>
+            <span v-if="tasks.length">{{doneTasks.length}}</span>
             Tasks completed
           </div>
           <h3 class="title" @click.prevent="showPanel('calendar')">{{ title }}</h3>
@@ -45,7 +45,7 @@
           </svg>
         </a>
       </div>
-      <div class="empty-state content" v-if="this.tasks.length == 0">
+      <div class="empty-state content" v-if="this.doneTasks.length == 0">
         <div>
           <h3 class="empty-state__title">Nothing found</h3>
           <p class="empty-state__subtitle">You don't have any tasks for this dates</p>
@@ -54,8 +54,7 @@
       <!-- 200ms so that I can scroll comfortably and never miss -->
       <div v-else class="content">
         <task
-          v-for="taskItem in tasks"
-          v-if="taskItem.done"
+          v-for="taskItem in doneTasks"
           v-bind:task.sync="taskItem"
           :important="true"
           :disabled="true"
@@ -110,6 +109,11 @@ export default {
   computed: {
     user() {
       return this.$store.state.user
+    },
+    doneTasks() {
+      return this.tasks.filter(task => {
+        return task.done
+      })
     },
   },
   beforeMount() {
