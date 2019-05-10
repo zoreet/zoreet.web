@@ -126,9 +126,6 @@ export default {
       this.gotoThisWeek()
     }
   },
-  mounted() {
-    this.getTasks()
-  },
   methods: {
     rangeSelected(range) {
       this.startDate = range.startDate
