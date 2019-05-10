@@ -156,6 +156,11 @@ export default {
       this.generateData()
     },
   },
+  watch: {
+    range: function(newRange) {
+      this.selectedRange = newRange
+    },
+  },
 }
 </script>
 
