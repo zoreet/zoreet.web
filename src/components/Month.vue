@@ -24,7 +24,7 @@
           endRange: ( day.date == selectedRange.endDate ),
           range: ( day.date > selectedRange.startDate && day.date < selectedRange.endDate ),
           today: ( day.date == todayId ),
-          disabled: ( selectedRange.startDate && !selectedRange.endDate && day.date < selectedRange.startDate )
+          disabled: ( selectedRange.startDate && !selectedRange.endDate && day.date <= selectedRange.startDate )
           }"
       >
         <span class="day--label" @click="changeDate(day.date)" v-if="day.id > 0">{{day.id}}</span>
@@ -273,7 +273,8 @@ export default {
 
 .day.disabled {
   pointer-events: none;
+}
+.day.disabled:not([class*='Range']) {
   opacity: 0.3;
-  cursor: default;
 }
 </style>
