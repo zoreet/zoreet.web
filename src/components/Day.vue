@@ -348,7 +348,7 @@ export default {
   height: 100%;
   overflow: hidden;
   width: 100%;
-  border-radius: 8px 8px 0 0;
+  border-radius: 10px 10px 0 0;
 }
 .header {
   align-items: flex-start;
