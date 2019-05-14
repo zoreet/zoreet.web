@@ -191,7 +191,7 @@ export default {
           this.sortTasks()
         })
         .catch(error => {
-          let message = error.response.data.error.message
+          let message = JSON.stringify(error)
           this.$store.commit('errorMessage', message)
         })
     },
