@@ -194,6 +194,16 @@ export default {
           let message = JSON.stringify(error)
           this.$store.commit('errorMessage', message)
         })
+
+      setTimeout(() => {
+        if (this.isLoading) {
+          this.isLoading = false
+          this.$store.commit(
+            'errorMessage',
+            `We couldn't load your task for this day. Try again later.`
+          )
+        }
+      }, 10000)
     },
     saveTasks() {
       if (!navigator.onLine) {
