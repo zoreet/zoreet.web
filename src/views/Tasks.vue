@@ -140,7 +140,9 @@ export default {
     // USER
     //
     // ////////////////////////////////////////////////////////////
-    login() {},
+    login() {
+      this.$store.dispatch('login')
+    },
   },
 }
 </script>

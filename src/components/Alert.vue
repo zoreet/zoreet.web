@@ -1,5 +1,5 @@
 <template>
-  <div class="alert" :class="{error: type=='error', info: type=='info'}" @click.prevent="action">
+  <div class="alert" :class="{error: type=='error', info: type=='info'}" @click.prevent="action()">
     <slot></slot>
   </div>
 </template>
