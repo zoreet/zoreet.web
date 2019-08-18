@@ -164,7 +164,7 @@ export default {
           let rawTasks = response.data.day.tasks
 
           this.isLoading = false
-          this.$store.commit('errorMessage', '')
+          this.$store.commit('clearErrorMessage')
 
           try {
             this.tasks = JSON.parse(rawTasks)
@@ -219,7 +219,7 @@ export default {
           { headers: { Authorization: 'Bearer ' + this.$store.state.token } }
         )
         .then(() => {
-          this.$store.commit('errorMessage', '')
+          this.$store.commit('clearErrorMessage')
         })
         .catch(error => {
           let message = error.response.data.error.message

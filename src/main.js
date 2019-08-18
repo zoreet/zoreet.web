@@ -94,6 +94,10 @@ const store = new Vuex.Store({
     errorMessage(state, newErrorMessage) {
       state.errorMessage = newErrorMessage
     },
+    clearErrorMessage(state) {
+      if (state.errorMessage !== '')
+        state.errorMessage = ''
+    },
     editingTask(state, newState) {
       state.editingTask = newState
     },
