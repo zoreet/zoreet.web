@@ -8,18 +8,22 @@ Vue.config.productionTip = false
 import Vuex from 'vuex'
 Vue.use(Vuex)
 
-window.onfocus = function() {
+window.addEventListener('focus', () => {
+  let wasLookingAtToday = false;
+  if (store.state.today.isSame(store.state.currentDay, 'day')) {
+    wasLookingAtToday = true;
+  }
+
   let now = moment()
-  if (store.state.today.format('YYYYMMDD') !== now.format('YYYYMMDD')) {
+  if (store.state.today.isSame(now,'day')) {
     store.commit('newToday', now)
+
+    if(wasLookingAtToday) {
+      store.dispatch('gotoDay', { today: true })
+    }
   }
-  if (
-    store.state.today.format('YYYYMMDD') !==
-    store.state.currentDay.format('YYYYMMDD')
-  ) {
-    store.dispatch('gotoDay', { today: true })
-  }
-}
+
+})
 
 // temporary cleanup for versions up to and including v3.0.3
 localStorage.removeItem('currentDayId')
