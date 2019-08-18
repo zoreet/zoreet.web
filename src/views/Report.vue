@@ -55,6 +55,7 @@
       <div v-else class="content">
         <task
           v-for="taskItem in doneTasks"
+          :key="taskItem.id"
           v-bind:task.sync="taskItem"
           :important="true"
           :disabled="true"
