@@ -454,7 +454,7 @@ export default {
 .empty-state__subtitle {
   font-size: 14px;
   margin: 4px 0 24px;
-  opacity: 0.6;
+  color: var(--default--text);
 }
 
 .reorder-list-move {
