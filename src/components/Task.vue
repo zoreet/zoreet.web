@@ -256,6 +256,7 @@ export default {
   min-height: 20px;
   pointer-events: none;
   top: 0;
+  user-select: none;
   width: 100%;
   word-break: break-word;
 }
