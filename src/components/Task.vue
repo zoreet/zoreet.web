@@ -260,6 +260,9 @@ export default {
   width: 100%;
   word-break: break-word;
 }
+#report .input-shadow {
+  user-select: all;
+}
 .task:not(.disabled) .input-shadow {
   opacity: 0;
   position: absolute;

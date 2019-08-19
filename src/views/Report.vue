@@ -53,6 +53,10 @@
       </div>
       <!-- 200ms so that I can scroll comfortably and never miss -->
       <div v-else class="content">
+        <div class="report__sort-options">
+          <a href="#" @click.prevent="sortByTime" class="report__link" :class="{active: !sortedByName}">Sort by time</a>
+          <a href="#" @click.prevent="sortByName" class="report__link" :class="{active: sortedByName}">Sort by name</a>
+        </div>
         <task
           v-for="taskItem in doneTasks"
           :key="taskItem.id"
@@ -105,6 +109,7 @@ export default {
       tasks: [],
       endDate: null,
       title: null,
+      sortedByName: false,
     }
   },
   computed: {
@@ -112,9 +117,19 @@ export default {
       return this.$store.state.user
     },
     doneTasks() {
-      return this.tasks.filter(task => {
+      let tasks = this.tasks.filter(task => {
         return task.done
       })
+
+      if (this.sortedByName) {
+        tasks = tasks.sort( (a,b) => {
+          if (a.title.toLowerCase() < b.title.toLowerCase()) { return -1; }
+          if (a.title.toLowerCase() > b.title.toLowerCase()) { return 1; }
+          return 0;
+        })
+      }
+
+      return tasks
     },
   },
   beforeMount() {
@@ -188,6 +203,17 @@ export default {
     },
     showPanel(panelId) {
       this.$store.commit('changePanel', panelId)
+    },
+    // ////////////////////////////////////////////////////////////
+    //
+    // TASKS
+    //
+    // ////////////////////////////////////////////////////////////
+    sortByName() {
+      this.sortedByName = true
+    },
+    sortByTime() {
+      this.sortedByName = false
     },
     // ////////////////////////////////////////////////////////////
     //
@@ -395,6 +421,23 @@ export default {
 }
 .calendar svg * {
   fill: var(--accent--strong);
+}
+
+.report__sort-options {
+  display: flex;
+  padding: 0 16px 12px;
+}
+
+.report__link {
+  color: var(--default--text--strong);
+}
+.report__link.active {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.report__link  + .report__link {
+  margin-left: 8px;
 }
 
 @media (min-width: 1024px) {
