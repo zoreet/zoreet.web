@@ -27,16 +27,11 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .navbar {
-  display: flex;
-  padding-bottom: constant(safe-area-inset-bottom);
-  padding-bottom: env(safe-area-inset-bottom);
   background: var(--default);
-  width: 100%;
   display: flex;
   justify-content: space-between;
-  z-index: 998;
-  position: fixed;
-  bottom: 0;
+  padding-bottom: constant(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .editingTask .navbar {

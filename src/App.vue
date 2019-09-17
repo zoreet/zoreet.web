@@ -1,6 +1,20 @@
 <template>
-  <div id="app" v-cloak :class="{editingTask: editingTask}">
-    <router-view></router-view>
+    <Layout v-cloak :class="{editingTask: editingTask}">
+      <template #main>
+        <!-- <router-view></router-view> -->
+      </template>
+      <template #overlays>
+        <Alert type="info">
+          <template #message>
+            A new version is available.
+          </template>
+          <template #action>
+            <a href="#" @click.prevent="refresh">REFRESH</a>
+          </template>
+        </Alert>
+      </template>
+    </Layout>
+    <!-- <router-view></router-view>
     <navbar></navbar>
     <div class="installMessage" v-if="showInstallMessage">
       <img src="/img/icon.svg" width="60" class="icon">
@@ -14,13 +28,15 @@
         Add to Home Screen
       </div>
     </div>
-  </div>
+  </div> -->  
 </template>
 
 <script>
 import auth0 from 'auth0-js'
 import moment from 'moment'
-import navbar from './components/Navbar'
+import navbar from '@/components/Navbar'
+import Layout from '@/components/Layout'
+import Alert from '@/components/Alert'
 
 export default {
   name: 'app',
@@ -34,6 +50,8 @@ export default {
   components: {
     // Component,
     navbar,
+    Layout,
+    Alert
   },
   computed: {
     editingTask() {
@@ -65,77 +83,23 @@ export default {
       this.showInstallMessage = true
     }
   },
-  methods: {},
+  methods: {
+    refresh() {
+      window.location.reload(true)
+    },
+  },
 }
 </script>
 
 <style>
-body {
-  margin: 0;
-  padding: 0;
-  background-color: var(--accent);
-}
 [v-cloak] {
   display: none !important;
 }
 
-#app {
-  -webkit-font-smoothing: antialiased;
-  background-color: rgb(128, 128, 128);
-  color: var(--text);
-  font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica,
-    Arial, sans-serif;
-  font-size: 16px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  overflow: hidden;
-  position: fixed;
-  top: 0;
-}
 
-body * {
-  box-sizing: border-box;
-  -webkit-overflow-scrolling: touch;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
-::selection {
-  background: #5ceea7;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 0;
-  padding: 0;
-}
 
-/* Colour Palette */
-#app {
-  --default: #312e53;
-  --default--strong: #232041;
-  --default--text: #8480aa;
-  --default--text--strong: #ffffff;
-  --accent: #82e5cc;
-  --accent--strong: #73d8be;
-  --accent--text: #389981;
-  --accent--text--strong: #114a3b;
-  --warning: #fec660;
-  --warning--strong: #feaa58;
-  --warning--text: #ce6a00;
-  --warning--text--strong: #623100;
-  --destructive: #f27778;
-  --destructive--strong: #ef686a;
-  --destructive--text: #c23a3d;
-  --destructive--text--strong: #69080a;
-  --extra--light: #a57ed5;
-  --extra--dark: #a57ed5;
 
-  color: var(--default--text);
-  background-color: #000;
-}
+
 
 @keyframes popDownThenGo {
   0% {
