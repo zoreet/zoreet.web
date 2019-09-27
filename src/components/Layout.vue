@@ -1,24 +1,37 @@
 <template>
   <div id="app" :class="classes">
-      <div class="main">
-        <slot name="main"></slot>
-      </div>
-      <Navbar />
-      <div class="sheets">
-        <slot name="sheets">Sheets</slot>
-      </div>
-      <div class="overlays">
-        <slot name="overlays">Sheets</slot>
-      </div>
+    <div class="main">
+      <slot name="main"></slot>
+    </div>
+    <Navbar />
+    <div class="sheets">
+      <slot name="sheets"></slot>
+    </div>
+    <div class="overlays">
+      <!-- Putting display none here, because I show it from serviceWorker.js and that doesn't have access to vue -->
+      <!-- TODO: make it appear through vue -->
+      <!-- TODO: I don't like that this is in here. can we abstract it in another way?  -->
+      <Alert type="info" style="display: none">
+        <template #message>
+          A new version is available.
+        </template>
+        <template #action>
+          <a href="#" @click.prevent="refresh">REFRESH</a>
+        </template>
+      </Alert>
+      <slot name="overlays"></slot>
+    </div>
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar'
+import Alert from '@/components/Alert'
 
 export default {
   name: 'Layout',
   components: {
+    Alert,
     Navbar
   },
   computed: {
@@ -31,52 +44,7 @@ export default {
 }
 </script>
 
-<style>
-html {
-  /* Colour Palette */
-  --default: #312e53;
-  --default--strong: #232041;
-  --default--text: #8480aa;
-  --default--text--strong: #ffffff;
-  --accent: #82e5cc;
-  --accent--strong: #73d8be;
-  --accent--text: #389981;
-  --accent--text--strong: #114a3b;
-  --warning: #fec660;
-  --warning--strong: #feaa58;
-  --warning--text: #ce6a00;
-  --warning--text--strong: #623100;
-  --destructive: #f27778;
-  --destructive--strong: #ef686a;
-  --destructive--text: #c23a3d;
-  --destructive--text--strong: #69080a;
-  --extra--light: #a57ed5;
-  --extra--dark: #a57ed5;
-}
-
-body {
-  -webkit-font-smoothing: antialiased;
-  background-color: var(--default);
-  font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  margin: 0;
-  padding: 0;
-}
-
-::selection {
-  background: var(--accent--strong) !important;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 0;
-  padding: 0;
-}
-
+<style scoped>
 .layout {
   color: var(--default--text);
   display: grid;
@@ -95,7 +63,7 @@ h6 {
   grid-template-rows: 100% 60px;
 }
 
-.layout * {
+.layout >>> * {
   box-sizing: border-box;
   -webkit-overflow-scrolling: touch;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -124,8 +92,10 @@ h6 {
 }
 
 .main {
-  background-color: var(--default--strong);
+  /* background-color: var(--default--strong); */
+  background-color: #000;
   grid-area: main;
+  position: relative;
 }
 
 

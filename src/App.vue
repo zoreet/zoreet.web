@@ -1,42 +1,10 @@
 <template>
-    <Layout v-cloak :class="{editingTask: editingTask}">
-      <template #main>
-        <!-- <router-view></router-view> -->
-      </template>
-      <template #overlays>
-        <Alert type="info">
-          <template #message>
-            A new version is available.
-          </template>
-          <template #action>
-            <a href="#" @click.prevent="refresh">REFRESH</a>
-          </template>
-        </Alert>
-      </template>
-    </Layout>
-    <!-- <router-view></router-view>
-    <navbar></navbar>
-    <div class="installMessage" v-if="showInstallMessage">
-      <img src="/img/icon.svg" width="60" class="icon">
-      <div class="title">
-        <strong>Install this webapp on your iPhone</strong>
-      </div>
-      <div class="info">
-        Tap
-        <img class="share-icon" src="/img/share-ios.svg" width="20"> and then
-        <img class="add-icon" src="/img/add-to-homescreen.svg" width="22">
-        Add to Home Screen
-      </div>
-    </div>
-  </div> -->  
+  <router-view></router-view>
 </template>
 
 <script>
 import auth0 from 'auth0-js'
 import moment from 'moment'
-import navbar from '@/components/Navbar'
-import Layout from '@/components/Layout'
-import Alert from '@/components/Alert'
 
 export default {
   name: 'app',
@@ -47,19 +15,13 @@ export default {
       showInstallMessage: false,
     }
   },
-  components: {
-    // Component,
-    navbar,
-    Layout,
-    Alert
-  },
   computed: {
     editingTask() {
       return this.$store.state.editingTask
     },
   },
   beforeMount() {
-    this.$store.dispatch('checkLogin')
+    // this.$store.dispatch('checkLogin')
   },
   mounted() {
     let that = this
@@ -95,6 +57,8 @@ export default {
 [v-cloak] {
   display: none !important;
 }
+
+@import url('./assets/base.css');
 
 
 

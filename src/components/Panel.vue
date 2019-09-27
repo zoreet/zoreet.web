@@ -14,7 +14,7 @@
 export default {
   name: 'Panel',
   props: {
-    id: String,
+    id: String, 
     title: String,
   },
   components: {},
@@ -94,8 +94,8 @@ a {
   /* iPad and up */
   .panel {
     height: 100vw;
-    left: 100%;
-    width: 320px;
+    /* left: 100%; */
+    width: 100%;
     bottom: auto;
     top: 0;
   }

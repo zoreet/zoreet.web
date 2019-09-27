@@ -105,7 +105,7 @@ export default {
       date: moment(this.dayId, 'YYYYMMDD'),
       drag: false,
       focusedTask: -1,
-      isLoading: true,
+      isLoading: false,
       tasks: [],
     }
   },
@@ -152,10 +152,11 @@ export default {
   },
   methods: {
     loadTasks() {
-      this.isLoading = true
       if (!navigator.onLine) {
         return
       }
+
+      this.isLoading = true
       axios
         .get('https://api.zoreet.com/days/' + this.dayId, {
           headers: { Authorization: 'Bearer ' + this.$store.state.token },
@@ -191,6 +192,7 @@ export default {
           this.sortTasks()
         })
         .catch(error => {
+          this.isLoading = false
           let message = JSON.stringify(error)
           this.$store.commit('errorMessage', message)
         })
@@ -357,8 +359,9 @@ export default {
   flex-direction: column;
   height: 100%;
   overflow: hidden;
+  flex: 1 0 auto;
+  top: 0;
   width: 100%;
-  border-radius: 10px 10px 0 0;
 }
 .header {
   align-items: flex-start;

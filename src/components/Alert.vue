@@ -4,7 +4,9 @@
     class="alert"
     :class="'alert--' + type"
   >
-    <slot name="message"></slot>
+    <div class="message">
+      <slot name="message"></slot>
+    </div>
     <div class="action">
       <slot name="action">
         <a href="#" @click.prevent="dismiss">DISMISS</a>
@@ -40,14 +42,16 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .alert {
-  position: absolute;
-  z-index: 999;
-  padding: 12px 16px;
   background: var(--warning);
   color: var(--warning--text--strong);
+  display: flex;
   font-size: 13px;
+  font-size: 13px;
+  justify-content: center;
+  padding: 12px 16px;
+  position: absolute;
   width: 100%;
-  font-size: 13px;
+  z-index: 999;
 }
 .alert--info {
   text-align: center;
@@ -64,7 +68,7 @@ a {
   font-weight: bold;
 }
 .action {
-  margin-left: 16px;
+  margin-left: 32px;
   display: inline-block;
 }
 .action a {

@@ -1,0 +1,44 @@
+html {
+  /* Colour Palette */
+  --default: #312e53;
+  --default--strong: #232041;
+  --default--text: #8480aa;
+  --default--text--strong: #ffffff;
+  --accent: #82e5cc;
+  --accent--strong: #73d8be;
+  --accent--text: #389981;
+  --accent--text--strong: #114a3b;
+  --warning: #fec660;
+  --warning--strong: #feaa58;
+  --warning--text: #ce6a00;
+  --warning--text--strong: #623100;
+  --destructive: #f27778;
+  --destructive--strong: #ef686a;
+  --destructive--text: #c23a3d;
+  --destructive--text--strong: #69080a;
+  --extra--light: #a57ed5;
+  --extra--dark: #a57ed5;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  background-color: var(--default);
+  font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+::selection {
+  background: var(--accent--strong) !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}

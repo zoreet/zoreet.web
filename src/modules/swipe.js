@@ -42,9 +42,9 @@ function handleTouchMove(evt) {
     if (Math.abs(xDiff) > Math.abs(yDiff)) {
       /*most significant*/
       if (xDiff > 100) {
-        document.querySelector('.windows').dispatchEvent(swipeLeftEvent)
+        document.querySelector('#tasks').dispatchEvent(swipeLeftEvent)
       } else {
-        document.querySelector('.windows').dispatchEvent(swipeRightEvent)
+        document.querySelector('#tasks').dispatchEvent(swipeRightEvent)
       }
     } else {
       if (yDiff > 0) {

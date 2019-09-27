@@ -1,41 +1,50 @@
 <template>
-  <div id="tasks" v-cloak :class="{editingTask: editingTask}">
-    <alert v-if="errorMessage" type="error" :action="login">
-      <strong>There was an error connecting to the server</strong>
-      <p>Press here to log in again and fix the error</p>
-    </alert>
+  <Layout v-cloak :class="{editingTask: editingTask}">
+    <template #main>
+      <div id="tasks" :style="scrollPosition">
+        <Day
+          v-for="day in days"
+          :key="day.id"
+          :dayId="day.id"
+        />
+      </div>
+    </template>
 
-    <div class="windows">
-      <div
-        v-for="day in days"
-        :key="day.id"
-        class="window"
-        :class="{'window--past': day.id - currentDayId < 0, 'window--future': day.id - currentDayId > 0, 'window--current': day.id == currentDayId }"
-      >
-        <day id="editor" :dayId="day.id"></day>
-      </div>
-    </div>
-    <panel id="calendar" title="Pick a date">
-      <month :action="gotoDay" :date="currentDayId"></month>
-      <div class="buttons">
-        <btn @action="gotoToday" role="secondary">Today</btn>
-      </div>
-    </panel>
-  </div>
+    <template #sheets>
+      <panel id="calendar" title="Pick a date">
+        <month :action="gotoDay" :date="currentDayId"></month>
+        <div class="buttons">
+          <btn @action="gotoToday" role="secondary">Today</btn>
+        </div>
+      </panel>
+    </template>
+
+    <template #overlays>
+      <Alert v-if="errorMessage" type="error">
+        <template #message>
+          There was an error accessing your account.
+        </template>
+        <template #action>
+          <a href="#" @click.prevent="login">LOG IN</a>
+        </template>
+      </Alert>
+    </template>
+  </Layout>
 </template>
 
 <script>
-import alert from '@/components/Alert'
+import Layout from '@/components/Layout'
+import Alert from '@/components/Alert'
 import btn from '@/components/Button'
-import day from '@/components/Day'
+import Day from '@/components/Day'
 import moment from 'moment'
 import month from '@/components/Month'
 import panel from '@/components/Panel'
+import { mapActions } from 'vuex'
 import Swipe from '@/modules/swipe' // keep this, I'm using it
-// import Component from '@/components/Component.vue'
 
 export default {
-  name: 'app',
+  name: 'Tasks',
   data() {
     return {
       swipe: null,
@@ -46,10 +55,10 @@ export default {
     }
   },
   components: {
-    // Component,
-    alert,
+    Alert,
     btn,
-    day,
+    Day,
+    Layout,
     month,
     panel,
   },
@@ -69,10 +78,21 @@ export default {
     editingTask() {
       return this.$store.state.editingTask
     },
-  },
-  mounted() {
-    let that = this
+    scrollPosition() {
+      let i = 0;
+      for(i=0; i<this.days.length; i++) {
+        if( this.days[i] && this.days[i].id == this.currentDayId ) {
 
+        }
+      }
+      if( i ) {
+        return 'transform: translateX(' + ( ( 1 - i ) * 100 ) + '%)'
+      }
+
+      return ''
+    }
+  },
+  created() {
     this.$store.commit('addDay', this.currentDayId)
 
     let yesterdayId = moment(this.currentDayId)
@@ -83,19 +103,25 @@ export default {
       .add(1, 'days')
       .format('YYYYMMDD')
     this.$store.commit('addDay', tomorrowId)
+  },
+  mounted() {
+    let that = this
 
     document
-      .querySelector('.windows')
+      .querySelector('#tasks')
       .addEventListener('swipeLeft', function() {
         if (!that.activePanel) that.gotoNextDay()
       })
     document
-      .querySelector('.windows')
+      .querySelector('#tasks')
       .addEventListener('swipeRight', function() {
         if (!that.activePanel) that.gotoPrevDay()
       })
   },
   methods: {
+    ...mapActions([
+      'login'
+    ]),
     // ////////////////////////////////////////////////////////////
     //
     // DAYS
@@ -128,20 +154,19 @@ export default {
         }
       }
     },
-
-    // ////////////////////////////////////////////////////////////
-    //
-    // USER
-    //
-    // ////////////////////////////////////////////////////////////
-    login() {
-      this.$store.dispatch('login')
-    },
   },
 }
 </script>
 
 <style>
+#tasks {
+  display: flex;
+  height: 100%;
+  position: absolute;
+  /* transform: scale(0.5); */
+  width: 100%;
+}
+
 .windows {
   flex: 1 0 auto;
   height: 100%;
@@ -155,7 +180,7 @@ export default {
   height: 100%;
   left: 0;
   overflow: hidden;
-  position: fixed;
+  position: absolute;
   top: 0;
   width: 100%;
   transition: transform 0.4s;
