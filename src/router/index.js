@@ -3,7 +3,7 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-import Tasks from '@/views/Tasks.vue'
+import Days from '@/views/Days.vue'
 import Report from '@/views/Report.vue'
 import Settings from '@/views/Settings.vue'
 
@@ -11,7 +11,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: Tasks,
+      component: Days,
     },
     {
       path: '/report',

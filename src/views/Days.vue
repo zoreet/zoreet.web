@@ -1,7 +1,7 @@
 <template>
   <Layout v-cloak :class="{editingTask: editingTask}">
     <template #main>
-      <div id="tasks" :style="scrollPosition">
+      <div id="days" :style="scrollPosition">
         <Day
           v-for="day in days"
           :key="day.id"
@@ -44,7 +44,7 @@ import { mapActions } from 'vuex'
 import Swipe from '@/modules/swipe' // keep this, I'm using it
 
 export default {
-  name: 'Tasks',
+  name: 'Days',
   data() {
     return {
       swipe: null,
@@ -108,12 +108,12 @@ export default {
     let that = this
 
     document
-      .querySelector('#tasks')
+      .querySelector('#days')
       .addEventListener('swipeLeft', function() {
         if (!that.activePanel) that.gotoNextDay()
       })
     document
-      .querySelector('#tasks')
+      .querySelector('#days')
       .addEventListener('swipeRight', function() {
         if (!that.activePanel) that.gotoPrevDay()
       })
@@ -159,7 +159,7 @@ export default {
 </script>
 
 <style>
-#tasks {
+#days {
   display: flex;
   height: 100%;
   position: absolute;
