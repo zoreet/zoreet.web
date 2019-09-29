@@ -43,7 +43,10 @@ export default {
     if (state.errorMessage !== '')
     state.errorMessage = ''
   },
-  editingTask(state, newState) {
-    state.editingTask = newState
+  startEditingTask(state) {
+    state.editingTask = true
+  },
+  doneEditingTask(state) {
+    state.editingTask = false
   },
 }

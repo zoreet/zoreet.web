@@ -14,7 +14,7 @@
         @change="updateHeight"
         @keydown="updateHeight"
         @blur="doneEdit"
-        @focus="editTask"
+        @focus="startEditingTask"
         @keydown.backspace="removeTask"
         @keydown.enter.prevent="doneEditWithEnter"
         @keyup.escape="cancelEdit"
@@ -83,12 +83,12 @@ export default {
     }
   },
   methods: {
-    editTask() {
+    startEditingTask() {
       this.beforeEditCache = this.task.title
-      this.$store.commit('editingTask', true)
+      this.$store.commit('startEditingTask', this.task)
     },
     doneEdit() {
-      this.$store.commit('editingTask', false)
+      this.$store.commit('doneEditingTask', this.task)
 
       if (this.isRemoved) return
 
