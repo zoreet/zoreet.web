@@ -1,7 +1,12 @@
 <template>
   <div
     class="task"
-    :class="{active: task.done, focused: autofocus, important: important, disabled: disabled}"
+    :class="{
+      active: task.done,
+      focused: autofocus,
+      important: important,
+      disabled: disabled,
+    }"
   >
     <div v-if="enabled" class="checkbox" @click="toggleTask"></div>
     <div v-else class="checkbox"></div>

@@ -1,5 +1,5 @@
 <template>
-  <div id="tasks" v-cloak :class="{editingTask: editingTask}">
+  <div id="tasks" v-cloak :class="{ editingTask: editingTask }">
     <alert id="refresh" type="info" :action="refresh" style="display: none">
       <strong>A new version is available.</strong>
       <p>Press here to get the latest changes</p>
@@ -14,7 +14,11 @@
         v-for="day in days"
         :key="day.id"
         class="window"
-        :class="{'window--past': day.id - currentDayId < 0, 'window--future': day.id - currentDayId > 0, 'window--current': day.id == currentDayId }"
+        :class="{
+          'window--past': day.id - currentDayId < 0,
+          'window--future': day.id - currentDayId > 0,
+          'window--current': day.id == currentDayId,
+        }"
       >
         <day id="editor" :dayId="day.id"></day>
       </div>
@@ -35,8 +39,8 @@ import day from '@/components/Day'
 import moment from 'moment'
 import month from '@/components/Month'
 import panel from '@/components/Panel'
+// eslint-disable-next-line no-unused-vars
 import Swipe from '@/modules/swipe' // keep this, I'm using it
-// import Component from '@/components/Component.vue'
 
 export default {
   name: 'app',

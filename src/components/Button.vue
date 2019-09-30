@@ -1,5 +1,10 @@
 <template>
-  <a href="#" class="button" :class="{secondary: role=='secondary'}" @click.prevent="action">
+  <a
+    href="#"
+    class="button"
+    :class="{ secondary: role == 'secondary' }"
+    @click.prevent="action"
+  >
     <slot></slot>
   </a>
 </template>

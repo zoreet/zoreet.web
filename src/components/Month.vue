@@ -2,7 +2,7 @@
   <div class="month">
     <div class="header">
       <div class="pagination" @click="prevMonth"></div>
-      <div class="title">{{title}}</div>
+      <div class="title">{{ title }}</div>
       <div class="pagination" @click="nextMonth"></div>
     </div>
     <div class="days weekdays">
@@ -20,14 +20,24 @@
         :key="day.id"
         class="day"
         :class="{
-          startRange: ( day.date == selectedRange.startDate ),
-          endRange: ( day.date == selectedRange.endDate ),
-          range: ( day.date > selectedRange.startDate && day.date < selectedRange.endDate ),
-          today: ( day.date == todayId ),
-          disabled: ( selectedRange.startDate && !selectedRange.endDate && day.date <= selectedRange.startDate )
-          }"
+          startRange: day.date == selectedRange.startDate,
+          endRange: day.date == selectedRange.endDate,
+          range:
+            day.date > selectedRange.startDate &&
+            day.date < selectedRange.endDate,
+          today: day.date == todayId,
+          disabled:
+            selectedRange.startDate &&
+            !selectedRange.endDate &&
+            day.date <= selectedRange.startDate,
+        }"
       >
-        <span class="day--label" @click="changeDate(day.date)" v-if="day.id > 0">{{day.id}}</span>
+        <span
+          class="day--label"
+          @click="changeDate(day.date)"
+          v-if="day.id > 0"
+          >{{ day.id }}</span
+        >
       </div>
     </div>
     <div class="days" v-else>
@@ -36,11 +46,16 @@
         :key="day.id"
         class="day"
         :class="{
-            active: ( day.date == currentDateId ),
-            today: ( day.date == todayId )
-          }"
+          active: day.date == currentDateId,
+          today: day.date == todayId,
+        }"
       >
-        <span class="day--label" @click="changeDate(day.date)" v-if="day.id > 0">{{day.id}}</span>
+        <span
+          class="day--label"
+          @click="changeDate(day.date)"
+          v-if="day.id > 0"
+          >{{ day.id }}</span
+        >
       </div>
     </div>
   </div>

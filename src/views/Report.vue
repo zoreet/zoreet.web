@@ -1,13 +1,15 @@
 <template>
   <div id="report">
-    <div class="day" :class="{isLoading: isLoading}">
+    <div class="day" :class="{ isLoading: isLoading }">
       <div class="header">
         <div class="header__copy">
           <div class="subtitle" @click.prevent="showPanel('calendar')">
-            <span v-if="tasks.length">{{doneTasks.length}}</span>
+            <span v-if="tasks.length">{{ doneTasks.length }}</span>
             Tasks completed
           </div>
-          <h3 class="title" @click.prevent="showPanel('calendar')">{{ title }}</h3>
+          <h3 class="title" @click.prevent="showPanel('calendar')">
+            {{ title }}
+          </h3>
         </div>
         <a href="#" class="calendar" @click.prevent="showPanel('calendar')">
           <svg
@@ -18,14 +20,27 @@
             xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink"
           >
-            <g id="calendar" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g
+              id="calendar"
+              stroke="none"
+              stroke-width="1"
+              fill="none"
+              fill-rule="evenodd"
+            >
               <path
                 d="M6,2 C6.27614237,2 6.5,2.22385763 6.5,2.5 C6.5,2.77614237 6.27614237,3 6,3 L4,3 C2.34314575,3 1,4.34314575 1,6 L1,28 C1,29.6568542 2.34314575,31 4,31 L26,31 C27.6568542,31 29,29.6568542 29,28 L29,6 C29,4.34314575 27.6568542,3 26,3 L24,3 C23.7238576,3 23.5,2.77614237 23.5,2.5 C23.5,2.22385763 23.7238576,2 24,2 L26,2 C28.209139,2 30,3.790861 30,6 L30,28 C30,30.209139 28.209139,32 26,32 L4,32 C1.790861,32 2.705415e-16,30.209139 0,28 L0,6 C-2.705415e-16,3.790861 1.790861,2 4,2 L6,2 Z"
                 id="Path"
                 fill="#000000"
                 fill-rule="nonzero"
               ></path>
-              <rect id="Rectangle" fill="#000000" x="1" y="12" width="28" height="1"></rect>
+              <rect
+                id="Rectangle"
+                fill="#000000"
+                x="1"
+                y="12"
+                width="28"
+                height="1"
+              ></rect>
               <path
                 d="M19,2 C19.2761424,2 19.5,2.22385763 19.5,2.5 C19.5,2.77614237 19.2761424,3 19,3 L11,3 C10.7238576,3 10.5,2.77614237 10.5,2.5 C10.5,2.22385763 10.7238576,2 11,2 L19,2 Z"
                 id="Path"
@@ -48,14 +63,28 @@
       <div class="empty-state content" v-if="this.doneTasks.length == 0">
         <div>
           <h3 class="empty-state__title">Nothing found</h3>
-          <p class="empty-state__subtitle">You don't have any tasks for this dates</p>
+          <p class="empty-state__subtitle">
+            You don't have any tasks for this dates
+          </p>
         </div>
       </div>
       <!-- 200ms so that I can scroll comfortably and never miss -->
       <div v-else class="content">
         <div class="report__sort-options">
-          <a href="#" @click.prevent="sortByTime" class="report__link" :class="{active: !sortedByName}">Sort by time</a>
-          <a href="#" @click.prevent="sortByName" class="report__link" :class="{active: sortedByName}">Sort by name</a>
+          <a
+            href="#"
+            @click.prevent="sortByTime"
+            class="report__link"
+            :class="{ active: !sortedByName }"
+            >Sort by time</a
+          >
+          <a
+            href="#"
+            @click.prevent="sortByName"
+            class="report__link"
+            :class="{ active: sortedByName }"
+            >Sort by name</a
+          >
         </div>
         <task
           v-for="taskItem in doneTasks"
@@ -67,11 +96,19 @@
       </div>
     </div>
     <panel id="calendar" title="Generate report for">
-      <month mode="range" :action="rangeSelected" :range="{startDate: startDate, endDate: endDate}"></month>
+      <month
+        mode="range"
+        :action="rangeSelected"
+        :range="{ startDate: startDate, endDate: endDate }"
+      ></month>
       <div class="buttons">
         <btn @action="gotoLastWeek">Last Week</btn>
         <btn @action="gotoThisWeek">This Week</btn>
-        <btn v-if="user.sub == 'auth0|5be5dd454aecba31291994c4'" @action="gotoAll">So Far</btn>
+        <btn
+          v-if="user.sub == 'auth0|5be5dd454aecba31291994c4'"
+          @action="gotoAll"
+          >So Far</btn
+        >
       </div>
     </panel>
   </div>
@@ -122,10 +159,14 @@ export default {
       })
 
       if (this.sortedByName) {
-        tasks = tasks.sort( (a,b) => {
-          if (a.title.toLowerCase() < b.title.toLowerCase()) { return -1; }
-          if (a.title.toLowerCase() > b.title.toLowerCase()) { return 1; }
-          return 0;
+        tasks = tasks.sort((a, b) => {
+          if (a.title.toLowerCase() < b.title.toLowerCase()) {
+            return -1
+          }
+          if (a.title.toLowerCase() > b.title.toLowerCase()) {
+            return 1
+          }
+          return 0
         })
       }
 
@@ -436,7 +477,7 @@ export default {
   text-decoration: none;
 }
 
-.report__link  + .report__link {
+.report__link + .report__link {
   margin-left: 8px;
 }
 

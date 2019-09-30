@@ -9,20 +9,19 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 window.addEventListener('focus', () => {
-  let wasLookingAtToday = false;
+  let wasLookingAtToday = false
   if (store.state.today.isSame(store.state.currentDay, 'day')) {
-    wasLookingAtToday = true;
+    wasLookingAtToday = true
   }
 
   let now = moment()
-  if (store.state.today.isSame(now,'day')) {
+  if (store.state.today.isSame(now, 'day')) {
     store.commit('newToday', now)
 
-    if(wasLookingAtToday) {
+    if (wasLookingAtToday) {
       store.dispatch('gotoDay', { today: true })
     }
   }
-
 })
 
 // temporary cleanup for versions up to and including v3.0.3
@@ -95,8 +94,7 @@ const store = new Vuex.Store({
       state.errorMessage = newErrorMessage
     },
     clearErrorMessage(state) {
-      if (state.errorMessage !== '')
-        state.errorMessage = ''
+      if (state.errorMessage !== '') state.errorMessage = ''
     },
     editingTask(state, newState) {
       state.editingTask = newState

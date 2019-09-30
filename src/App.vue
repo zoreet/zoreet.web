@@ -1,16 +1,16 @@
 <template>
-  <div id="app" v-cloak :class="{editingTask: editingTask}">
+  <div id="app" v-cloak :class="{ editingTask: editingTask }">
     <router-view></router-view>
     <navbar></navbar>
     <div class="installMessage" v-if="showInstallMessage">
-      <img src="/img/icon.svg" width="60" class="icon">
+      <img src="/img/icon.svg" width="60" class="icon" />
       <div class="title">
         <strong>Install this webapp on your iPhone</strong>
       </div>
       <div class="info">
         Tap
-        <img class="share-icon" src="/img/share-ios.svg" width="20"> and then
-        <img class="add-icon" src="/img/add-to-homescreen.svg" width="22">
+        <img class="share-icon" src="/img/share-ios.svg" width="20" /> and then
+        <img class="add-icon" src="/img/add-to-homescreen.svg" width="22" />
         Add to Home Screen
       </div>
     </div>
@@ -18,8 +18,6 @@
 </template>
 
 <script>
-import auth0 from 'auth0-js'
-import moment from 'moment'
 import navbar from './components/Navbar'
 
 export default {
@@ -44,8 +42,6 @@ export default {
     this.$store.dispatch('checkLogin')
   },
   mounted() {
-    let that = this
-
     document.addEventListener(
       'touchmove',
       function(e) {
