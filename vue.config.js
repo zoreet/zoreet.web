@@ -1,7 +1,7 @@
 // vue.config.js
 module.exports = {
   publicPath: '/',
-  outputDir: 'docs',
+  outputDir: 'build',
   pwa: {
     appleMobileWebAppStatusBarStyle: 'black',
     workboxOptions: {
