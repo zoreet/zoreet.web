@@ -12,9 +12,7 @@
       <!-- TODO: make it appear through vue -->
       <!-- TODO: I don't like that this is in here. can we abstract it in another way?  -->
       <Alert type="info" style="display: none">
-        <template #message>
-          A new version is available.
-        </template>
+        <template #message>A new version is available.</template>
         <template #action>
           <a href="#" @click.prevent="refresh">REFRESH</a>
         </template>
@@ -32,14 +30,14 @@ export default {
   name: 'Layout',
   components: {
     Alert,
-    Navbar
+    Navbar,
   },
   computed: {
     classes() {
-      let classes= 'layout'
+      let classes = 'layout'
       // here i'll have to see if we're in editing mode and add 'layout--editing'
       return classes
-    }
+    },
   },
 }
 </script>
@@ -48,7 +46,7 @@ export default {
 .layout {
   color: var(--default--text);
   display: grid;
-  grid-template-areas: "main" "navbar";
+  grid-template-areas: 'main' 'navbar';
   grid-template-columns: 1fr;
   grid-template-rows: 1fr auto;
   overflow: hidden;
@@ -58,6 +56,8 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
+
+  height: 100%;
 }
 .layout--editing {
   grid-template-rows: 100% 60px;
@@ -68,10 +68,6 @@ export default {
   -webkit-overflow-scrolling: touch;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
-
-
-
-
 
 .sheets {
   position: absolute;
@@ -98,18 +94,18 @@ export default {
   position: relative;
 }
 
-
-
-
 @media (min-width: 1281px) {
   .layout {
     grid-template-columns: 300px 1fr;
     grid-template-rows: auto 1fr;
-    grid-template-areas: "navbar main" "sheets main";
+    grid-template-areas: 'navbar main' 'sheets main';
   }
 
-  .navbar { grid-area: navbar; }
-  .sheets { grid-area: navbar; }
-
+  .navbar {
+    grid-area: navbar;
+  }
+  .sheets {
+    grid-area: navbar;
+  }
 }
 </style>
