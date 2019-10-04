@@ -70,9 +70,9 @@ export default {
 }
 
 .sheets {
-  position: absolute;
+  position: fixed;
   background-color: var(--default);
-  top: 100%;
+  bottom: 0;
   left: 0;
   right: 0;
 }
