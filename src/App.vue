@@ -1,11 +1,23 @@
 <template>
+<div>
   <router-view></router-view>
+  <div class="installMessage" v-if="showInstallMessage">
+      <img src="/img/icon.svg" width="60" class="icon" />
+      <div class="title">
+        <strong>Install this webapp on your iPhone</strong>
+      </div>
+      <div class="info">
+        Tap
+        <img class="share-icon" src="/img/share-ios.svg" width="20" /> and then
+        <img class="add-icon" src="/img/add-to-homescreen.svg" width="22" />
+        Add to Home Screen
+      </div>
+    </div>
+  </div>
+</div>
 </template>
 
 <script>
-import auth0 from 'auth0-js'
-import moment from 'moment'
-
 export default {
   name: 'app',
   data() {
@@ -15,17 +27,10 @@ export default {
       showInstallMessage: false,
     }
   },
-  computed: {
-    editingTask() {
-      return this.$store.state.editingTask
-    },
-  },
   beforeMount() {
-    // this.$store.dispatch('checkLogin')
+    this.$store.dispatch('checkLogin')
   },
   mounted() {
-    let that = this
-
     document.addEventListener(
       'touchmove',
       function(e) {
@@ -59,11 +64,6 @@ export default {
 }
 
 @import url('./assets/base.css');
-
-
-
-
-
 
 @keyframes popDownThenGo {
   0% {
