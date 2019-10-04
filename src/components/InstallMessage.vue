@@ -41,6 +41,7 @@ export default {
   background-color: var(--default--text--strong);
   border-radius: 16px;
   bottom: 16px;
+  box-sizing: border-box;
   color: var(--default);
   display: grid;
   grid-column-gap: 12px;
@@ -53,7 +54,7 @@ export default {
   opacity: 0;
   padding: 8px;
   position: fixed;
-  width: calc(100% - 4px);
+  width: calc(100vw - 4px);
   z-index: 999;
 }
 .installMessage:after {
