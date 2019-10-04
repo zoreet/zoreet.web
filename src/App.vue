@@ -1,7 +1,7 @@
 <template>
-<div>
-  <router-view></router-view>
-  <div class="installMessage" v-if="showInstallMessage">
+  <div>
+    <router-view></router-view>
+    <div class="installMessage" v-if="showInstallMessage">
       <img src="/img/icon.svg" width="60" class="icon" />
       <div class="title">
         <strong>Install this webapp on your iPhone</strong>
@@ -14,7 +14,6 @@
       </div>
     </div>
   </div>
-</div>
 </template>
 
 <script>
