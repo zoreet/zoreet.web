@@ -1,16 +1,16 @@
 <template>
-  <div :id="id" class="day" :class="{isLoading: isLoading}">
+  <div class="day" :class="{isLoading: isLoading}">
     <div class="header">
       <div class="header__copy">
-        <div class="subtitle" @click.prevent="showPanel('calendar')">
+        <div class="subtitle" @click.prevent="changePanel('calendar')">
           {{ dateSubtitle }}
           <span v-if="isToday">- Today</span>
         </div>
-        <h3 class="title" @click.prevent="showPanel('calendar')">{{ dateTitle }}</h3>
+        <h3 class="title" @click.prevent="changePanel('calendar')">{{ dateTitle }}</h3>
       </div>
 
       <a href="#" class="header__add-task" @click.prevent="addFirstEmptyTask">+</a>
-      <a href="#" class="calendar" @click.prevent="showPanel('calendar')">
+      <a href="#" class="calendar" @click.prevent="changePanel('calendar')">
         <svg
           width="24px"
           height="25px"
@@ -25,23 +25,23 @@
               id="Path"
               fill="#000000"
               fill-rule="nonzero"
-            ></path>
-            <rect id="Rectangle" fill="#000000" x="1" y="12" width="28" height="1"></rect>
+            />
+            <rect id="Rectangle" fill="#000000" x="1" y="12" width="28" height="1" />
             <path
               d="M19,2 C19.2761424,2 19.5,2.22385763 19.5,2.5 C19.5,2.77614237 19.2761424,3 19,3 L11,3 C10.7238576,3 10.5,2.77614237 10.5,2.5 C10.5,2.22385763 10.7238576,2 11,2 L19,2 Z"
               id="Path"
               fill="#000000"
-            ></path>
+            />
             <path
               d="M9,5.05000906 C10.1411202,5.28164422 11,6.29052104 11,7.5 C11,8.88071187 9.88071187,10 8.5,10 C7.11928813,10 6,8.88071187 6,7.5 C6,6.29052104 6.85887984,5.28164422 8,5.05000906 L8,0.5 C8,0.223857625 8.22385763,0 8.5,0 C8.77614237,0 9,0.223857625 9,0.5 L9,5.05000906 Z M8.5,9 C9.32842712,9 10,8.32842712 10,7.5 C10,6.67157288 9.32842712,6 8.5,6 C7.67157288,6 7,6.67157288 7,7.5 C7,8.32842712 7.67157288,9 8.5,9 Z"
               id="Combined-Shape"
               fill="#000000"
-            ></path>
+            />
             <path
               d="M22,5.05000906 C23.1411202,5.28164422 24,6.29052104 24,7.5 C24,8.88071187 22.8807119,10 21.5,10 C20.1192881,10 19,8.88071187 19,7.5 C19,6.29052104 19.8588798,5.28164422 21,5.05000906 L21,0.5 C21,0.223857625 21.2238576,0 21.5,0 C21.7761424,0 22,0.223857625 22,0.5 L22,5.05000906 Z M21.5,9 C22.3284271,9 23,8.32842712 23,7.5 C23,6.67157288 22.3284271,6 21.5,6 C20.6715729,6 20,6.67157288 20,7.5 C20,8.32842712 20.6715729,9 21.5,9 Z"
               id="Combined-Shape-Copy"
               fill="#000000"
-            ></path>
+            />
           </g>
         </svg>
       </a>
@@ -58,13 +58,14 @@
     <!-- 200ms so that I can scroll comfortably and never miss -->
     <draggable
       v-else
-      v-model="tasks"
+      :value="tasks"
       @end.prevent="onDragEnd"
       delay="200"
       class="content"
       :options="{disabled: editingTask}"
       @start="drag = true"
       @end="drag = false"
+      @change="log"
     >
       <transition-group :name="!drag ? 'reorder-list' : null">
         <task
@@ -88,13 +89,10 @@ import axios from 'axios'
 import draggable from 'vuedraggable'
 import task from './Task'
 import btn from './Button'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'Day',
-  props: {
-    dayId: String,
-    id: String,
-  },
   components: {
     btn,
     draggable,
@@ -102,16 +100,15 @@ export default {
   },
   data() {
     return {
-      date: moment(this.dayId, 'YYYYMMDD'),
       drag: false,
       focusedTask: -1,
       isLoading: false,
-      tasks: [],
     }
   },
   computed: {
-    isVisible() {
-      return this.date.isSame(this.$store.state.currentDay, 'day')
+    ...mapState(['currentDay', 'tasks']),
+    date() {
+      return moment(this.currentDay, 'YYYYMMDD')
     },
     isPast() {
       return this.date.isBefore(this.$store.state.today, 'day')
@@ -136,21 +133,13 @@ export default {
     },
   },
   mounted() {
-    if (this.isVisible) {
-      this.loadTasks()
-    }
-
-    this.$store.subscribe(mutation => {
-      switch (mutation.type) {
-        case 'gotoDay':
-          if (this.isVisible) {
-            this.loadTasks()
-          }
-          break
-      }
-    })
+    this.loadTasks()
   },
   methods: {
+    ...mapMutations(['changePanel']),
+    log(a, b, c, d) {
+      console.log(a, b, c, d)
+    },
     loadTasks() {
       if (!navigator.onLine) {
         return
@@ -158,19 +147,22 @@ export default {
 
       this.isLoading = true
       axios
-        .get('https://api.zoreet.com/days/' + this.dayId, {
+        .get('https://api.zoreet.com/days/' + this.currentDay, {
           headers: { Authorization: 'Bearer ' + this.$store.state.token },
         })
         .then(response => {
           let rawTasks = response.data.day.tasks
+          let newTasks = []
 
           this.isLoading = false
-          this.$store.commit('clearErrorMessage')
+          if (this.$store.state.errorMessage !== '') {
+            this.$store.commit('clearErrorMessage')
+          }
 
           try {
-            this.tasks = JSON.parse(rawTasks)
+            newTasks = JSON.parse(rawTasks)
           } catch (e) {
-            this.tasks = rawTasks
+            newTasks = rawTasks
               .replace(/<br>/g, '')
               .replace(/<div class="\s*[a-z]*\s*">\s*<\/div>/g, '') // empty divs
               .split('</div>')
@@ -189,7 +181,8 @@ export default {
               .filter(task => task.title.length)
           }
 
-          this.sortTasks()
+          // this.sortTasks()
+          this.$store.commit('saveTasks', newTasks)
         })
         .catch(error => {
           this.isLoading = false
@@ -216,12 +209,14 @@ export default {
 
       axios
         .post(
-          'https://api.zoreet.com/days/' + this.dayId,
+          'https://api.zoreet.com/days/' + this.currentDay,
           { tasks: JSON.stringify(this.tasks) },
           { headers: { Authorization: 'Bearer ' + this.$store.state.token } }
         )
         .then(() => {
-          this.$store.commit('clearErrorMessage')
+          if (this.$store.state.errorMessage !== '') {
+            this.$store.commit('clearErrorMessage')
+          }
         })
         .catch(error => {
           let message = error.response.data.error.message
@@ -343,9 +338,6 @@ export default {
           this.focusedTask == this.tasks[0].id
         }
       })
-    },
-    showPanel(pannelId) {
-      this.$store.commit('changePanel', pannelId)
     },
   },
 }
