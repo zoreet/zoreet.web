@@ -9,18 +9,6 @@
 <script>
 export default {
   name: 'Navbar',
-  props: {},
-  components: {},
-  data() {
-    return {}
-  },
-
-  mounted() {},
-  methods: {
-    gotoToday() {
-      this.$store.dispatch('gotoDay', { today: true })
-    },
-  },
 }
 </script>
 
