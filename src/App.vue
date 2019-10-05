@@ -69,7 +69,6 @@ export default {
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--accent);
 }
 [v-cloak] {
   display: none !important;
@@ -130,7 +129,7 @@ h6 {
   --extra--dark: #a57ed5;
 
   color: var(--default--text);
-  background-color: #000;
+  background-color: var(--default--strong);
 }
 
 @keyframes popDownThenGo {
