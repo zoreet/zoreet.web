@@ -3,6 +3,7 @@ import App from './App.vue'
 import moment from 'moment'
 import auth0 from 'auth0-js'
 import router from '@/router/index.js'
+import './registerServiceWorker'
 
 Vue.config.productionTip = false
 import Vuex from 'vuex'
