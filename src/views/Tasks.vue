@@ -41,6 +41,7 @@ import month from '@/components/Month'
 import panel from '@/components/Panel'
 // eslint-disable-next-line no-unused-vars
 import Swipe from '@/modules/swipe' // keep this, I'm using it
+import { mapState } from 'vuex'
 
 export default {
   name: 'app',
@@ -62,20 +63,15 @@ export default {
     panel,
   },
   computed: {
-    days() {
-      return this.$store.state.days
-    },
+    ...mapState([
+      'days',
+      'activePanel',
+      'currentDay',
+      'errorMessage',
+      'editingTask',
+    ]),
     currentDayId() {
-      return this.$store.state.currentDay.format('YYYYMMDD')
-    },
-    activePanel() {
-      return this.$store.state.activePanel
-    },
-    errorMessage() {
-      return this.$store.state.errorMessage
-    },
-    editingTask() {
-      return this.$store.state.editingTask
+      return this.currentDay.format('YYYYMMDD')
     },
   },
   mounted() {

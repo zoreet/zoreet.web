@@ -7,6 +7,7 @@ import moment from 'moment'
 
 Vue.config.productionTip = false
 
+// TODO: move this to Day.vue or Tasks.vue
 window.addEventListener('focus', () => {
   let wasLookingAtToday = false
   if (store.state.today.isSame(store.state.currentDay, 'day')) {

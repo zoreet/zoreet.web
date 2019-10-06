@@ -19,6 +19,7 @@
 
 <script>
 import navbar from './components/Navbar'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'app',
@@ -34,12 +35,10 @@ export default {
     navbar,
   },
   computed: {
-    editingTask() {
-      return this.$store.state.editingTask
-    },
+    ...mapState(['editingTask']),
   },
   beforeMount() {
-    this.$store.dispatch('checkLogin')
+    this.checkLogin()
   },
   mounted() {
     document.addEventListener(
@@ -61,7 +60,9 @@ export default {
       this.showInstallMessage = true
     }
   },
-  methods: {},
+  methods: {
+    ...mapActions(['checkLogin']),
+  },
 }
 </script>
 

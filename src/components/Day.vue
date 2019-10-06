@@ -110,6 +110,7 @@ import axios from 'axios'
 import draggable from 'vuedraggable'
 import task from './Task'
 import btn from './Button'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Day',
@@ -132,17 +133,18 @@ export default {
     }
   },
   computed: {
+    ...mapState(['currentDay', 'editingTask', 'today', 'token']),
     isVisible() {
-      return this.date.isSame(this.$store.state.currentDay, 'day')
+      return this.date.isSame(this.currentDay, 'day')
     },
     isPast() {
-      return this.date.isBefore(this.$store.state.today, 'day')
+      return this.date.isBefore(this.today, 'day')
     },
     isToday() {
-      return this.date.isSame(this.$store.state.today, 'day')
+      return this.date.isSame(this.today, 'day')
     },
     isFuture() {
-      return this.date.isAfter(this.$store.state.today, 'day')
+      return this.date.isAfter(this.today, 'day')
     },
     dateTitle() {
       let now = moment()
@@ -152,9 +154,6 @@ export default {
     },
     dateSubtitle() {
       return this.date.format('dddd')
-    },
-    editingTask() {
-      return this.$store.state.editingTask
     },
   },
   mounted() {
@@ -180,7 +179,7 @@ export default {
       }
       axios
         .get('https://api.zoreet.com/days/' + this.dayId, {
-          headers: { Authorization: 'Bearer ' + this.$store.state.token },
+          headers: { Authorization: 'Bearer ' + this.token },
         })
         .then(response => {
           let rawTasks = response.data.day.tasks
@@ -238,7 +237,7 @@ export default {
         .post(
           'https://api.zoreet.com/days/' + this.dayId,
           { tasks: JSON.stringify(this.tasks) },
-          { headers: { Authorization: 'Bearer ' + this.$store.state.token } }
+          { headers: { Authorization: 'Bearer ' + this.token } }
         )
         .then(() => {
           this.$store.commit('clearErrorMessage')

@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'Panel',
   props: {
@@ -22,12 +23,11 @@ export default {
     return {}
   },
   computed: {
+    ...mapState(['activePanel']),
     active() {
-      return this.$store.state.activePanel == this.id
+      return this.activePanel == this.id
     },
   },
-
-  mounted() {},
   methods: {
     closePanel() {
       this.$store.commit('changePanel', '')

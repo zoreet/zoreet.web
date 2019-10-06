@@ -20,6 +20,7 @@
 
 <script>
 import btn from '@/components/Button'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Settings',
@@ -30,9 +31,7 @@ export default {
     return {}
   },
   computed: {
-    user() {
-      return this.$store.state.user
-    },
+    ...mapState(['user']),
   },
   methods: {
     logout() {
