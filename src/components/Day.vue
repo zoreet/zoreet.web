@@ -133,7 +133,13 @@ export default {
     }
   },
   computed: {
-    ...mapState(['currentDay', 'editingTask', 'today', 'token']),
+    ...mapState([
+      'currentDay',
+      'editingTask',
+      'errorMessage',
+      'today',
+      'token',
+    ]),
     isVisible() {
       return this.date.isSame(this.currentDay, 'day')
     },
@@ -185,7 +191,7 @@ export default {
           let rawTasks = response.data.day.tasks
 
           this.isLoading = false
-          this.$store.commit('clearErrorMessage')
+          if (this.errorMessage) this.$store.commit('clearErrorMessage')
 
           try {
             this.tasks = JSON.parse(rawTasks)
@@ -240,7 +246,7 @@ export default {
           { headers: { Authorization: 'Bearer ' + this.token } }
         )
         .then(() => {
-          this.$store.commit('clearErrorMessage')
+          if (this.errorMessage) this.$store.commit('clearErrorMessage')
         })
         .catch(error => {
           let message = error.response.data.error.message
