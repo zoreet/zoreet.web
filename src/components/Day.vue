@@ -81,7 +81,7 @@
       @end.prevent="onDragEnd"
       delay="200"
       class="content"
-      :options="{ disabled: editingTask }"
+      :disabled="editingTask"
       @start="drag = true"
       @end="drag = false"
     >
