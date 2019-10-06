@@ -1,13 +1,17 @@
 <template>
   <div id="tasks" v-cloak :class="{ editingTask: editingTask }">
-    <alert id="refresh" type="info" :action="refresh" style="display: none">
+    <Alert id="refresh" type="info" :action="refresh" style="display: none">
       <strong>A new version is available.</strong>
       <p>Press here to get the latest changes</p>
-    </alert>
-    <alert v-if="errorMessage" type="error" :action="login">
-      <strong>There was an error connecting to the server</strong>
-      <p>Press here to log in again and fix the error</p>
-    </alert>
+    </Alert>
+    <Alert v-if="errorMessage" type="error" :action="login">
+      <template slot="message"
+        >There was an error connecting to the server</template
+      >
+      <template slot="action"
+        >Log in</template
+      >
+    </Alert>
 
     <div class="windows">
       <div
@@ -33,7 +37,7 @@
 </template>
 
 <script>
-import alert from '@/components/Alert'
+import Alert from '@/components/Alert'
 import btn from '@/components/Button'
 import day from '@/components/Day'
 import moment from 'moment'
@@ -56,7 +60,7 @@ export default {
   },
   components: {
     // Component,
-    alert,
+    Alert,
     btn,
     day,
     month,
