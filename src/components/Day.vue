@@ -1,14 +1,5 @@
 <template>
-  <div
-    :id="id"
-    class="day"
-    :class="{
-      isLoading: isLoading,
-      'window--past': isPast,
-      'window--future': isFuture,
-      'window--current': isToday,
-    }"
-  >
+  <div :id="id" class="day" :class="{ isLoading: isLoading }">
     <div class="header">
       <div class="header__copy">
         <div class="subtitle" @click.prevent="showPanel('calendar')">
@@ -20,7 +11,9 @@
         </h3>
       </div>
 
-      <a href="#" class="header__add-task" @click.prevent="addFirstEmptyTask">+</a>
+      <a href="#" class="header__add-task" @click.prevent="addFirstEmptyTask"
+        >+</a
+      >
       <a href="#" class="calendar" @click.prevent="showPanel('calendar')">
         <svg
           width="24px"
@@ -30,14 +23,27 @@
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <g id="calendar" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g
+            id="calendar"
+            stroke="none"
+            stroke-width="1"
+            fill="none"
+            fill-rule="evenodd"
+          >
             <path
               d="M6,2 C6.27614237,2 6.5,2.22385763 6.5,2.5 C6.5,2.77614237 6.27614237,3 6,3 L4,3 C2.34314575,3 1,4.34314575 1,6 L1,28 C1,29.6568542 2.34314575,31 4,31 L26,31 C27.6568542,31 29,29.6568542 29,28 L29,6 C29,4.34314575 27.6568542,3 26,3 L24,3 C23.7238576,3 23.5,2.77614237 23.5,2.5 C23.5,2.22385763 23.7238576,2 24,2 L26,2 C28.209139,2 30,3.790861 30,6 L30,28 C30,30.209139 28.209139,32 26,32 L4,32 C1.790861,32 2.705415e-16,30.209139 0,28 L0,6 C-2.705415e-16,3.790861 1.790861,2 4,2 L6,2 Z"
               id="Path"
               fill="#000000"
               fill-rule="nonzero"
             />
-            <rect id="Rectangle" fill="#000000" x="1" y="12" width="28" height="1" />
+            <rect
+              id="Rectangle"
+              fill="#000000"
+              x="1"
+              y="12"
+              width="28"
+              height="1"
+            />
             <path
               d="M19,2 C19.2761424,2 19.5,2.22385763 19.5,2.5 C19.5,2.77614237 19.2761424,3 19,3 L11,3 C10.7238576,3 10.5,2.77614237 10.5,2.5 C10.5,2.22385763 10.7238576,2 11,2 L19,2 Z"
               id="Path"
@@ -60,7 +66,9 @@
     <div class="empty-state content" v-if="this.tasks.length == 0">
       <div>
         <h3 class="empty-state__title">Start planning your day</h3>
-        <p class="empty-state__subtitle">You don't have any tasks added for this day</p>
+        <p class="empty-state__subtitle">
+          You don't have any tasks added for this day
+        </p>
         <div>
           <btn @action="addFirstEmptyTask">Add first task</btn>
         </div>
@@ -125,18 +133,24 @@ export default {
     }
   },
   computed: {
-    ...mapState([ 'currentDay', 'editingTask', 'errorMessage', 'token']),
+    ...mapState([
+      'currentDay',
+      'editingTask',
+      'errorMessage',
+      'today',
+      'token',
+    ]),
     isVisible() {
-      return this.date.isSame(moment(this.currentDay), 'day')
+      return this.date.isSame(this.currentDay, 'day')
     },
     isPast() {
-      return this.date.isBefore(moment(), 'day')
+      return this.date.isBefore(this.today, 'day')
     },
     isToday() {
-      return this.date.isSame(moment(), 'day')
+      return this.date.isSame(this.today, 'day')
     },
     isFuture() {
-      return this.date.isAfter(moment(), 'day')
+      return this.date.isAfter(this.today, 'day')
     },
     dateTitle() {
       let now = moment()

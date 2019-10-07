@@ -18,6 +18,11 @@
         v-for="day in days"
         :key="day.id"
         class="window"
+        :class="{
+          'window--past': day.id - currentDayId < 0,
+          'window--future': day.id - currentDayId > 0,
+          'window--current': day.id == currentDayId,
+        }"
       >
         <day id="editor" :dayId="day.id"></day>
       </div>
