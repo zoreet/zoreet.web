@@ -5,12 +5,12 @@
       <p>Press here to get the latest changes</p>
     </Alert>
     <Alert v-if="errorMessage" type="error" :action="login">
-      <template slot="message"
-        >There was an error connecting to the server</template
-      >
-      <template slot="action"
-        >Log in</template
-      >
+      <template slot="message">
+        There was an error connecting to the server
+      </template>
+      <template slot="action">
+        Reload
+      </template>
     </Alert>
 
     <div class="windows">
