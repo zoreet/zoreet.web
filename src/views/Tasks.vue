@@ -70,7 +70,10 @@ export default {
       'editingTask',
     ]),
     currentDayId() {
-      return this.currentDay.format('YYYYMMDD')
+      // TODO - refactor me
+      return this.currentDay && typeof this.currentDay.format == 'function'
+        ? this.currentDay.format('YYYYMMDD')
+        : ''
     },
   },
   mounted() {

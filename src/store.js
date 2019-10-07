@@ -19,8 +19,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    today: moment(),
-    currentDay: moment(currentDayId, 'YYYYMMDD'),
+    today: moment(), // TODO - let's not keep moment objects in the state, only IDs
+    currentDay: moment(currentDayId, 'YYYYMMDD'), // TODO - let's not keep moment objects in the state, only IDs
     days: {},
     activePanel: '',
     errorMessage: '',
