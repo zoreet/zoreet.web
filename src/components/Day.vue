@@ -184,7 +184,7 @@ export default {
         return
       }
       axios
-        .get('https://api.zoreet.com/days/' + this.dayId, {
+        .get('/api/days/' + this.dayId, {
           headers: { Authorization: 'Bearer ' + this.token },
         })
         .then(response => {
@@ -241,7 +241,7 @@ export default {
 
       axios
         .post(
-          'https://api.zoreet.com/days/' + this.dayId,
+          '/api/days/' + this.dayId,
           { tasks: JSON.stringify(this.tasks) },
           { headers: { Authorization: 'Bearer ' + this.token } }
         )

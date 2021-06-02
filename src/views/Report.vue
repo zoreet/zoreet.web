@@ -247,7 +247,7 @@ export default {
       }
       axios
         .get(
-          'https://api.zoreet.com/reports/' +
+          '/api/reports/' +
             this.startDate +
             '/' +
             this.endDate,
