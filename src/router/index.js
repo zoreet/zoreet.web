@@ -9,6 +9,7 @@ import Settings from '@/views/Settings.vue'
 
 export default new Router({
   mode: 'history',
+  base: '/app/',
   routes: [
     {
       path: '/',
