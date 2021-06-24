@@ -1,15 +1,6 @@
 <template>
   <div id="app">
     <router-view />
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/day">day</router-link> |
-      <router-link to="/someday">someday</router-link> |
-      <router-link to="/login">login</router-link> |
-      <router-link to="/logout">logout</router-link> |
-      <router-link to="/report">report</router-link> |
-      <router-link to="/settings">settings</router-link>
-    </div>
   </div>
 </template>
 <style>
