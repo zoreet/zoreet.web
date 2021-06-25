@@ -52,4 +52,59 @@ h6,
 strong {
   color: var(--default--text--strong);
 }
+
+.button {
+  background: transparent;
+  border-radius: 0.33em;
+  border: 1px solid;
+  color: var(--accent);
+  display: inline-block;
+  padding: 0.5em 0.75em;
+  text-decoration: none;
+  transition: all 0.3s;
+  font-size: inherit;
+}
+.button:hover,
+.button--full {
+  background-color: var(--accent);
+  color: var(--default--strong);
+}
+.button--full:hover {
+  filter: brightness(1.2);
+}
+.button:active,
+.button--full:active {
+  filter: brightness(0.7);
+}
+
+.button--secondary {
+  color: var(--default--text--strong);
+}
+.button--secondary:hover {
+  color: var(--default--strong);
+  background-color: var(--default--text--strong);
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1100px;
+}
+
+.highlight {
+  color: var(--accent);
+}
+
+@media only screen and (max-width: 414px) {
+  /* iPhone Xr Portrait */
+  .button {
+    padding: 0.75em;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  /* iPad Landscape */
+  .container {
+    padding: 0 24px;
+  }
+}
 </style>

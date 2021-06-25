@@ -1,66 +1,45 @@
 <template>
   <div class="home">
-    <div class="hero">
-      <div class="header">
-        <div class="container">
-          <a href="/" class="logo"><strong>zoreet</strong>.com</a>
-          <div class="header-actions">
-            <a id="login-header" href="/login">log in</a>
-            <a
-              id="signup-header"
-              class="header-action button js-login"
-              href="/login"
-              >sign up - it's free</a
-            >
-          </div>
-        </div>
-      </div>
-      <div class="hero-content">
-        <div class="container">
-          <h1>
-            <div class="word-container">
-              <div class="word" style="animation-delay: 0.5s">every</div>
-            </div>
-            <div class="word-container">
-              <div class="word" style="animation-delay: 0.7s">day</div>
-            </div>
-            <div class="word-container">
-              <div class="word" style="animation-delay: 0.9s">a</div>
-            </div>
-            <div class="word-container">
-              <div class="word" style="animation-delay: 1.1s">new</div>
-            </div>
-            <div class="word-container">
-              <div class="word" style="animation-delay: 1.3s">start</div>
-            </div>
-          </h1>
-          <p class="hero-lead animate">
-            <strong>zoreet is a to-do app</strong> that helps you focus on what
-            you can achieve right now.<br />plan ahead, let go of unfinished
-            tasks and celebrate your achievements.
-          </p>
-          <a id="signup" href="/login" class="button --full animate js-login"
-            >sign up - it's free</a
-          >
-          <a
-            id="login"
-            href="/login"
-            class="button --secondary animate js-login"
-            >log in</a
-          >
-          <p class="disclaimer animate">
-            after you sign up or log in, this site uses cookies to identify who
-            you are. we store your to-dos <em>duh!</em> but only until you
-            decide to remove them. we also use google analytics for anonymous
-            stats. that's it :)
-          </p>
-        </div>
-      </div>
-      <picture>
+    <Navbar class="navbar--home" />
+    <Hero class="hero--home">
+      <template slot="title">
+        <span class="word-container">
+          <span class="word" style="animation-delay: 0.5s">every</span>
+        </span>
+        <span class="word-container">
+          <span class="word" style="animation-delay: 0.7s">day</span>
+        </span>
+        <span class="word-container">
+          <span class="word" style="animation-delay: 0.9s">a</span>
+        </span>
+        <span class="word-container">
+          <span class="word" style="animation-delay: 1.1s">new</span>
+        </span>
+        <span class="word-container">
+          <span class="word" style="animation-delay: 1.3s">start</span>
+        </span>
+      </template>
+      <template slot="content">
+        <p class="hero__lead animate">
+          <strong>zoreet is a to-do app</strong> that helps you focus on what
+          you can achieve right now. <br />
+          Plan ahead, let go of unfinished tasks and celebrate your
+          achievements.
+        </p>
+        <a href="/login" class="hero__cta button --full animate"
+          >sign up - it's free</a
+        >
+        <p class="disclaimer animate">
+          By signin up you agree that this site uses cookies to identify your
+          account and for anonymous usage stats. It stores your to-dos
+          <em>duh!</em> but only until you decide to remove them. That's it :)
+        </p>
+      </template>
+      <template slot="picture">
         <source media="(max-width: 450px)" srcset="/img/sunsire-900.png" />
-        <img src="/img/sunsire-1980.png" width="100%" class="hero-image" />
-      </picture>
-    </div>
+        <img src="/img/sunsire-1980.png" width="100%" class="hero__image" />
+      </template>
+    </Hero>
     <div class="container">
       <div id="how-it-works" class="animate">
         <h2 class="title2">how it works</h2>
@@ -114,124 +93,28 @@
 
 <script>
 // @ is an alias to /src
+import Hero from "@/components/Hero.vue";
+import Navbar from "@/components/Navbar.vue";
 
 export default {
   name: "Home",
+  components: {
+    Hero,
+    Navbar,
+  },
 };
 </script>
 
 <style>
-.button {
-  padding: 0.33em 0.75em 0.4em;
-  border-radius: 0.33em;
-  border: 1px solid;
-  color: var(--accent);
-  text-decoration: none;
-  display: inline-block;
-  transition: all 0.3s;
-}
-.button:hover,
-.button.--full {
-  background-color: var(--accent);
-  color: var(--default--strong);
-}
-.button.--full:hover {
-  filter: brightness(1.2);
-}
-.button:active,
-.button.--full:active {
-  filter: brightness(0.7);
-}
-
-.button.--secondary {
-  color: var(--default--text--strong);
-}
-.button.--secondary:hover {
-  color: var(--default--strong);
-  background-color: var(--default--text--strong);
-}
-
-.container {
-  margin: 0 auto;
-  max-width: 1100px;
-}
-
-.highlight {
-  color: var(--accent);
-}
-
-@keyframes hero-misc {
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-.animate {
-  animation: hero-misc 0.3s forwards;
-  transform: translateY(60px);
-  opacity: 0;
-}
-
-.hero {
-  background-color: #e1bee6;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  position: relative;
-  text-align: center;
-}
-.header {
+/* Navbar */
+.navbar--home {
   background-color: var(--extra);
-  padding: 12px 0;
-  flex: 0 0 auto;
 }
-.header .container {
-  align-items: center;
-  display: flex;
-}
-.header a {
-  text-decoration: none;
-  padding: 8px 12px;
-  display: inline-block;
-  color: var(--default--strong);
-}
-
-.header .logo {
-  color: var(--default);
-  padding-left: 0;
-  font-size: 1.125em;
-}
-.logo strong {
-  color: var(--default--strong);
-}
-
-.header-actions {
-  flex: 1 0 auto;
-  text-align: right;
-}
-
-.hero-content {
-  flex: 1 1 auto;
-  margin: 0 auto;
-  max-width: 80vw;
-  padding-top: 32px;
-  position: relative;
-  width: 100%;
-  z-index: 100;
-}
-
-.hero,
-.hero h1,
-.hero strong {
+.navbar--home a,
+.navbar--home strong {
   color: var(--default);
 }
-h1 {
-  display: block;
-  font-size: 72px;
-  font-weight: 900;
-  line-height: 1.2em;
-  margin: 0;
-}
+/* Hero */
 .word-container,
 .word {
   display: inline-block;
@@ -239,6 +122,7 @@ h1 {
 .word-container {
   overflow: hidden;
 }
+
 @keyframes word {
   100% {
     transform: translateY(0);
@@ -249,7 +133,26 @@ h1 {
   transform: translateY(100%);
 }
 
-.hero-lead {
+@keyframes fade-in--slide-from-bottom {
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.animate {
+  animation: fade-in--slide-from-bottom 0.3s forwards;
+  transform: translateY(60px);
+  opacity: 0;
+}
+.hero--home {
+  background-color: var(--extra);
+}
+.hero--home,
+.hero--home h1,
+.hero--home strong {
+  color: var(--default);
+}
+.hero__lead {
   animation-delay: 2s;
   line-height: 1.5em;
   margin: 24px 0 18px;
@@ -260,35 +163,28 @@ h1 {
 .disclaimer {
   animation-delay: 2.5s;
   margin: 24px auto 0;
-  /* font-size: 14px; */
-  color: var(--default--text);
+  /* color: var(--default--text); */
   max-width: 40vw;
 }
 
-.hero-image {
+.hero__image {
   display: block;
   position: relative;
   width: 100vw;
   height: 33.33vw;
 }
 
-#signup {
+.hero__cta {
   border: 0 none;
   padding: 16px 32px;
   font-weight: 700;
   background-color: var(--extra--strong);
   color: var(--default--text--strong) !important;
-}
-#signup,
-#login {
   animation-delay: 2.3s;
-}
-#login {
-  display: none;
 }
 
 #how-it-works {
-  /* animation-delay: 2.7s; */
+  animation-delay: 2.7s;
   color: var(--default--text);
   padding-top: 64px;
 }
@@ -390,57 +286,19 @@ h1 {
 
 @media only screen and (max-width: 414px) {
   /* iPhone Xr Portrait */
-  .container {
-    padding: 0 24px;
-  }
   .button {
     padding: 0.75em;
   }
-  .animate {
-    transform: translateY(-30px);
-  }
-  .word {
-    transform: translateY(-100%);
-  }
 
-  .header {
-    padding: 10px 0;
-    position: relative;
-    z-index: 10;
-  }
-  .header .logo {
-    font-size: 1.2em;
-  }
-
-  .hero-lead {
-    max-width: auto;
-  }
-
-  #signup-header {
-    display: none;
-  }
-  #login-header {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  .hero-content {
-    width: 100%;
-    font-size: inherit;
-  }
-
-  h1 {
-    font-size: 42px;
-  }
-
-  #signup,
-  #login {
+  .hero__cta {
     display: block;
     text-align: center;
     font-weight: 700;
+    padding: 16px 32px;
   }
-  #login {
-    margin-top: 12px;
+
+  .hero__lead br {
+    display: none;
   }
 
   .title2 {
@@ -458,30 +316,22 @@ h1 {
 
 @media only screen and (max-width: 375px) {
   /* iPhone 8 Portrait */
-  h1 {
+  .hero__title {
     font-size: 38px;
   }
 }
 
 @media only screen and (max-width: 320px) {
   /* iPhone 5 Portrait */
-  h1 {
+  .hero__title {
     font-size: 32px;
   }
 }
-
 @media only screen and (max-width: 1024px) {
   /* iPad Landscape */
-  .container {
-    padding: 0 32px;
-  }
-  .hero-lead,
+  .hero__lead,
   .disclaimer {
     max-width: 100%;
-  }
-
-  .hero-lead br {
-    display: none;
   }
 }
 </style>
