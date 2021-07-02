@@ -121,6 +121,7 @@ export default {
 }
 .word-container {
   overflow: hidden;
+  padding: 0 0.1em;
 }
 
 @keyframes word {

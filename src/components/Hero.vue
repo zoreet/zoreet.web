@@ -34,7 +34,7 @@ export default {
 .hero .container {
   flex: 1 1 auto;
   margin: 0 auto;
-  max-width: 80vw;
+  /* max-width: 80vw; */
   position: relative;
   width: 100%;
   z-index: 100;
