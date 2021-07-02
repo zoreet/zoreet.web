@@ -3,7 +3,16 @@ import { createVuePlugin } from "vite-plugin-vue2";
 import path from "path";
 
 export default defineConfig({
-  plugins: [createVuePlugin()],
+  plugins: [
+    createVuePlugin({
+      jsx: true,
+      vueTemplateOptions: {
+        compilerOptions: {
+          whitespace: "preserve",
+        },
+      },
+    }),
+  ],
   define: {
     "process.env": process.env,
   },

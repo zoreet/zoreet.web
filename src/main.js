@@ -4,6 +4,7 @@ import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
 import { firestorePlugin } from "vuefire";
+import "./index.css";
 
 Vue.use(firestorePlugin);
 

@@ -3,8 +3,12 @@
     <router-view />
   </div>
 </template>
+<script>
+import "tailwindcss/tailwind.css";
+export default {};
+</script>
 <style>
-* {
+/* * {
   -webkit-overflow-scrolling: touch;
   box-sizing: border-box;
 }
@@ -85,6 +89,14 @@ strong {
   background-color: var(--default--text--strong);
 }
 
+.input {
+  padding: 0.5em 0.75em;
+  border-radius: 0.33em;
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid #fff;
+  color: #fff;
+}
+
 .container {
   margin: 0 auto;
   max-width: 1100px;
@@ -96,15 +108,15 @@ strong {
 
 @media only screen and (max-width: 414px) {
   /* iPhone Xr Portrait */
-  .button {
+/* .button {
     padding: 0.75em;
   }
 }
 
 @media only screen and (max-width: 1024px) {
   /* iPad Landscape */
-  .container {
+/* .container {
     padding: 0 24px;
   }
-}
+} */
 </style>
