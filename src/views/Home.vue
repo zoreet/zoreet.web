@@ -40,10 +40,10 @@
         <img src="/img/sunsire-1980.png" width="100%" class="hero__image" />
       </template>
     </Hero>
-    <div class="container">
+    <section class="container">
       <div id="how-it-works" class="animate">
-        <h2 class="title2">how it works</h2>
-        <div class="screenshots">
+        <h2 class="text-5xl mb-4">how it works</h2>
+        <div class="lg:flex justify-between mt-6 mb-18">
           <div class="day">
             <div class="fake-app past">
               <div class="fake-app-header">yesterday</div>
@@ -87,7 +87,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -106,6 +106,9 @@ export default {
 </script>
 
 <style>
+.home {
+  @apply bg-black-700;
+}
 /* Hero */
 .word-container,
 .word {
@@ -113,7 +116,6 @@ export default {
 }
 .word-container {
   overflow: hidden;
-  /* padding: 0 0.1em; */
 }
 
 @keyframes word {
@@ -137,26 +139,14 @@ export default {
   transform: translateY(60px);
   opacity: 0;
 }
-.hero--home {
-  background-color: var(--extra);
-}
-.hero--home,
-.hero--home h1,
-.hero--home strong {
-  color: var(--default);
-}
 .hero__lead {
+  @apply mt-4 mb-8;
   animation-delay: 2s;
-  line-height: 1.5em;
-  margin: 24px 0 18px;
-  max-width: 60vw;
-  margin: 16px auto 32px;
 }
 
 .disclaimer {
+  @apply mt-6 mx-auto;
   animation-delay: 2.5s;
-  margin: 24px auto 0;
-  /* color: var(--default--text); */
   max-width: 40vw;
 }
 
@@ -173,7 +163,8 @@ export default {
 }
 
 .hero:after {
-  @apply bg-gradient-to-t from-black-500;
+  /* cover the bottom of the image with a fade from transparent to the bg color */
+  @apply bg-gradient-to-t from-black-700;
   content: "";
   display: block;
   position: absolute;
@@ -185,96 +176,73 @@ export default {
 }
 
 #how-it-works {
+  @apply text-white-500 pt-16;
   animation-delay: 2.7s;
-  color: var(--default--text);
-  padding-top: 64px;
-}
-.title2 {
-  font-size: 48px;
-  margin: 0;
-  color: var(--default--text--strong);
 }
 
-.screenshots {
-  display: flex;
-  justify-content: space-between;
-  padding: 24px 0 72px;
-}
 .day {
   flex-basis: 31%;
   flex-grow: 0;
   flex-shrink: 0;
 }
 .fake-app {
-  background-color: var(--default);
-  border-radius: 8px;
+  @apply bg-black-500 rounded-lg;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.2);
   overflow: hidden;
 }
 .fake-app-header {
+  @apply px-4;
   line-height: 3em;
-  color: var(--default--text--strong);
   font-weight: bold;
-  padding: 0 1.125em;
 }
 .fake-app-header:after {
-  background-color: var(--accent);
-  background-image: linear-gradient(
-    17deg,
-    var(--warning) 0%,
-    var(--accent) 50%,
-    var(--extra--strong) 100%
-  );
+  @apply bg-gradient-to-r from-accent-500 via-construct-500 to-action-500 h-1;
   content: "";
   display: block;
-  height: 4px;
 }
 .fake-app-tasks {
+  @apply p-4;
   list-style: none inside;
-  color: var(--default--text--strong);
   margin: 0;
-  padding: 18px;
 }
 .fake-app-task {
-  line-height: 24px;
-  padding-left: 32px;
+  @apply pl-8 leading-6;
   position: relative;
 }
 .past .fake-app-task,
 .fake-app-task.--done {
-  color: var(--default--text);
+  @apply text-black-400;
 }
 .past .fake-app-task.--done {
-  color: var(--default--text--strong);
+  color: inherit;
 }
 .fake-app-task + .fake-app-task {
-  margin-top: 8px;
+  @apply mt-2;
 }
-.fake-app-task:before {
-  border-radius: 4px;
-  border: 1px solid #9b9b9b;
+.fake-app-task:before,
+.past .fake-app-task.--done:before {
+  @apply rounded-md border border-action-50 w-6 h-6 mr-2;
   content: "";
   display: block;
-  height: 24px;
   left: 0;
-  margin-right: 8px;
   position: absolute;
   top: 0;
-  width: 24px;
 }
 
 .past .fake-app-task:before,
 .fake-app-task.--done:before {
-  border-color: #9b9b9b;
+  @apply border-black-400;
 }
 .fake-app-task.--done:after {
+  @apply border-construct-500;
+  border-width: 3px;
   position: absolute;
   left: 7px;
   top: 8px;
   width: 10px;
   height: 5px;
-  border-left: 3px solid var(--accent);
-  border-bottom: 3px solid var(--accent);
+  border-top-color: transparent;
+  border-right-color: transparent;
   content: "";
   display: block;
   transform: rotate(-45deg);
@@ -302,10 +270,6 @@ export default {
 
   .title2 {
     font-size: 2em;
-  }
-
-  .screenshots {
-    display: block;
   }
 
   .day + .day {
