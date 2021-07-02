@@ -1,10 +1,10 @@
 <template>
   <div class="navbar">
     <div class="container">
-      <a href="/" class="logo"><strong>zoreet</strong>.com</a>
+      <a href="/" class="navbar__logo"><strong>zoreet</strong>.com</a>
       <div class="navbar__actions">
         <a href="/login">log in</a>
-        <a id="signup-navbar" class="button" href="/login"
+        <a id="signup-navbar" class="btn ml-4" href="/login"
           >sign up - it's free</a
         >
       </div>
@@ -20,18 +20,23 @@ export default {
 
 <style>
 .navbar {
-  padding: 12px 0;
-  flex: 0 0 auto;
+  @apply py-3;
 }
 .navbar .container {
   align-items: center;
   display: flex;
+  justify-content: space-between;
 }
 .navbar a {
   text-decoration: none;
-  color: var(--default--text--strong);
+  color: inherit;
   display: inline-block;
 }
+
+.navbar__logo {
+  @apply text-lg;
+}
+/*
 
 .navbar a + a {
   margin-left: 16px;
@@ -50,7 +55,7 @@ export default {
 
 @media only screen and (max-width: 414px) {
   /* iPhone Xr Portrait */
-  .navbar {
+/* .navbar {
     padding: 10px 0;
     position: relative;
     z-index: 10;
@@ -67,5 +72,5 @@ export default {
   #signup-navbar {
     display: none;
   }
-}
+} */
 </style>

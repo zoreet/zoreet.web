@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <Navbar class="navbar--home" />
-    <Hero class="hero--home">
+    <Navbar class="bg-hero-500 text-black-500" />
+    <Hero class="bg-hero-500 text-black-500">
       <template slot="title">
         <span class="word-container">
           <span class="word" style="animation-delay: 0.5s">every</span>
@@ -26,11 +26,11 @@
           Plan ahead, let go of unfinished tasks and celebrate your
           achievements.
         </p>
-        <a href="/login" class="hero__cta button --full animate"
+        <a href="/login" class="hero__cta btn btn--primary --large animate"
           >sign up - it's free</a
         >
         <p class="disclaimer animate">
-          By signin up you agree that this site uses cookies to identify your
+          by signin up you agree that this site uses cookies to identify your
           account and for anonymous usage stats. It stores your to-dos
           <em>duh!</em> but only until you decide to remove them. That's it :)
         </p>
@@ -106,14 +106,6 @@ export default {
 </script>
 
 <style>
-/* Navbar */
-.navbar--home {
-  background-color: var(--extra);
-}
-.navbar--home a,
-.navbar--home strong {
-  color: var(--default);
-}
 /* Hero */
 .word-container,
 .word {
@@ -121,7 +113,7 @@ export default {
 }
 .word-container {
   overflow: hidden;
-  padding: 0 0.1em;
+  /* padding: 0 0.1em; */
 }
 
 @keyframes word {
@@ -176,12 +168,20 @@ export default {
 }
 
 .hero__cta {
-  border: 0 none;
-  padding: 16px 32px;
-  font-weight: 700;
-  background-color: var(--extra--strong);
-  color: var(--default--text--strong) !important;
   animation-delay: 2.3s;
+  display: inline-block;
+}
+
+.hero:after {
+  @apply bg-gradient-to-t from-black-500;
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  height: 50px;
 }
 
 #how-it-works {
@@ -293,9 +293,7 @@ export default {
 
   .hero__cta {
     display: block;
-    text-align: center;
-    font-weight: 700;
-    padding: 16px 32px;
+    @apply text-lg;
   }
 
   .hero__lead br {
@@ -318,14 +316,14 @@ export default {
 @media only screen and (max-width: 375px) {
   /* iPhone 8 Portrait */
   .hero__title {
-    font-size: 38px;
+    @apply text-5xl;
   }
 }
 
 @media only screen and (max-width: 320px) {
   /* iPhone 5 Portrait */
   .hero__title {
-    font-size: 32px;
+    @apply text-4xl;
   }
 }
 @media only screen and (max-width: 1024px) {
