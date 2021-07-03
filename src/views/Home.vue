@@ -4,19 +4,19 @@
     <Hero class="bg-hero-500 text-black-500">
       <template slot="title">
         <span class="word-container">
-          <span class="word" style="animation-delay: 0.5s">every</span>
+          <span class="word">every</span>
         </span>
         <span class="word-container">
-          <span class="word" style="animation-delay: 0.7s">day</span>
+          <span class="word">day</span>
         </span>
         <span class="word-container">
-          <span class="word" style="animation-delay: 0.9s">a</span>
+          <span class="word">a</span>
         </span>
         <span class="word-container">
-          <span class="word" style="animation-delay: 1.1s">new</span>
+          <span class="word">new</span>
         </span>
         <span class="word-container">
-          <span class="word" style="animation-delay: 1.3s">start</span>
+          <span class="word">start</span>
         </span>
       </template>
       <template slot="content">
@@ -26,7 +26,9 @@
           Plan ahead, let go of unfinished tasks and celebrate your
           achievements.
         </p>
-        <a href="/login" class="hero__cta btn btn--primary --large animate"
+        <a
+          href="/login"
+          class="hero__cta btn btn--primary --large shadow-md animate"
           >sign up - it's free</a
         >
         <p class="disclaimer animate">
@@ -41,8 +43,8 @@
       </template>
     </Hero>
     <section class="container">
-      <div id="how-it-works" class="animate">
-        <h2 class="text-5xl mb-4">how it works</h2>
+      <div id="how-it-works" class="fadein">
+        <h2 class="text-3xl md:text-5xl mb-4">how it works</h2>
         <div class="lg:flex justify-between mt-6 mb-18">
           <div class="day">
             <div class="fake-app past">
@@ -53,7 +55,7 @@
                 <li class="fake-app-task">decide on a destination</li>
               </ul>
             </div>
-            <div class="explain">
+            <div class="text-black-200 mt-4 mb-8">
               when you look back at past days zoreet focuses on celebrating what
               you've acomplished
             </div>
@@ -67,7 +69,7 @@
                 <li class="fake-app-task --done">decide on a date</li>
               </ul>
             </div>
-            <div class="explain">
+            <div class="text-black-200 mt-4 mb-8">
               today it's time to focus on getting things done
             </div>
           </div>
@@ -80,11 +82,16 @@
                 <li class="fake-app-task">start up an itinerary</li>
               </ul>
             </div>
-            <div class="explain">
+            <div class="text-black-200 mt-4 mb-8">
               you can also plan ahead tasks you know you'll need to do on a
               certain day
             </div>
           </div>
+        </div>
+        <div class="container text-center pt-4 pb-16">
+          <a id="signup-navbar" href="/login" class="btn --large"
+            >join zoreet.com</a
+          >
         </div>
       </div>
     </section>
@@ -108,6 +115,17 @@ export default {
 <style>
 .home {
   @apply bg-black-700;
+
+  --animation-stage-1: 0.3s;
+  --animation-stage-2: 0.5s;
+  --animation-stage-3: 0.7s;
+  --animation-stage-4: 0.9s;
+  --animation-stage-5: 1.1s;
+  --animation-stage-6: 1.8s;
+  --animation-stage-7: 2s;
+  --animation-stage-8: 2.2s;
+  --animation-stage-9: 2.4s;
+  --animation-length: 0.3s;
 }
 /* Hero */
 .word-container,
@@ -117,6 +135,21 @@ export default {
 .word-container {
   overflow: hidden;
 }
+.word-container:nth-child(1) .word {
+  animation-delay: var(--animation-stage-1);
+}
+.word-container:nth-child(2) .word {
+  animation-delay: var(--animation-stage-2);
+}
+.word-container:nth-child(3) .word {
+  animation-delay: var(--animation-stage-3);
+}
+.word-container:nth-child(4) .word {
+  animation-delay: var(--animation-stage-4);
+}
+.word-container:nth-child(5) .word {
+  animation-delay: var(--animation-stage-5);
+}
 
 @keyframes word {
   100% {
@@ -124,7 +157,7 @@ export default {
   }
 }
 .word {
-  animation: word 0.3s forwards;
+  animation: word var(--animation-length) forwards;
   transform: translateY(100%);
 }
 
@@ -135,18 +168,21 @@ export default {
   }
 }
 .animate {
-  animation: fade-in--slide-from-bottom 0.3s forwards;
+  animation: fade-in--slide-from-bottom var(--animation-length) forwards;
   transform: translateY(60px);
   opacity: 0;
 }
+.hero__title {
+  color: inherit;
+}
 .hero__lead {
   @apply mt-4 mb-8;
-  animation-delay: 2s;
+  animation-delay: var(--animation-stage-6);
 }
 
 .disclaimer {
   @apply mt-6 mx-auto;
-  animation-delay: 2.5s;
+  animation-delay: var(--animation-stage-8);
   max-width: 40vw;
 }
 
@@ -158,7 +194,7 @@ export default {
 }
 
 .hero__cta {
-  animation-delay: 2.3s;
+  animation-delay: var(--animation-stage-7);
   display: inline-block;
 }
 
@@ -174,10 +210,29 @@ export default {
   z-index: 999;
   height: 50px;
 }
+/* END HERO */
+
+/* NAVBAR */
+@keyframes fade-in {
+  100% {
+    opacity: 1;
+  }
+}
+#signup-navbar {
+  @apply bg-none text-black-500 border-black-500;
+}
+#signup-navbar:hover {
+  @apply bg-action-900 border-black-500 text-white-500;
+}
+.fadein,
+.navbar > * {
+  opacity: 0;
+  animation: fade-in var(--animation-length) forwards var(--animation-stage-9);
+}
+/* END NAVBAR */
 
 #how-it-works {
   @apply text-white-500 pt-16;
-  animation-delay: 2.7s;
 }
 
 .day {

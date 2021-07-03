@@ -9,4 +9,16 @@ module.exports = {
         return options;
       });
   },
+  pages: {
+    index: {
+      // entry for the page
+      entry: "src/main.js",
+      title: "every day a new start",
+    },
+    login: {
+      // entry for the page
+      entry: "src/main.js",
+      title: "Login",
+    },
+  },
 };

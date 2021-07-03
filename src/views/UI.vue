@@ -19,6 +19,7 @@
     <section>
       <h1>UI Elements</h1>
       <button class="btn">Click me</button>
+      <button class="btn btn--inverted">Click me</button>
       <button class="btn btn--primary">Click me</button>
       <input
         type="text"

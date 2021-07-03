@@ -32,7 +32,7 @@ export default {
 }
 
 .hero__title {
-  @apply text-black-500 font-black text-7xl mt-6;
+  @apply font-black text-7xl mt-6;
   line-height: 1.2em;
 }
 </style>
