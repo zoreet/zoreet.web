@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  @apply bg-black-500 text-action-300 font-normal;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  @apply font-bold text-white-500;
+}
+h1 {
+  @apply text-4xl mb-6;
+}
+h2 {
+  @apply text-3xl mb-4;
+}
+h3 {
+  @apply text-2xl mb-3;
+}
+
+p + p {
+  @apply mt-2;
+}
+
+a {
+  @apply text-action-100 underline;
+}
+a:hover {
+  @apply text-action-50;
+}
+
+.btn,
+.input-text {
+  @apply px-3 py-2 rounded-md border transition-all;
+}
+
+.btn {
+  @apply no-underline;
+}
+.btn:hover {
+  @apply bg-action-900 border-white-500 text-white-500;
+}
+.btn--primary {
+  @apply bg-action-500 border-action-500 text-white-500;
+}
+.btn--primary:hover {
+  @apply bg-action-500 border-action-500;
+  filter: saturate(1.5);
+}
+.--large {
+  @apply px-6 py-4
+}
+.input-text {
+  @apply border-2 border-white-500 text-black-500 outline-none;
+}
+.input-text:focus {
+  @apply border-accent-500;
+}
+
+.container {
+  @apply max-w-screen-lg mx-auto px-8;
+}

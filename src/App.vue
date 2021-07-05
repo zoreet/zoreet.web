@@ -1,119 +1,18 @@
 <template>
-  <div id="app" v-cloak :class="{ editingTask: editingTask }">
-    <router-view></router-view>
-    <navbar></navbar>
-    <div class="installMessage" v-if="showInstallMessage">
-      <img src="/img/icon.svg" width="60" class="icon" />
-      <div class="title">
-        <strong>Install this webapp on your iPhone</strong>
-      </div>
-      <div class="info">
-        Tap
-        <img class="share-icon" src="/img/share-ios.svg" width="20" /> and then
-        <img class="add-icon" src="/img/add-to-homescreen.svg" width="22" />
-        Add to Home Screen
-      </div>
-    </div>
+  <div id="app">
+    <router-view />
   </div>
 </template>
-
-<script>
-import navbar from './components/Navbar'
-import { mapState, mapActions } from 'vuex'
-
-export default {
-  name: 'app',
-  data() {
-    return {
-      isStandalone:
-        'standalone' in window.navigator && window.navigator.standalone,
-      showInstallMessage: false,
-    }
-  },
-  components: {
-    // Component,
-    navbar,
-  },
-  computed: {
-    ...mapState(['editingTask']),
-  },
-  beforeMount() {
-    this.checkLogin()
-  },
-  mounted() {
-    document.addEventListener(
-      'touchmove',
-      function(e) {
-        if (e.target == document.body) e.preventDefault()
-      },
-      { passive: false }
-    )
-
-    // Detects if device is on iOS
-    const isIos = () => {
-      const userAgent = window.navigator.userAgent.toLowerCase()
-      return /iphone|ipad|ipod/.test(userAgent)
-    }
-
-    // Checks if should display install popup notification:
-    if (isIos() && !this.isStandalone) {
-      this.showInstallMessage = true
-    }
-  },
-  methods: {
-    ...mapActions(['checkLogin']),
-  },
-}
-</script>
-
 <style>
-body {
-  margin: 0;
-  padding: 0;
-}
-[v-cloak] {
-  display: none !important;
-}
-
-#app {
-  -webkit-font-smoothing: antialiased;
-  background-color: rgb(128, 128, 128);
-  color: var(--text);
-  font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica,
-    Arial, sans-serif;
-  font-size: 16px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  overflow: hidden;
-  position: fixed;
-  top: 0;
-}
-
-body * {
-  box-sizing: border-box;
+/* * {
   -webkit-overflow-scrolling: touch;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  box-sizing: border-box;
 }
-::selection {
-  background: #5ceea7;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 0;
-  padding: 0;
-}
-
-/* Colour Palette */
-#app {
+body {
   --default: #312e53;
   --default--strong: #232041;
   --default--text: #8480aa;
-  --default--text--strong: #ffffff;
+  --default--text--strong: #fff;
   --accent: #82e5cc;
   --accent--strong: #73d8be;
   --accent--text: #389981;
@@ -126,76 +25,94 @@ h6 {
   --destructive--strong: #ef686a;
   --destructive--text: #c23a3d;
   --destructive--text--strong: #69080a;
-  --extra--light: #a57ed5;
-  --extra--dark: #a57ed5;
+  --extra: #e1bee6;
+  --extra--strong: #a57ed5;
 
-  color: var(--default--text);
+  -webkit-font-smoothing: antialiased;
   background-color: var(--default--strong);
+  color: var(--default--text);
+  font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica,
+    Arial, sans-serif;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
 }
 
-@keyframes popDownThenGo {
-  0% {
-    bottom: 64px;
-  }
-  10%,
-  90% {
-    bottom: 16px;
-    opacity: 1;
-  }
-  100% {
-    bottom: -32px;
-    pointer-events: none;
-  }
+a {
+  color: var(--default--text--strong);
+  text-decoration: none;
 }
-.installMessage {
-  align-items: top;
-  animation: popDownThenGo 4s cubic-bezier(0.17, 0.89, 0.32, 1.49) forwards;
-  animation-delay: 1s;
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+strong {
+  color: var(--default--text--strong);
+}
+
+.button {
+  background: transparent;
+  border-radius: 0.33em;
+  border: 1px solid;
+  color: var(--accent);
+  display: inline-block;
+  padding: 0.5em 0.75em;
+  text-decoration: none;
+  transition: all 0.3s;
+  font-size: inherit;
+}
+.button:hover,
+.button--full {
+  background-color: var(--accent);
+  color: var(--default--strong);
+}
+.button--full:hover {
+  filter: brightness(1.2);
+}
+.button:active,
+.button--full:active {
+  filter: brightness(0.7);
+}
+
+.button--secondary {
+  color: var(--default--text--strong);
+}
+.button--secondary:hover {
+  color: var(--default--strong);
   background-color: var(--default--text--strong);
-  border-radius: 16px;
-  bottom: 16px;
-  color: var(--default);
-  display: grid;
-  grid-column-gap: 12px;
-  grid-template-areas: 'icon title' 'icon info';
-  grid-template-columns: 60px 1fr;
-  grid-template-rows: 20px 1fr;
-  left: 2px;
-  min-height: 0; /* NEW */
-  min-width: 0; /* NEW; needed for Firefox */
-  opacity: 0;
-  padding: 8px;
-  position: fixed;
-  width: calc(100% - 4px);
-  z-index: 999;
-}
-.installMessage:after {
-  position: absolute;
-  top: 100%;
-  border: 16px solid transparent;
-  border-top-color: var(--default--text--strong);
-  border-bottom: 0 none;
-  left: calc(50% - 16px);
-  content: '';
-  display: block;
 }
 
-.installMessage .icon {
-  grid-area: icon;
+.input {
+  padding: 0.5em 0.75em;
+  border-radius: 0.33em;
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid #fff;
+  color: #fff;
 }
 
-.installMessage .title {
-  grid-area: title;
-  padding-top: 4px;
+.container {
+  margin: 0 auto;
+  max-width: 1100px;
 }
-.installMessage .info {
-  grid-area: info;
-  padding-top: 6px;
+
+.highlight {
+  color: var(--accent);
 }
-.share-icon {
-  margin: 0 3px -5px;
+
+@media only screen and (max-width: 414px) {
+  /* iPhone Xr Portrait */
+/* .button {
+    padding: 0.75em;
+  }
 }
-.add-icon {
-  margin: 0 1px -5px 3px;
-}
+
+@media only screen and (max-width: 1024px) {
+  /* iPad Landscape */
+/* .container {
+    padding: 0 24px;
+  }
+} */
 </style>

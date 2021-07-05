@@ -1,46 +1,38 @@
 <template>
   <div class="navbar">
-    <router-link class="link" to="/">Tasks</router-link>
-    <router-link class="link" to="/report">Reports</router-link>
-    <router-link class="link" to="/settings">Settings</router-link>
+    <div class="container">
+      <a href="/" class="navbar__logo"><strong>zoreet</strong>.com</a>
+      <div class="navbar__actions">
+        <a href="/login">log in</a>
+        <a id="signup-navbar" class="btn ml-4 hidden lg:inline" href="/login"
+          >sign up - it's free</a
+        >
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Navbar',
-}
+  name: "Navbar",
+};
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
 .navbar {
-  display: flex;
-  padding-bottom: constant(safe-area-inset-bottom);
-  padding-bottom: env(safe-area-inset-bottom);
-  background: var(--default);
-  width: 100%;
+  @apply py-3;
+}
+.navbar .container {
+  align-items: center;
   display: flex;
   justify-content: space-between;
-  z-index: 998;
-  position: fixed;
-  bottom: 0;
 }
-
-.editingTask .navbar {
-  display: none;
-}
-
-.link {
-  box-sizing: content-box;
-  padding: 20px 16px;
-  line-height: 20px;
+.navbar a {
   text-decoration: none;
-  color: var(--default--text--strong);
-  font-size: 16px;
-  display: block;
+  color: inherit;
 }
-.router-link-exact-active {
-  color: var(--accent);
+
+.navbar__logo {
+  @apply text-lg;
 }
 </style>

@@ -1,0 +1,128 @@
+// Example `tailwind.config.js` file
+// const colors = require("tailwindcss/colors");
+
+module.exports = {
+  purge: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
+  darkMode: false,
+  theme: {
+    colors: {
+      // generated via https://javisperez.github.io/tailwindcolorshades/?lavender=AF7ED6&port-gore=302957&geraldine=F47F76&golden-tainoi=FFD261&riptide=82E8D4&white=ffffff&hero=e1bee6
+      // before - https://javisperez.github.io/tailwindcolorshades/?white=ffffff&black=000000&bermuda=82e5cc&dark=312e53&danger=f27778&warning=fec660&lilac=a57ed5
+      hero: {
+        50: "#fefcfe",
+        100: "#fcf9fd",
+        200: "#f8eff9",
+        300: "#f3e5f5",
+        400: "#ead2ee",
+        500: "#e1bee6",
+        600: "#cbabcf",
+        700: "#a98fad",
+        800: "#87728a",
+        900: "#6e5d71",
+      },
+      action: {
+        50: "#fbf9fd",
+        100: "#f7f2fb",
+        200: "#ebdff5",
+        300: "#dfcbef",
+        400: "#c7a5e2",
+        500: "#AF7ED6",
+        600: "#9e71c1",
+        700: "#835fa1",
+        800: "#694c80",
+        900: "#563e69",
+      },
+      black: {
+        50: "#f5f4f7",
+        100: "#eaeaee",
+        200: "#cbcad5",
+        300: "#aca9bc",
+        400: "#6e6989",
+        500: "#302957",
+        600: "#2b254e",
+        700: "#241f41",
+        800: "#1d1934",
+        900: "#18142b",
+      },
+      destroy: {
+        50: "#fef9f8",
+        100: "#fef2f1",
+        200: "#fcdfdd",
+        300: "#fbccc8",
+        400: "#f7a59f",
+        500: "#F47F76",
+        600: "#dc726a",
+        700: "#b75f59",
+        800: "#924c47",
+        900: "#783e3a",
+      },
+      accent: {
+        50: "#fffdf7",
+        100: "#fffbef",
+        200: "#fff4d8",
+        300: "#ffedc0",
+        400: "#ffe090",
+        500: "#FFD261",
+        600: "#e6bd57",
+        700: "#bf9e49",
+        800: "#997e3a",
+        900: "#7d6730",
+      },
+      construct: {
+        50: "#f9fefd",
+        100: "#f3fdfb",
+        200: "#e0f9f4",
+        300: "#cdf6ee",
+        400: "#a8efe1",
+        500: "#82E8D4",
+        600: "#75d1bf",
+        700: "#62ae9f",
+        800: "#4e8b7f",
+        900: "#407268",
+      },
+      white: {
+        50: "#ffffff",
+        100: "#ffffff",
+        200: "#ffffff",
+        300: "#ffffff",
+        400: "#ffffff",
+        500: "#ffffff",
+        600: "#e6e6e6",
+        700: "#bfbfbf",
+        800: "#999999",
+        900: "#7d7d7d",
+      },
+    },
+    container: {
+      center: true,
+    },
+    fontFamily: {
+      sans: [
+        "BlinkMacSystemFont",
+        "-apple-system",
+        "Segoe UI",
+        "Roboto",
+        "Helvetica",
+        "Arial",
+        "sans-serif",
+      ],
+      serif: ["Merriweather", "serif"],
+    },
+    // extend: {
+    //   spacing: {
+    //     128: "32rem",
+    //     144: "36rem",
+    //   },
+    //   borderRadius: {
+    //     "4xl": "2rem",
+    //   },
+    // },
+  },
+  variants: {
+    extend: {},
+  },
+  corePlugins: {
+    container: false,
+  },
+  plugins: [],
+};

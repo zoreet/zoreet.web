@@ -1,31 +1,17 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from '@/router/index.js'
-import store from './store'
-import './registerServiceWorker'
-import moment from 'moment'
+import Vue from "vue";
+import App from "./App.vue";
+import "./registerServiceWorker";
+import router from "./router";
+import store from "./store";
+import { firestorePlugin } from "vuefire";
+import "./index.css";
 
-Vue.config.productionTip = false
+Vue.use(firestorePlugin);
 
-// TODO: move this to Day.vue or Tasks.vue
-window.addEventListener('focus', () => {
-  let wasLookingAtToday = false
-  if (store.state.today.isSame(store.state.currentDay, 'day')) {
-    wasLookingAtToday = true
-  }
-
-  let now = moment()
-  if (store.state.today.isSame(now, 'day')) {
-    store.commit('newToday', now)
-
-    if (wasLookingAtToday) {
-      store.dispatch('gotoDay', { today: true })
-    }
-  }
-})
+Vue.config.productionTip = false;
 
 new Vue({
   router,
   store,
-  render: h => h(App),
-}).$mount('#app')
+  render: (h) => h(App),
+}).$mount("#app");
